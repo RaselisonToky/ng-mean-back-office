@@ -50,7 +50,6 @@ export const menuItems: MenuItem[] = [
     display: true,
     items: [
       { id: 'prestation', label: 'Prestation', href: '/service', icon: ScrollText, roles: ['ADMIN'] },
-      { id: 'security', label: 'Security', href: '/settings/security', icon: UserCheck, roles: ['ADMIN'] }
     ]
   }
 ];
