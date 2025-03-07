@@ -1,0 +1,17 @@
+.category-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.title {
+  margin-bottom: 40px;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 1.5rem;
+}

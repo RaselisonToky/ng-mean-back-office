@@ -1,0 +1,50 @@
+<aside [class.open]="isOpen" class="sidebar">
+  <nav class="nav">
+    <ul>
+      @for (item of menuItems; track item.id) {
+        <li>
+          @if (item.items) {
+            <div class="navItem" (click)="toggleCategory(item.id)">
+              @if (item.icon) {
+                <lucide-icon [name]="item.icon" class="icon"></lucide-icon>
+              }
+              <span class="label">{{ item.label }}</span>
+              @if (isCategoryExpanded(item.id)) {
+                <lucide-icon [img]="ChevronDown" class="chevron" size="16"></lucide-icon>
+              } @else {
+                <lucide-icon [img]="ChevronUp" class="chevron" size="16"></lucide-icon>
+              }
+            </div>
+            @if (isCategoryExpanded(item.id)) {
+              <div class="sous-menu">
+                <ul>
+                  @for (subItem of item.items; track subItem.id) {
+                    <li>
+                      <a [routerLink]="subItem.href"
+                         routerLinkActive="activeNavItem"
+                         class="navItem nestedNavItem">
+                        @if (subItem.icon) {
+                          <lucide-icon [name]="subItem.icon" class="icon"></lucide-icon>
+                        }
+                        <span class="label">{{ subItem.label }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          } @else {
+            <a [routerLink]="item.href"
+               routerLinkActive="activeNavItem"
+               class="navItem">
+              @if (item.icon) {
+                <lucide-icon [name]="item.icon" class="icon"></lucide-icon>
+              }
+              <span class="label">{{ item.label }}</span>
+            </a>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+</aside>

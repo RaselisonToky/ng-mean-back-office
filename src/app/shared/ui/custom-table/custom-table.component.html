@@ -1,0 +1,59 @@
+<div class="table-container" [ngClass]="className" [ngStyle]="{'height': height}">
+  <div class="pagination">
+    <div class="pagination-info">
+      {{ currentPage }} sur {{ totalPages }}
+    </div>
+    <div class="pagination-controls">
+      <button
+        (click)="goToPrevPage()"
+        [disabled]="currentPage === 1"
+        class="pagination-arrow"
+        aria-label="Page précédente"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+
+      <ng-container *ngFor="let btn of getPaginationButtons()">
+        <button
+          *ngIf="btn.type === 'button'"
+          (click)="goToPage(btn.value)"
+          class="pagination-button"
+          [class.active-page]="btn.active"
+        >
+          {{ btn.value }}
+        </button>
+        <span *ngIf="btn.type === 'ellipsis'">...</span>
+      </ng-container>
+
+      <button
+        (click)="goToNextPage()"
+        [disabled]="currentPage === totalPages"
+        class="pagination-arrow"
+        aria-label="Page suivante"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table [ngClass]="tableClassName">
+      <thead>
+      <tr>
+        <th *ngFor="let header of headers">{{ header }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClicked(item)">
+        <ng-container
+          *ngTemplateOutlet="rowTemplate; context: { $implicit: item, index: i }"
+        ></ng-container>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

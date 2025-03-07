@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="loginSection">
+    <div class="loginBox">
+      <h2>Connexion</h2>
+      @if (error()) {
+        <div class="errorMessage">{{ error() }}</div>
+      }
+      <form (submit)="onSubmit($event)">
+        <div class="inputGroup">
+          <label for="username">Nom d'utilisateur</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+            required
+            [disabled]="isLoading()"
+          />
+        </div>
+        <div class="inputGroup">
+          <label for="password">Mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            [disabled]="isLoading()"
+          />
+        </div>
+        @if (isLoading()) {
+          <div class="spinnerContainer">
+            <div class="spinner"></div>
+          </div>
+        } @else {
+          <button type="submit" class="submitButton">Se connecter</button>
+        }
+      </form>
+      <div class="links">
+        <a href="#">Mot de passe oublié ?</a>
+        <a href="#">Créer un compte</a>
+      </div>
+    </div>
+  </div>
+  <div class="imageSection">
+    <!-- Espace réservé pour une image -->
+  </div>
+</div>
