@@ -31,7 +31,7 @@ export const menuItems: MenuItem[] = [
     items: [
       { id: 'dashboard', label: 'Tableau de bord', href: '/garage', icon: Home, roles: ['ADMIN'] },
       { id: 'maintenance', label: 'Maintenance', href: '/maintenance', icon: Wrench, roles: ['ADMIN'] },
-      { id: 'appointment', label: 'Rendez-vous', href: '/dashboard', icon: Clock, roles: ['ADMIN'] },
+      { id: 'appointment', label: 'Rendez-vous', href: '/appointment', icon: Clock, roles: ['ADMIN'] },
     ]
   },
   {
@@ -40,7 +40,6 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'interv-appointement', label: 'Rendez-vous', href: '/appointment', icon: Home, roles: ['ADMIN'] },
       { id: 'interv-maintenance', label: 'Mécanicien', href: '/m', icon: Wrench, roles: ['ADMIN'] },
     ]
   },

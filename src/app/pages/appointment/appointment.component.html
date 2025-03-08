@@ -1,0 +1,56 @@
+<div class="page-container">
+  <div class="title">Rendez-vous</div>
+
+  <app-custom-table
+    [headers]="tableHeaders"
+    [data]="appointments"
+    [itemsPerPage]="30"
+    (rowClick)="onRowClick($event)"
+  >
+    <ng-template let-item let-i="index">
+      <td>{{ item.user.firstname }}</td>
+      <td>{{ item.user.email }}</td>
+      <td>{{ item.carModel.brand.name }}</td>
+      <td>{{ item.carModel.name }}</td>
+      <td>
+        <div class="chips-container" [ngClass]="{'collapsed': !expandedRows.has(i), 'expanded': expandedRows.has(i)}">
+          <ng-container *ngFor="let service of item.services; let j = index">
+            <span class="service-chip">
+              {{ service.name }}
+            </span>
+          </ng-container>
+
+          <ng-container *ngIf="shouldShowExpansionChevron(item.services)">
+            <span *ngIf="!expandedRows.has(i) && item.services.length > 2" class="visible-chip-count">
+              +{{ item.services.length - 2 }}
+            </span>
+            <span class="expand-button" (click)="toggleExpand(i)">
+              <svg
+                class="chevron-icon"
+                [ngClass]="{'expanded': expandedRows.has(i)}"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </ng-container>
+        </div>
+      </td>
+      <td>{{ item.scheduleAt | date:'short' }}</td>
+      <td>{{ item.estimateDuration }}</td>
+      <td>{{ item.estimatedPrice }}</td>
+      <td>
+        <span class="category-chip"
+              [ngStyle]="getStatusChipStyle(item.status)">
+          {{ getStatusLabel(item.status) }}
+        </span>
+      </td>
+    </ng-template>
+  </app-custom-table>
+</div>

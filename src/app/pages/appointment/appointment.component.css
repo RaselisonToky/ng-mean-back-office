@@ -1,0 +1,70 @@
+.service-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.chips-container {
+  width: 400px;
+  display: flex;
+  position: relative;
+}
+
+.chips-container.collapsed {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.chips-container.expanded {
+  flex-wrap: wrap;
+  white-space: normal;
+  overflow: visible;
+}
+
+.category-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.expand-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.chevron-icon {
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.chips-container.collapsed .service-chip:nth-child(n+3) {
+  display: none;
+}
+
+.visible-chip-count {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  background-color: #e0e0e0;
+  color: #555;
+}
