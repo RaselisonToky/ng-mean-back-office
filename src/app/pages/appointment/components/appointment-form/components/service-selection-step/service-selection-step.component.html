@@ -1,0 +1,94 @@
+<div class="step-content">
+  <h2 class="step-title">Select Services</h2>
+  <p class="step-description">Choose the services you need for your vehicle</p>
+
+  <div class="service-grid">
+    <div class="tabs">
+      <div class="tabs-list">
+        @for (category of serviceCategories; track category.id) {
+          <button
+            [ngClass]="{'active': activeTab === category.id}"
+            [ngStyle]="{
+              'background-color': activeTab === category.id ? category.backgroundColor : '',
+              'color': activeTab === category.id ? category.color : '',
+              'border-color': activeTab === category.id ? category.borderColor : ''
+            }"
+            (click)="activeTab = category.id"
+            class="tab-trigger"
+          >
+            {{ category.name }}
+          </button>
+        }
+      </div>
+
+      @for (category of serviceCategories; track category.id) {
+        <div [ngClass]="{'active': activeTab === category.id}" class="tab-content">
+          <div class="services-grid">
+            @for (service of getServicesByCategory(category.id); track service.id) {
+              <div
+                (click)="toggleService(service.id)"
+                [ngClass]="{'selected': isServiceSelected(service.id)}"
+                [ngStyle]="{
+                  'background-color': isServiceSelected(service.id) ? category.backgroundColor : '',
+                  'border-color': isServiceSelected(service.id) ? category.borderColor : ''
+                }"
+                class="service-card"
+              >
+                <div class="service-info">
+                  <h3 class="service-name">{{ service.name }}</h3>
+                  <div class="service-details">
+                    <span class="service-price">${{ service.price.toFixed(2) }}</span>
+                    <span class="service-duration">~ {{ service.estimateDuration }} min</span>
+                  </div>
+                </div>
+                @if (isServiceSelected(service.id)) {
+                  <svg
+                    class="check-icon"
+                    [ngStyle]="{'color': category.color}"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="service-summary">
+      <div class="summary-details">
+        <p class="summary-text">Selected services: {{ selectedServiceIds.length }}</p>
+        <div class="summary-totals">
+          <p class="total-price">Total: ${{ totalPrice.toFixed(2) }}</p>
+          <p class="total-duration">Estimated time: {{ totalDuration }} min</p>
+        </div>
+      </div>
+      <div class="summary-actions">
+        <button
+          (click)="onPrevious.emit()"
+          class="button-outline"
+        >
+          ← Back
+        </button>
+
+        <button
+          (click)="handleNext()"
+          [disabled]="selectedServiceIds.length === 0"
+          class="button-primary"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

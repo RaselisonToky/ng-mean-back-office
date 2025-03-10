@@ -1,0 +1,285 @@
+.step-content {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.summary-card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.summary-card-header {
+  background-color: #f8fafc;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.summary-card-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3b82f6;
+}
+
+.summary-card-title {
+  font-weight: 500;
+}
+
+.summary-card-content {
+  padding: 1rem;
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.summary-value {
+  font-weight: 500;
+}
+
+.appointment-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .appointment-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.service-header {
+  justify-content: space-between;
+}
+
+.service-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.service-total {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.service-total-label {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.service-total-value {
+  font-weight: 500;
+}
+
+.services-list {
+  padding: 0;
+}
+
+.service-item {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.service-name {
+  font-weight: 500;
+}
+
+.service-duration {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.service-price {
+  font-weight: 500;
+}
+
+.price-summary {
+  padding: 1rem;
+  background-color: #f8fafc;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.price-label {
+  color: #64748b;
+}
+
+.summary-separator {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 0.75rem 0;
+}
+
+.total-row {
+  font-weight: 500;
+}
+
+.summary-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-outline {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background-color: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.button-outline:hover {
+  background-color: #f8fafc;
+}
+
+.button-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button-primary {
+  padding: 0.5rem 2rem;
+  border-radius: 9999px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.button-primary:hover {
+  background-color: #2563eb;
+}
+
+.button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success screen styles */
+.success-container {
+  text-align: center;
+  padding: 3rem 0;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: #dbeafe;
+  color: #3b82f6;
+  margin-bottom: 1.5rem;
+}
+
+.success-message {
+  color: #64748b;
+  margin-bottom: 2rem;
+  max-width: 25rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.confirmation-details {
+  background-color: #f8fafc;
+  display: inline-block;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.confirmation-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.confirmation-item:last-child {
+  margin-bottom: 0;
+}
+
+.confirmation-text {
+  font-weight: 500;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  color: #3b82f6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

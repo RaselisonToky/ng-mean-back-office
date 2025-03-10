@@ -1,0 +1,26 @@
+<div class="main-container">
+  <div class="app-header">
+    <div class="app-tag">Car Service Appointment Scheduler</div>
+    <h1 class="app-title">Book Your Service Appointment</h1>
+    <p class="app-description">
+      Schedule your car maintenance with our easy-to-use appointment system
+    </p>
+  </div>
+  <div class="stepper">
+    <app-stepper-progress [currentStep]="currentStep" [totalSteps]="totalSteps"></app-stepper-progress>
+  </div>
+  @if (currentStep === 1) {
+    <app-user-vehicle-step (onNext)="handleNext($event)"></app-user-vehicle-step>
+  } @else if (currentStep === 2) {
+    <app-service-selection-step
+      (onPrevious)="handlePrevious()"
+      (onNext)="handleServicesNext($event)">
+    </app-service-selection-step>
+  } @else if (currentStep === 3) {
+    <app-appointment-summary-step
+      [appointmentDetails]="appointmentDetails!"
+      (onPrevious)="handlePrevious()"
+      (onConfirm)="handleConfirm()">
+    </app-appointment-summary-step>
+  }
+</div>

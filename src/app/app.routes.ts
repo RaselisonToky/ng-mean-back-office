@@ -6,6 +6,7 @@ import {SettingsComponent} from './pages/settings/settings.component';
 import {AuthGuard} from './pages/auth/services/auth-guards.service';
 import {ServiceComponent} from './pages/service/service.component';
 import {AppointmentComponent} from './pages/appointment/appointment.component';
+import {AppointmentFormComponent} from './pages/appointment/components/appointment-form/appointment-form.component';
 
 export const routes: Routes = [
   {path: 'login', component: AuthComponent},
@@ -15,6 +16,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] }},
       { path: 'appointment', component: AppointmentComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] }},
+      { path: 'appointment-form', component: AppointmentFormComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] }},
       { path: 'garage', component: SettingsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'maintenance', component: SettingsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'service', component: ServiceComponent,  canActivate: [AuthGuard], data: { roles: ['ADMIN'] }},

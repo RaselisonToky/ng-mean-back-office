@@ -11,6 +11,7 @@ import { NgClass, NgStyle } from '@angular/common';
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.css'],
   imports: [CommonModule, NgClass, NgStyle],
+  standalone: true,
   encapsulation: ViewEncapsulation.None
 })
 export class CustomTableComponent implements OnInit, OnChanges, AfterContentInit {
