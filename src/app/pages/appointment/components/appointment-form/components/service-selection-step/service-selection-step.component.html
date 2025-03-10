@@ -4,33 +4,64 @@
 
   <div class="service-grid">
     <div class="tabs">
-      <div class="tabs-list">
-        @for (category of serviceCategories; track category.id) {
-          <button
-            [ngClass]="{'active': activeTab === category.id}"
-            [ngStyle]="{
-              'background-color': activeTab === category.id ? category.backgroundColor : '',
-              'color': activeTab === category.id ? category.color : '',
-              'border-color': activeTab === category.id ? category.borderColor : ''
-            }"
-            (click)="activeTab = category.id"
-            class="tab-trigger"
-          >
-            {{ category.name }}
-          </button>
-        }
+      <div class="scroll-button">
+        <div>
+          @if (hasPreviousPage()) {
+            <button
+              (click)="previousCategoryPage()"
+              class="tab-scroll-btn left-scroll"
+              [disabled]="isAnimating"
+              aria-label="Catégories précédentes"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          }
+        </div>
+        <div>
+          @if (hasNextPage()) {
+            <button
+              (click)="nextCategoryPage()"
+              class="tab-scroll-btn right-scroll"
+              [disabled]="isAnimating"
+              aria-label="Catégories suivantes"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          }
+        </div>
       </div>
-
-      @for (category of serviceCategories; track category.id) {
-        <div [ngClass]="{'active': activeTab === category.id}" class="tab-content">
+      <div class="tabs-list">
+        <div class="tabs-wrapper" [ngClass]="{'slide-right': slideDirection === 'right', 'slide-left': slideDirection === 'left'}">
+          @for (category of visibleCategories; track category._id) {
+            <button
+              [ngClass]="{'active': activeTab === category._id}"
+              [ngStyle]="{
+                'background-color': activeTab === category._id ? category.backgroundColor : '',
+                'color': activeTab === category._id ? category.color : '',
+                'border-color': activeTab === category._id ? category.borderColor : ''
+              }"
+              (click)="activeTab = category._id"
+              class="tab-trigger"
+            >
+              {{ category.name }}
+            </button>
+          }
+        </div>
+      </div>
+      @for (category of categories; track category._id) {
+        <div [ngClass]="{'active': activeTab === category._id}" class="tab-content">
           <div class="services-grid">
-            @for (service of getServicesByCategory(category.id); track service.id) {
+            @for (service of getServicesByCategory(category._id); track service._id) {
               <div
-                (click)="toggleService(service.id)"
-                [ngClass]="{'selected': isServiceSelected(service.id)}"
+                (click)="toggleService(service._id)"
+                [ngClass]="{'selected': isServiceSelected(service._id)}"
                 [ngStyle]="{
-                  'background-color': isServiceSelected(service.id) ? category.backgroundColor : '',
-                  'border-color': isServiceSelected(service.id) ? category.borderColor : ''
+                  'background-color': isServiceSelected(service._id) ? category.backgroundColor : '',
+                  'border-color': isServiceSelected(service._id) ? category.borderColor : ''
                 }"
                 class="service-card"
               >
@@ -41,7 +72,7 @@
                     <span class="service-duration">~ {{ service.estimateDuration }} min</span>
                   </div>
                 </div>
-                @if (isServiceSelected(service.id)) {
+                @if (isServiceSelected(service._id)) {
                   <svg
                     class="check-icon"
                     [ngStyle]="{'color': category.color}"

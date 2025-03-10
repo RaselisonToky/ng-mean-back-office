@@ -10,13 +10,25 @@ export enum STATUS {
 }
 
 export interface Appointment {
-  user: {
-    firstName: string;
-    email: string;
-  },
+  name: string,
+  email: string,
+  phone: string,
   carModel: Model,
   licensePlate: string,
   services: Service[],
+  scheduleAt: Date,
+  estimateDuration: Number,
+  estimatedPrice: Number,
+  status: STATUS,
+}
+
+export interface AppointmentDto {
+  name: string,
+  email: string,
+  phone: string,
+  carModel: string,
+  licensePlate: string,
+  services: string[],
   scheduleAt: Date,
   estimateDuration: Number,
   estimatedPrice: Number,

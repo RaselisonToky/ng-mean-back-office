@@ -19,7 +19,7 @@ import {AppointmentService} from '../../services/appointment.service';
 
 export class AppointmentListComponent implements OnInit {
   appointments: Appointment[] = [];
-  tableHeaders = ['Client', 'e-mail', 'marque', 'model', 'services', 'programmé le', 'durée', 'prix', 'status'];
+  tableHeaders = ['Client', 'e-mail','phone', 'marque', 'model', 'services', 'programmé le', 'durée', 'prix', 'status'];
   statusChipColors = STATUS_CHIP_COLORS;
   statusLabelsFr = STATUS_LABELS_FR;
   expandedRows = new Set<number>();

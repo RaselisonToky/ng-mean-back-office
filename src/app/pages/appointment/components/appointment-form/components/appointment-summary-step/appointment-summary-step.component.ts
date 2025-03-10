@@ -1,29 +1,22 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { brands, models } from '../../mockData';
+import {Model} from '../../../../../model/model/model.model';
+import {Brand} from '../../../../../brand/model/brand.model';
+import {AppointmentService} from '../../../../services/appointment.service';
+import {STATUS} from '../../../../model/appointment.model';
 
 interface AppointmentDetails {
-  user: {
-    name: string;
-    email: string;
-    phone: string;
-  };
-  vehicle: {
-    brandId: string;
-    modelId: string;
-    licensePlate: string;
-  };
-  schedule: {
-    date: string;
-    time: string;
-  };
-  services: Array<{
-    id: string;
+  user: { name: string; email: string; phone: string; };
+  vehicle: { brandId: string; modelId: string; licensePlate: string; };
+  schedule: { date: string; time: string; };
+  services: {
+    _id: string;
     name: string;
     price: number;
     estimateDuration: number;
-  }>;
+  }[];
 }
+
 
 @Component({
   selector: 'app-appointment-summary-step',
@@ -33,7 +26,14 @@ interface AppointmentDetails {
   styleUrl: './appointment-summary-step.component.css',
 })
 export class AppointmentSummaryStepComponent {
+  constructor(
+    private appointmentService: AppointmentService,
+  ) {
+  }
+
   @Input() appointmentDetails!: AppointmentDetails;
+  @Input() brands: Brand[] = [];
+  @Input() models: Model[] = [];
   @Output() onPrevious = new EventEmitter<void>();
   @Output() onConfirm = new EventEmitter<void>();
 
@@ -41,11 +41,11 @@ export class AppointmentSummaryStepComponent {
   isSuccess = false;
 
   get brand() {
-    return brands.find(b => b.id === this.appointmentDetails.vehicle.brandId);
+    return this.brands.find((b) => b._id === this.appointmentDetails.vehicle.brandId);
   }
 
   get model() {
-    return models.find(m => m.id === this.appointmentDetails.vehicle.modelId);
+    return this.models.find((m) => m._id === this.appointmentDetails.vehicle.modelId);
   }
 
   get totalPrice() {
@@ -74,27 +74,32 @@ export class AppointmentSummaryStepComponent {
 
   handleConfirm() {
     this.isSubmitting = true;
+    const scheduleAt = new Date(`${this.appointmentDetails.schedule.date}T${this.appointmentDetails.schedule.time}:00`);
+    const newAppointmentData = {
+      name: this.appointmentDetails.user.name,
+      email: this.appointmentDetails.user.email,
+      phone: this.appointmentDetails.user.phone,
+      carModel: this.appointmentDetails.vehicle.modelId,
+      licensePlate: this.appointmentDetails.vehicle.licensePlate,
+      services: this.appointmentDetails.services.map(service => service._id),
+      scheduleAt,
+      estimateDuration: this.totalDuration,
+      estimatedPrice: this.totalPrice,
+      status: STATUS.PENDING
+    }
 
-    // Simulate API call
-    setTimeout(() => {
-      console.group('Appointment Confirmation');
-      console.log('User Information:', this.appointmentDetails.user);
-      console.log('Vehicle Information:', {
-        brand: this.brand?.name,
-        model: this.model?.name,
-        licensePlate: this.appointmentDetails.vehicle.licensePlate
-      });
-      console.log('Appointment Date:', this.formatDate(this.appointmentDetails.schedule.date));
-      console.log('Appointment Time:', this.appointmentDetails.schedule.time);
-      console.log('Selected Services:', this.appointmentDetails.services);
-      console.log('Total Price:', `$${this.totalPrice.toFixed(2)}`);
-      console.log('Estimated Duration:', `${this.totalDuration} minutes`);
-      console.groupEnd();
-
-      this.isSubmitting = false;
-      this.isSuccess = true;
-      this.onConfirm.emit();
-    }, 1500);
+    this.appointmentService.create(newAppointmentData).subscribe({
+      next: (response) => {
+        this.isSuccess = true;
+        this.onConfirm.emit();
+      },
+      error: (error) => {
+        console.error('Error creating appointment:', error);
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
   }
 
   reloadPage() {

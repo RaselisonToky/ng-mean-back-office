@@ -1,18 +1,9 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import {Component, EventEmitter, Output, OnInit, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Importez FormsModule
-import { Brand, Model, brands, models } from '../../mockData';
-
-interface UserVehicleFormData {
-  name: string;
-  email: string;
-  phone: string;
-  brandId: string;
-  modelId: string;
-  licensePlate: string;
-  appointmentDate: string;
-  appointmentTime: string;
-}
+import { FormsModule } from '@angular/forms';
+import {Brand} from '../../../../../brand/model/brand.model';
+import {Model} from '../../../../../model/model/model.model';
+import {UserVehicleFormData} from '../../mockData';
 
 @Component({
   selector: 'app-user-vehicle-step',
@@ -22,18 +13,18 @@ interface UserVehicleFormData {
 })
 export class UserVehicleStepComponent implements OnInit {
   @Output() onNext = new EventEmitter<UserVehicleFormData>();
-
-  name: string = '';
-  email: string = '';
-  phone: string = '';
+  name: string = 'Toky';
+  email: string = 'toky@gmail.com';
+  phone: string = '0343061615';
   selectedBrandId: string = '';
   selectedModelId: string = '';
-  licensePlate: string = '';
+  licensePlate: string = '789';
   appointmentDate: string = '';
-  appointmentTime: string = '';
+  appointmentTime: string = '10:00';
+
   formErrors: Record<string, string> = {};
-  brands: Brand[] = brands;
-  models: Model[] = models;
+  @Input() brands: Brand[] = [];
+  @Input() models: Model[] = [];
   filteredModels: Model[] = [];
   minDate: string = '';
 
@@ -43,13 +34,12 @@ export class UserVehicleStepComponent implements OnInit {
 
   onBrandChange(brandId: string) {
     this.selectedBrandId = brandId;
-    this.selectedModelId = ''; // Reset model selection
-    this.filteredModels = this.models.filter(model => model.brandId === brandId);
+    this.selectedModelId = '';
+    this.filteredModels = this.models.filter(model => model.brand._id === brandId);
   }
 
   validateForm(): boolean {
     this.formErrors = {};
-
     if (!this.name) this.formErrors['name'] = 'Name is required';
     if (!this.email) this.formErrors['email'] = 'Email is required';
     if (!this.phone) this.formErrors['phone'] = 'Phone number is required';
@@ -64,7 +54,6 @@ export class UserVehicleStepComponent implements OnInit {
 
   handleSubmit(event: Event): void {
     event.preventDefault();
-
     if (this.validateForm()) {
       const formData: UserVehicleFormData = {
         name: this.name,
@@ -74,7 +63,7 @@ export class UserVehicleStepComponent implements OnInit {
         modelId: this.selectedModelId,
         licensePlate: this.licensePlate,
         appointmentDate: this.appointmentDate,
-        appointmentTime: this.appointmentTime
+        appointmentTime: this.appointmentTime,
       };
       this.onNext.emit(formData);
     }

@@ -70,8 +70,8 @@
               [class.error]="formErrors['brandId']"
             >
               <option value="">Sélectionnez une marque</option>
-              @for (brand of brands; track brand.id) {
-                <option [value]="brand.id">{{ brand.name }}</option>
+              @for (brand of brands; track brand._id) {
+                <option [value]="brand._id">{{ brand.name }}</option>
               }
             </select>
             @if (formErrors['brandId']) {
@@ -90,8 +90,8 @@
               [class.error]="formErrors['modelId']"
             >
               <option value="">Sélectionnez un modèle</option>
-              @for (model of filteredModels; track model.id) {
-                <option [value]="model.id">{{ model.name }} ({{ model.releaseYear }})</option>
+              @for (model of filteredModels; track model._id) {
+                <option [value]="model._id">{{ model.name }} ({{ model.releaseYear }})</option>
               }
             </select>
             @if (formErrors['modelId']) {

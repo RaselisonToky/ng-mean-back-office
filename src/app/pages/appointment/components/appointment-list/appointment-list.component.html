@@ -8,8 +8,9 @@
     (rowClick)="onRowClick($event)"
   >
     <ng-template let-item let-i="index">
-      <td>{{ item.user.firstname }}</td>
-      <td>{{ item.user.email }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.phone }}</td>
       <td>{{ item.carModel.brand.name }}</td>
       <td>{{ item.carModel.name }}</td>
       <td>

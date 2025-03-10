@@ -1,21 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { JsonPipe, NgClass, NgStyle } from '@angular/common';
-
-interface Service {
-  id: string;
-  name: string;
-  price: number;
-  estimateDuration: number;
-  categoryId: string;
-}
-
-interface ServiceCategory {
-  id: string;
-  name: string;
-  backgroundColor: string;
-  color: string;
-  borderColor: string;
-}
+import {ServiceService} from '../../../../../service/services/servce.service';
+import {CategoryService} from '../../../../../category/services/category.service';
+import {Category} from '../../../../../category/model/category.model';
+import {Service} from '../../../../../service/model/service.model';
 
 @Component({
   selector: 'app-service-selection-step',
@@ -24,58 +12,104 @@ interface ServiceCategory {
   templateUrl: './service-selection-step.component.html',
   styleUrl: './service-selection-step.component.css',
 })
-export class ServiceSelectionStepComponent {
+export class ServiceSelectionStepComponent implements OnInit {
   @Output() onPrevious = new EventEmitter<void>();
   @Output() onNext = new EventEmitter<Service[]>();
-
+  categories: Category[] = [];
+  services: Service[] = [];
   selectedServiceIds: string[] = [];
-  activeTab: string;
+  activeTab: string = '';
 
-  serviceCategories: ServiceCategory[] = [
-    {
-      id: 'maintenance',
-      name: 'Maintenance',
-      backgroundColor: '#e6f7ff',
-      color: '#0066cc',
-      borderColor: '#99ccff'
-    },
-    {
-      id: 'repair',
-      name: 'Repair',
-      backgroundColor: '#fff3e6',
-      color: '#cc6600',
-      borderColor: '#ffcc99'
-    },
-    {
-      id: 'inspection',
-      name: 'Inspection',
-      backgroundColor: '#e6fff3',
-      color: '#00cc66',
-      borderColor: '#99ffcc'
-    }
-  ];
+  visibleCategories: Category[] = [];
+  currentCategoryPage: number = 0;
+  categoriesPerPage: number = 8;
 
-  services: Service[] = [
-    { id: '1', name: 'Oil Change', price: 49.99, estimateDuration: 30, categoryId: 'maintenance' },
-    { id: '2', name: 'Tire Rotation', price: 29.99, estimateDuration: 20, categoryId: 'maintenance' },
-    { id: '3', name: 'Brake Pad Replacement', price: 149.99, estimateDuration: 60, categoryId: 'repair' },
-    { id: '4', name: 'Battery Replacement', price: 119.99, estimateDuration: 45, categoryId: 'repair' },
-    { id: '5', name: 'Full Inspection', price: 89.99, estimateDuration: 90, categoryId: 'inspection' },
-    { id: '6', name: 'Emissions Test', price: 39.99, estimateDuration: 30, categoryId: 'inspection' }
-  ];
+  isAnimating: boolean = false;
+  slideDirection: 'left' | 'right' | null = null;
 
-  constructor() {
-    this.activeTab = this.serviceCategories[0].id;
+  constructor(
+    private serviceService: ServiceService,
+    private categoryService: CategoryService,
+  ) {}
+
+  ngOnInit() {
+    this.fetchServices();
+    this.fetchCategories();
   }
 
-  // Method to filter services by category
+  fetchServices(){
+    this.serviceService.findAll().subscribe({
+      next: (data) => {
+        this.services = data.data;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des données:', error);
+      }
+    })
+  }
+
+  fetchCategories(){
+    this.categoryService.findAll().subscribe({
+      next: (data) => {
+        this.categories = data.data;
+        if (this.categories.length > 0) {
+          this.activeTab = this.categories[0]._id;
+          this.updateVisibleCategories();
+        }
+      }
+    })
+  }
+
+  updateVisibleCategories(): void {
+    const startIndex = this.currentCategoryPage * this.categoriesPerPage;
+    this.visibleCategories = this.categories.slice(
+      startIndex,
+      startIndex + this.categoriesPerPage
+    );
+  }
+
+  nextCategoryPage(): void {
+    if (this.isAnimating || !this.hasNextPage()) return;
+
+    this.isAnimating = true;
+    this.slideDirection = 'right';
+
+    setTimeout(() => {
+      this.currentCategoryPage++;
+      this.updateVisibleCategories();
+      this.slideDirection = null;
+      this.isAnimating = false;
+    }, 280);
+  }
+
+  previousCategoryPage(): void {
+    if (this.isAnimating || !this.hasPreviousPage()) return;
+
+    this.isAnimating = true;
+    this.slideDirection = 'left';
+
+    setTimeout(() => {
+      this.currentCategoryPage--;
+      this.updateVisibleCategories();
+      this.slideDirection = null;
+      this.isAnimating = false;
+    }, 280);
+  }
+
+  hasNextPage(): boolean {
+    return this.currentCategoryPage < Math.ceil(this.categories.length / this.categoriesPerPage) - 1;
+  }
+
+  hasPreviousPage(): boolean {
+    return this.currentCategoryPage > 0;
+  }
+
   getServicesByCategory(categoryId: string): Service[] {
-    return this.services.filter(service => service.categoryId === categoryId);
+    return this.services.filter(service => service.category._id === categoryId);
   }
 
   toggleService(serviceId: string): void {
     const index = this.selectedServiceIds.indexOf(serviceId);
-
     if (index === -1) {
       this.selectedServiceIds.push(serviceId);
     } else {
@@ -85,11 +119,9 @@ export class ServiceSelectionStepComponent {
 
   handleNext(): void {
     if (this.selectedServiceIds.length === 0) return;
-
     const selectedServicesList = this.services.filter(service =>
-      this.selectedServiceIds.includes(service.id)
+      this.selectedServiceIds.includes(service._id)
     );
-
     this.onNext.emit(selectedServicesList);
   }
 
@@ -99,13 +131,13 @@ export class ServiceSelectionStepComponent {
 
   get totalPrice(): number {
     return this.services
-      .filter(service => this.selectedServiceIds.includes(service.id))
+      .filter(service => this.selectedServiceIds.includes(service._id))
       .reduce((sum, service) => sum + service.price, 0);
   }
 
   get totalDuration(): number {
     return this.services
-      .filter(service => this.selectedServiceIds.includes(service.id))
+      .filter(service => this.selectedServiceIds.includes(service._id))
       .reduce((sum, service) => sum + service.estimateDuration, 0);
   }
 }
