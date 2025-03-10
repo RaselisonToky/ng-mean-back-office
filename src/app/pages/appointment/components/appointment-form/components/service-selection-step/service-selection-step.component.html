@@ -1,6 +1,6 @@
 <div class="step-content">
-  <h2 class="step-title">Select Services</h2>
-  <p class="step-description">Choose the services you need for your vehicle</p>
+  <h2 class="step-title">Sélectionner les services</h2>
+  <p class="step-description">Choisissez les services dont vous avez besoin pour le véhicule.</p>
 
   <div class="service-grid">
     <div class="tabs">
@@ -67,10 +67,10 @@
 
     <div class="service-summary">
       <div class="summary-details">
-        <p class="summary-text">Selected services: {{ selectedServiceIds.length }}</p>
+        <p class="summary-text">Nombre de services sélectionnés: {{ selectedServiceIds.length }}</p>
         <div class="summary-totals">
           <p class="total-price">Total: ${{ totalPrice.toFixed(2) }}</p>
-          <p class="total-duration">Estimated time: {{ totalDuration }} min</p>
+          <p class="total-duration">Durée estimée: {{ totalDuration }} min</p>
         </div>
       </div>
       <div class="summary-actions">
@@ -78,7 +78,7 @@
           (click)="onPrevious.emit()"
           class="button-outline"
         >
-          ← Back
+          ← Retour
         </button>
 
         <button

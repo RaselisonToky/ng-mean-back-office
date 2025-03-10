@@ -40,7 +40,7 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'interv-maintenance', label: 'Mécanicien', href: '/m', icon: Wrench, roles: ['ADMIN'] },
+      { id: 'interv-appointment', label: 'Planifier un rendez-vous', href: '/appointment-form', icon: Wrench, roles: ['ADMIN'] },
     ]
   },
   {
