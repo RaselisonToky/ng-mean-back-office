@@ -10,6 +10,7 @@ import {ModelService} from '../../../model/services/model.service';
 import {Brand} from '../../../brand/model/brand.model';
 import {Model} from '../../../model/model/model.model';
 import {Service} from '../../../service/model/service.model';
+import {AppointmentService} from '../../services/appointment.service';
 
 @Component({
   selector: 'app-appointment-form',

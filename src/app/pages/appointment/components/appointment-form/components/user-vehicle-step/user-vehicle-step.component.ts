@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {Brand} from '../../../../../brand/model/brand.model';
 import {Model} from '../../../../../model/model/model.model';
 import {UserVehicleFormData} from '../../mockData';
+import {AppointmentService} from '../../../../services/appointment.service';
 
 @Component({
   selector: 'app-user-vehicle-step',
@@ -12,6 +13,10 @@ import {UserVehicleFormData} from '../../mockData';
   styleUrl: './user-vehicle-step.component.css'
 })
 export class UserVehicleStepComponent implements OnInit {
+  constructor(
+    private appointmentService: AppointmentService,
+  ) {}
+
   @Output() onNext = new EventEmitter<UserVehicleFormData>();
   name: string = 'Toky';
   email: string = 'toky@gmail.com';
@@ -21,6 +26,7 @@ export class UserVehicleStepComponent implements OnInit {
   licensePlate: string = '789';
   appointmentDate: string = '';
   appointmentTime: string = '10:00';
+  availableTimeSlots : string[] = [];
 
   formErrors: Record<string, string> = {};
   @Input() brands: Brand[] = [];
@@ -30,12 +36,24 @@ export class UserVehicleStepComponent implements OnInit {
 
   ngOnInit(): void {
     this.minDate = new Date().toISOString().split('T')[0];
+    this.fetchAvailableTimeSlots(new Date());
   }
 
   onBrandChange(brandId: string) {
     this.selectedBrandId = brandId;
     this.selectedModelId = '';
     this.filteredModels = this.models.filter(model => model.brand._id === brandId);
+  }
+
+  fetchAvailableTimeSlots(filterDate: Date) {
+    this.appointmentService.getAvailableSlots(filterDate).subscribe({
+      next: (response: any) => {
+        this.availableTimeSlots = response.data;
+      },
+      error: (error) => {
+        console.error("Erreur lors de la récupération des créneaux disponibles :", error);
+      }
+    });
   }
 
   validateForm(): boolean {

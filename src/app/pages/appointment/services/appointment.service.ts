@@ -20,4 +20,8 @@ export class AppointmentService {
     return this.http.post(`${this.baseUrl}/appointment`, appointment);
   }
 
+  getAvailableSlots(filter_date: Date): Observable<any>{
+    return this.http.get(`${this.baseUrl}/appointment/available-time-slots/${filter_date}`);
+  }
+
 }
