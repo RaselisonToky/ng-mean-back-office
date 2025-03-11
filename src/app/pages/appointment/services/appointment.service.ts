@@ -12,8 +12,12 @@ export class AppointmentService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/appointment`);
+  findAll(startDate: Date, endDate: Date): Observable<any> {
+    const body = {
+      startDate,
+      endDate,
+    }
+    return this.http.post(`${this.baseUrl}/appointment/monitoring`,body);
   }
 
   create(appointment: AppointmentDto): Observable<any> {

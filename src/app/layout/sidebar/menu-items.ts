@@ -37,7 +37,7 @@ export const menuItems: MenuItem[] = [
     label: 'CONFIGURATION',
     display: true,
     items: [
-      { id: 'prestation', label: 'Prestation', href: '/service', icon: Car, roles: ['ADMIN'] },
+      { id: 'prestation', label: 'Prestation', href: '/service', icon: Wrench, roles: ['ADMIN'] },
     ]
   }
 ];

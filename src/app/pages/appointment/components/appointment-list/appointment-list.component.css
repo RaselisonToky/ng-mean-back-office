@@ -1,3 +1,4 @@
+/* Existing CSS from your code */
 .service-chip {
   display: inline-block;
   padding: 4px 4px;
@@ -66,4 +67,240 @@
   font-size: 0.875rem;
   background-color: #e0e0e0;
   color: #555;
+}
+
+/* New CSS for filters */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.date-range-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-field label {
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.date-picker {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  color: #475569;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.date-picker:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #1a365d;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: white;
+}
+
+.search-button, .filter-button {
+  padding: 10px 16px;
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover, .filter-button:hover {
+  background-color: #334155;
+}
+
+.filter-panel {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.filter-title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a365d;
+}
+
+.filter-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #334155;
+  cursor: pointer;
+}
+
+.filter-option input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.filter-actions {
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.clear-filters {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #64748b;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-filters:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.active-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background-color: white;
+  border-radius: 8px;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.active-filter-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.active-filter-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  background-color: #f1f5f9;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.page-container {
+  background-color: white;
+  padding: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #1e293b;
+  border-radius: 2px;
+}
+
+.schedule{
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #666;
+  font-size: 12px;
 }
