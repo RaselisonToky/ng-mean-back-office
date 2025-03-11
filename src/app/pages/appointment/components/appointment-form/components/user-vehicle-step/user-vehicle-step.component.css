@@ -37,6 +37,7 @@
   font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 1rem;
+  color: #1e293b;
 }
 
 .form-fields {
@@ -118,8 +119,8 @@
 
 .button-primary {
   padding: 0.75rem 2rem;
-  border-radius: 9999px;
-  background-color: #3b82f6;
+  border-radius: 4px;
+  background-color: #1e293b;
   color: white;
   border: none;
   transition: all 0.2s;
@@ -128,7 +129,7 @@
 }
 
 .button-primary:hover {
-  background-color: #2563eb;
+  background-color: #2c4060;
 }
 
 @keyframes fadeIn {

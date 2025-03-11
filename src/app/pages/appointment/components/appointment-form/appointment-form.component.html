@@ -21,7 +21,7 @@
       (onPrevious)="handlePrevious()"
       (onNext)="handleServicesNext($event)">
     </app-service-selection-step>
-  } @else if (currentStep === 3) {
+  } @else if (currentStep === 3 || currentStep === 4) {
     <app-appointment-summary-step
       [appointmentDetails]="appointmentDetails!"
       [brands]="brands"

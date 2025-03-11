@@ -124,13 +124,6 @@
       <div class="schedule-fields">
         <div class="form-field">
           <label htmlFor="appointmentDate" class="form-label">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8" y1="2" x2="8" y2="6"></line>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
             Date
           </label>
           <input
@@ -138,9 +131,9 @@
             type="date"
             name="appointmentDate"
             [(ngModel)]="appointmentDate"
-            [min]="minDate"
             class="form-input"
             [class.error]="formErrors['appointmentDate']"
+            (change)="onScheduleAppointmentDateChange(appointmentDate)"
           />
           @if (formErrors['appointmentDate']) {
             <p class="error-message">{{ formErrors['appointmentDate'] }}</p>
@@ -149,18 +142,13 @@
 
         <div class="form-field">
           <label htmlFor="appointmentTime" class="form-label">Heure</label>
-          <select
-            id="appointmentTime"
-            name="appointmentTime"
-            [(ngModel)]="appointmentTime"
-            class="form-select"
-            [class.error]="formErrors['appointmentTime']"
-          >
-            <option value="">Sélectionnez une heure</option>
-            <option *ngFor="let slot of availableTimeSlots" [value]="slot">
-              {{ slot }}
-            </option>
-          </select>
+          <app-time-chip-picker
+            [timeSlots]="availableTimeSlots"
+            [(value)]="appointmentTime"
+            [hasError]="!!formErrors['appointmentTime']"
+            [errorMessage]="formErrors['appointmentTime'] || ''"
+            (valueChange)="onTimeChange($event)"
+          ></app-time-chip-picker>
 
           @if (formErrors['appointmentTime']) {
             <p class="error-message">{{ formErrors['appointmentTime'] }}</p>

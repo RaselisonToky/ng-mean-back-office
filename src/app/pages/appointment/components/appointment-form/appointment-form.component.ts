@@ -107,6 +107,7 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   handleConfirm() {
+    this.currentStep = 4;
     console.log('Appointment confirmed!');
   }
 }

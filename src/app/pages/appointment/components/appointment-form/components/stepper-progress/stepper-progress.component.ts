@@ -18,9 +18,9 @@ export class StepperProgressComponent implements OnInit {
   }
 
   getCircleClass(index: number): string {
-    if (index < this.currentStep) {
+    if (index + 1 < this.currentStep) {
       return 'stepper-circle completed';
-    } else if (index === this.currentStep) {
+    } else if (index +1 === this.currentStep) {
       return 'stepper-circle active';
     } else {
       return 'stepper-circle';

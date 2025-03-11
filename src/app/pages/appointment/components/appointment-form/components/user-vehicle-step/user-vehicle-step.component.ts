@@ -5,10 +5,11 @@ import {Brand} from '../../../../../brand/model/brand.model';
 import {Model} from '../../../../../model/model/model.model';
 import {UserVehicleFormData} from '../../mockData';
 import {AppointmentService} from '../../../../services/appointment.service';
+import {TimeChipPickerComponent} from './time-chip-picker/time-chip-picker.component';
 
 @Component({
   selector: 'app-user-vehicle-step',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TimeChipPickerComponent],
   templateUrl: './user-vehicle-step.component.html',
   styleUrl: './user-vehicle-step.component.css'
 })
@@ -32,10 +33,9 @@ export class UserVehicleStepComponent implements OnInit {
   @Input() brands: Brand[] = [];
   @Input() models: Model[] = [];
   filteredModels: Model[] = [];
-  minDate: string = '';
 
   ngOnInit(): void {
-    this.minDate = new Date().toISOString().split('T')[0];
+    this.appointmentDate = new Date().toISOString().split('T')[0];
     this.fetchAvailableTimeSlots(new Date());
   }
 
@@ -43,6 +43,15 @@ export class UserVehicleStepComponent implements OnInit {
     this.selectedBrandId = brandId;
     this.selectedModelId = '';
     this.filteredModels = this.models.filter(model => model.brand._id === brandId);
+  }
+
+  onScheduleAppointmentDateChange(date: string) {
+    const newDate = new Date(date);
+    this.fetchAvailableTimeSlots(newDate);
+  }
+
+  onTimeChange(time: string): void {
+    this.appointmentTime = time;
   }
 
   fetchAvailableTimeSlots(filterDate: Date) {
