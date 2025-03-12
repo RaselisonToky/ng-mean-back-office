@@ -8,15 +8,18 @@ import { AppointmentService } from '../../services/appointment.service';
 import {Category} from '../../../category/model/category.model';
 import {CategoryService} from '../../../category/services/category.service';
 import {Clock, Filter, LucideAngularModule} from 'lucide-angular';
+import {TaskAssignmentComponent} from './components/task-assignement/task-assignment.component';
 
 @Component({
   selector: 'app-appointment-list',
-  imports: [CustomTableComponent, DatePipe, CommonModule, FormsModule, LucideAngularModule],
+  imports: [CustomTableComponent, DatePipe, CommonModule, FormsModule, LucideAngularModule, TaskAssignmentComponent],
   templateUrl: './appointment-list.component.html',
   styleUrls: ['./appointment-list.component.css']
 })
 
 export class AppointmentListComponent implements OnInit {
+
+  showSidebar = false;
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
 
@@ -34,8 +37,17 @@ export class AppointmentListComponent implements OnInit {
   selectedCategories: string[] = [];
   availableCategories: Category[] = [];
   showFilters: boolean = false;
+  selectedAppointment: Appointment | null = null;
 
+  onRowClick(appointment: Appointment): void {
+    this.selectedAppointment = appointment;
+    this.showSidebar = true;
+  }
 
+  onCloseSidebar(): void {
+    this.showSidebar = false;
+    this.selectedAppointment = null;
+  }
 
   constructor(
     private appointmentService: AppointmentService,
@@ -127,10 +139,6 @@ export class AppointmentListComponent implements OnInit {
       this.selectedStatuses.push(status);
     }
     this.applyFilters();
-  }
-
-  onRowClick(item: any): void {
-    console.log('Ligne cliquée:', item);
   }
 
   toggleExpand(index: number): void {

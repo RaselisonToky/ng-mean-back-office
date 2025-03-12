@@ -1,0 +1,71 @@
+<div class="sidebar" [class.visible]="visible">
+  <div class="sidebar-header">
+    <div class="header-content">
+      <h2>Assignation des tâches</h2>
+      <button class="close-button" (click)="onClose()">
+        <lucide-icon [img]="X" size="20"></lucide-icon>
+      </button>
+    </div>
+    <div class="client-info" *ngIf="appointment">
+      <p class="client-name">{{ appointment.name }}</p>
+      <p class="appointment-time">
+        {{ appointment.scheduleAt | date:'d MMM HH:mm' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="services-list">
+    <div *ngFor="let service of appointment?.services" class="service-card">
+      <div class="service-header">
+        <h3>{{ service.name }}</h3>
+        <span class="duration">{{ service.estimateDuration }} min</span>
+      </div>
+
+      <div class="assigned-mechanics">
+        <div *ngFor="let mechanicId of getAssignedMechanics(service._id)" class="mechanic-chip">
+          {{ getMechanicName(mechanicId) }}
+          <button class="remove-mechanic" (click)="removeMechanic(service._id, mechanicId)">
+            <lucide-icon [img]="X" size="14"></lucide-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="mechanics-dropdown-container">
+        <button
+          class="assign-button"
+          (click)="toggleDropdown(service._id)"
+        >
+          <lucide-icon [img]="User" size="16"></lucide-icon>
+          <span>Assigner un mécanicien</span>
+        </button>
+
+        <div class="mechanics-dropdown" *ngIf="activeDropdownServiceId === service._id">
+          <div class="search-box">
+            <lucide-icon [img]="Search" size="16"></lucide-icon>
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              placeholder="Rechercher un mécanicien..."
+              (click)="$event.stopPropagation()"
+            >
+          </div>
+          <div class="mechanics-list">
+            <button
+              *ngFor="let mechanic of getFilteredMechanics()"
+              class="mechanic-option"
+              (click)="assignMechanic(service._id, mechanic.id)"
+              [class.assigned]="getAssignedMechanics(service._id).includes(mechanic.id)"
+            >
+              {{ mechanic.name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="cancel-button" (click)="onClose()">Annuler</button>
+    <button class="save-button" (click)="onSave()">Confirmer</button>
+  </div>
+</div>

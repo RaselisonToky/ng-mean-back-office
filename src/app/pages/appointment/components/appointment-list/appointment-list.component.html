@@ -26,44 +26,6 @@
   </div>
 </div>
 
-<!-- Filter panel -->
-<div class="filter-panel" *ngIf="showFilters">
-  <div class="filter-section">
-    <h4 class="filter-title">Catégories</h4>
-    <div class="filter-options">
-      @for (category of availableCategories; track category) {
-        <label class="filter-option">
-          <input
-            type="checkbox"
-            [checked]="selectedCategories.includes(category.name)"
-            (change)="toggleCategory(category.name)"
-          >
-          <span>{{ category.name }}</span>
-        </label>
-      }
-    </div>
-  </div>
-  <div class="filter-section">
-    <h4 class="filter-title">Status</h4>
-    <div class="filter-options">
-      @for (status of availableStatuses; track status) {
-        <label class="filter-option">
-          <input
-            type="checkbox"
-            [checked]="selectedStatuses.includes(status)"
-            (change)="toggleStatus(status)"
-          >
-          <span>{{ getStatusLabel(status) }}</span>
-        </label>
-      }
-    </div>
-  </div>
-
-  <div class="filter-actions">
-    <button class="clear-filters" (click)="clearFilters()">Effacer les filtres</button>
-  </div>
-</div>
-
 <!-- Active filters display -->
 <div class="active-filters" *ngIf="selectedCategories.length > 0 || selectedStatuses.length > 0">
   <span class="active-filter-label">Filtres actifs:</span>
@@ -89,8 +51,46 @@
     >
     <div>
       <button class="filter-button" (click)="toggleFilters()">
-        <lucide-icon [img]="Filter" size="16" class="icon"></lucide-icon>
+        <lucide-icon [img]="Filter" size="20" class="icon"></lucide-icon>
       </button>
+    </div>
+  </div>
+
+  <!-- Filter panel -->
+  <div class="filter-panel" *ngIf="showFilters">
+    <div class="filter-section">
+      <h4 class="filter-title">Catégories</h4>
+      <div class="filter-options">
+        @for (category of availableCategories; track category) {
+          <label class="filter-option">
+            <input
+              type="checkbox"
+              [checked]="selectedCategories.includes(category.name)"
+              (change)="toggleCategory(category.name)"
+            >
+            <span>{{ category.name }}</span>
+          </label>
+        }
+      </div>
+    </div>
+    <div class="filter-section">
+      <h4 class="filter-title">Status</h4>
+      <div class="filter-options">
+        @for (status of availableStatuses; track status) {
+          <label class="filter-option">
+            <input
+              type="checkbox"
+              [checked]="selectedStatuses.includes(status)"
+              (change)="toggleStatus(status)"
+            >
+            <span>{{ getStatusLabel(status) }}</span>
+          </label>
+        }
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="clear-filters" (click)="clearFilters()">Effacer les filtres</button>
     </div>
   </div>
   <app-custom-table
@@ -153,3 +153,8 @@
     </ng-template>
   </app-custom-table>
 </div>
+<app-task-assignment
+  [appointment]="selectedAppointment"
+  [visible]="showSidebar"
+  (close)="onCloseSidebar()"
+></app-task-assignment>
