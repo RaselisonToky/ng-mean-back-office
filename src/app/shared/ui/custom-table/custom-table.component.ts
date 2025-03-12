@@ -5,6 +5,7 @@ import {Component, ContentChild, TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgClass, NgStyle } from '@angular/common';
+import {isEmpty} from 'rxjs';
 
 @Component({
   selector: 'app-custom-table',
@@ -108,4 +109,6 @@ export class CustomTableComponent implements OnInit, OnChanges, AfterContentInit
 
     return buttons;
   }
+
+  protected readonly isEmpty = isEmpty;
 }

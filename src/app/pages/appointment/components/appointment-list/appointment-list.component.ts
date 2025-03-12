@@ -18,17 +18,19 @@ import {TaskAssignmentComponent} from './components/task-assignement/task-assign
 })
 
 export class AppointmentListComponent implements OnInit {
+  constructor(
+    private appointmentService: AppointmentService,
+    private categoryService: CategoryService,
+  ) {}
 
+  height = '909px';
   showSidebar = false;
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
-
   tableHeaders = ['Client','phone', 'marque', 'model', 'services', 'programmé le', 'durée', 'prix', 'status'];
-
   statusChipColors = STATUS_CHIP_COLORS;
   statusLabelsFr = STATUS_LABELS_FR;
   expandedRows = new Set<number>();
-
   startDate: string = '';
   endDate: string = '';
   searchQuery: string = '';
@@ -48,11 +50,6 @@ export class AppointmentListComponent implements OnInit {
     this.showSidebar = false;
     this.selectedAppointment = null;
   }
-
-  constructor(
-    private appointmentService: AppointmentService,
-    private categoryService: CategoryService,
-  ) {}
 
   ngOnInit() {
     const today = new Date();

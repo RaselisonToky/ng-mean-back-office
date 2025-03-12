@@ -98,6 +98,7 @@
     [data]="filteredAppointments"
     [itemsPerPage]="30"
     (rowClick)="onRowClick($event)"
+    [height]="height"
   >
     <ng-template let-item let-i="index">
       <td>{{ item.name }}</td>

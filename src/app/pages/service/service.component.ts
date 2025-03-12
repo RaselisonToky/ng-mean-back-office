@@ -11,6 +11,7 @@ import {Service} from './model/service.model';
   imports: [CommonModule, CustomTableComponent]
 })
 export class ServiceComponent implements OnInit {
+  height = '785px'
   services: Service[] = [];
   tableHeaders = ['Service','prix', 'categorie','durée (éstimation)']
 
