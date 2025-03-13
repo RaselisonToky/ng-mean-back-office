@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { X, Search, LucideAngularModule } from 'lucide-angular';
+import {Component, effect, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {LucideAngularModule, Search, X} from 'lucide-angular';
 import {Appointment} from '../../../../model/appointment.model';
 import {UserService} from '../../../../../user/services/user.service';
 import {User} from '../../../../../user/model/user.model';
+import {TaskService} from '../../../../../task/services/task.service';
+import {Task, TASK_STATUS, TaskDto} from '../../../../../task/model/task.model';
 
 @Component({
   selector: 'app-task-assignment',
@@ -15,16 +17,19 @@ import {User} from '../../../../../user/model/user.model';
 })
 export class TaskAssignmentComponent implements OnInit {
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private taskService: TaskService
   ) {}
 
   @Input() appointment: Appointment | null = null;
   @Input() visible: boolean = false;
   @Output() close = new EventEmitter<void>();
+  @Output() tasksUpdated = new EventEmitter<any[]>();
   mechanics: User[] = [];
   serviceAssignments: Map<string, string[]> = new Map();
   activeDropdownServiceId: string | null = null;
   searchQuery: string = '';
+  isLoading: boolean = false;
 
   ngOnInit() {
     if (this.appointment) {
@@ -34,15 +39,6 @@ export class TaskAssignmentComponent implements OnInit {
         }
       });
     }
-    this.fetchMechanics().then();
-  }
-
-  async fetchMechanics() {
-    this.userService.getUsersByRole("MECHANIC").subscribe({
-      next: (data) => {
-        this.mechanics = data.data;
-      }
-    });
   }
 
   toggleDropdown(serviceId: string | null) {
@@ -86,8 +82,33 @@ export class TaskAssignmentComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Assignments saved:', Object.fromEntries(this.serviceAssignments));
-    this.close.emit();
+    if (!this.appointment) return;
+
+    this.isLoading = true;
+    const tasksToUpsert: TaskDto[] = [];
+
+    this.appointment.services.forEach(service => {
+      const mechanicIds = this.serviceAssignments.get(service._id) || [];
+      tasksToUpsert.push({
+        appointment: this.appointment?._id? this.appointment._id: '',
+        service: service._id,
+        users: mechanicIds,
+        status: TASK_STATUS.PENDING
+      });
+    });
+
+    this.taskService.upsertMany(tasksToUpsert).subscribe({
+      next: (response) => {
+        console.log('Tâches créées ou mises à jour avec succès:', response);
+        this.tasksUpdated.emit(response.data);
+        this.isLoading = false;
+        this.close.emit();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la création ou mise à jour des tâches:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   onClose() {

@@ -9,6 +9,8 @@ import {Category} from '../../../category/model/category.model';
 import {CategoryService} from '../../../category/services/category.service';
 import {Clock, Filter, LucideAngularModule} from 'lucide-angular';
 import {TaskAssignmentComponent} from './components/task-assignement/task-assignment.component';
+import {TaskService} from '../../../task/services/task.service';
+import {Task} from '../../../task/model/task.model';
 
 @Component({
   selector: 'app-appointment-list',
@@ -21,6 +23,7 @@ export class AppointmentListComponent implements OnInit {
   constructor(
     private appointmentService: AppointmentService,
     private categoryService: CategoryService,
+    private taskService: TaskService
   ) {}
 
   height = '909px';
@@ -42,6 +45,7 @@ export class AppointmentListComponent implements OnInit {
   selectedAppointment: Appointment | null = null;
 
   onRowClick(appointment: Appointment): void {
+    this.fetchTasks(appointment._id!);
     this.selectedAppointment = appointment;
     this.showSidebar = true;
   }
@@ -75,6 +79,14 @@ export class AppointmentListComponent implements OnInit {
         console.error('Erreur lors de la récupération des catégories:', error);
       }
     });
+  }
+
+  fetchTasks(appointmentId: string){
+    this.taskService.getTasksByAppointment(appointmentId).subscribe({
+      next: (data)=>{
+        console.log(data.data)
+    }
+    })
   }
 
   loadAppointment(): void {

@@ -154,8 +154,10 @@
     </ng-template>
   </app-custom-table>
 </div>
-<app-task-assignment
-  [appointment]="selectedAppointment"
-  [visible]="showSidebar"
-  (close)="onCloseSidebar()"
-></app-task-assignment>
+@if (showSidebar){
+  <app-task-assignment
+    [appointment]="selectedAppointment"
+    [visible]="showSidebar"
+    (close)="onCloseSidebar()"
+  ></app-task-assignment>
+}
