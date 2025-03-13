@@ -38,12 +38,13 @@
           <span>Assigner un mécanicien</span>
         </button>
 
-        <div class="mechanics-dropdown" *ngIf="activeDropdownServiceId === service._id">
+        <div class="mechanics-dropdown" *ngIf="activeDropdownServiceId() === service._id">
           <div class="search-box">
             <lucide-icon [img]="Search" size="16"></lucide-icon>
             <input
               type="text"
-              [(ngModel)]="searchQuery"
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event)"
               placeholder="Rechercher un mécanicien..."
               (click)="$event.stopPropagation()"
             >
@@ -65,6 +66,9 @@
 
   <div class="sidebar-footer">
     <button class="cancel-button" (click)="onClose()">Annuler</button>
-    <button class="save-button" (click)="onSave()">Confirmer</button>
+    <button class="save-button" (click)="onSave()" [disabled]="isLoading()">
+      <span *ngIf="isLoading()">Chargement...</span>
+      <span *ngIf="!isLoading()">Confirmer</span>
+    </button>
   </div>
 </div>

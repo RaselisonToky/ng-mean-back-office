@@ -19,6 +19,6 @@ export interface Task {
 export interface TaskDto {
   appointment: string;
   service: string;
-  users: String[];
+  users: string[];
   status: TASK_STATUS;
 }
