@@ -35,7 +35,6 @@
           class="assign-button"
           (click)="toggleDropdown(service._id)"
         >
-          <lucide-icon [img]="User" size="16"></lucide-icon>
           <span>Assigner un mécanicien</span>
         </button>
 
@@ -53,10 +52,10 @@
             <button
               *ngFor="let mechanic of getFilteredMechanics()"
               class="mechanic-option"
-              (click)="assignMechanic(service._id, mechanic.id)"
-              [class.assigned]="getAssignedMechanics(service._id).includes(mechanic.id)"
+              (click)="assignMechanic(service._id, mechanic._id!)"
+              [class.assigned]="getAssignedMechanics(service._id).includes(mechanic._id!)"
             >
-              {{ mechanic.name }}
+              {{ mechanic.firstname }}
             </button>
           </div>
         </div>

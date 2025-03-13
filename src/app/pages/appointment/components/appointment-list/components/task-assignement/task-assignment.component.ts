@@ -1,14 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { X, User, Search, LucideAngularModule } from 'lucide-angular';
+import { X, Search, LucideAngularModule } from 'lucide-angular';
 import {Appointment} from '../../../../model/appointment.model';
-
-interface Mechanic {
-  id: string;
-  name: string;
-  avatar?: string;
-}
+import {UserService} from '../../../../../user/services/user.service';
+import {User} from '../../../../../user/model/user.model';
 
 @Component({
   selector: 'app-task-assignment',
@@ -18,23 +14,17 @@ interface Mechanic {
   styleUrls: ['./task-assignment.component.css']
 })
 export class TaskAssignmentComponent implements OnInit {
+  constructor(
+    private userService: UserService
+  ) {}
+
   @Input() appointment: Appointment | null = null;
   @Input() visible: boolean = false;
   @Output() close = new EventEmitter<void>();
-
-  mechanics: Mechanic[] = [
-    { id: '1', name: 'John Doe' },
-    { id: '2', name: 'Jane Smith' },
-    { id: '3', name: 'Mike Johnson' },
-    { id: '4', name: 'Sarah Williams' },
-  ];
-
+  mechanics: User[] = [];
   serviceAssignments: Map<string, string[]> = new Map();
   activeDropdownServiceId: string | null = null;
   searchQuery: string = '';
-  showDropdown: boolean = false;
-
-  constructor() {}
 
   ngOnInit() {
     if (this.appointment) {
@@ -44,6 +34,15 @@ export class TaskAssignmentComponent implements OnInit {
         }
       });
     }
+    this.fetchMechanics().then();
+  }
+
+  async fetchMechanics() {
+    this.userService.getUsersByRole("MECHANIC").subscribe({
+      next: (data) => {
+        this.mechanics = data.data;
+      }
+    });
   }
 
   toggleDropdown(serviceId: string | null) {
@@ -73,21 +72,20 @@ export class TaskAssignmentComponent implements OnInit {
   }
 
   getMechanicName(mechanicId: string): string {
-    return this.mechanics.find(m => m.id === mechanicId)?.name || '';
+    return this.mechanics.find(m => m._id === mechanicId)?.firstname || '';
   }
 
   getAssignedMechanics(serviceId: string): string[] {
     return this.serviceAssignments.get(serviceId) || [];
   }
 
-  getFilteredMechanics(): Mechanic[] {
+  getFilteredMechanics(): User[] {
     return this.mechanics.filter(mechanic =>
-      mechanic.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      mechanic.firstname.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
 
   onSave() {
-    // TODO: Implement save logic
     console.log('Assignments saved:', Object.fromEntries(this.serviceAssignments));
     this.close.emit();
   }
@@ -97,6 +95,5 @@ export class TaskAssignmentComponent implements OnInit {
   }
 
   protected readonly X = X;
-  protected readonly User = User;
   protected readonly Search = Search;
 }
