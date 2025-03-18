@@ -5,7 +5,7 @@ import {
   Grid2x2,
   Truck,
   Newspaper,
-  RotateCcw
+  RotateCcw,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -67,6 +67,21 @@ export const menuItems: MenuItem[] = [
         href: '/service',
         icon: Wrench,
         roles: ['ADMIN'],
+      },
+    ],
+  },
+  {
+    id: 'monitoring',
+    label: 'MONITORING',
+    display: true,
+    roles: ['ADMIN'],
+    items: [
+      {
+        id: 'task',
+        label: 'Mes tâches',
+        href: '/task',
+        icon: Grid2x2,
+        roles: ['MECHANIC'],
       },
     ],
   },

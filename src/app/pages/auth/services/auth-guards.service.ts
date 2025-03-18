@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
+    this.authService.getToken();
     if (isPlatformBrowser(this.platformId)) {
       const requiredRoles: string[] = route.data['roles'] || [];
       if (requiredRoles.length === 0) return true;
@@ -27,12 +28,19 @@ export class AuthGuard implements CanActivate {
 
       const hasRole = requiredRoles.some(role => userRoles.includes(role));
       if (!hasRole) {
-        this.router.navigate(['/login']).then();
+        if (userRoles.includes('MECHANIC')) {
+          this.router.navigate(['/task']).then();
+        } else {
+          this.router.navigate(['/login']).then();
+        }
         return false;
       }
+
+
       return true;
     } else {
       return true;
     }
   }
+
 }
