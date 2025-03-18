@@ -1,1 +1,17 @@
-<p>transactions works!</p>
+<div class="page-container">
+    <div class="title">Transaction</div>
+
+    <app-custom-table [headers]="tableHeaders" [data]="transactions" [itemsPerPage]="30" >
+        <ng-template let-item>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.estimateDuration }}</td>
+            <td>
+                <span class="category-chip" [style.backgroundColor]="item.category.backgroundColor"
+                    [style.borderColor]="item.category.borderColor" [style.color]="item.category.color">
+                    {{ item.category.name }}
+                </span>
+            </td>
+        </ng-template>
+    </app-custom-table>
+</div>

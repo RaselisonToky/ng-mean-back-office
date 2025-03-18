@@ -22,7 +22,7 @@ export const routes: Routes = [
       { path: 'maintenance', component: SettingsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'service', component: ServiceComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'inventory/transactions', component: TransactionsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
-      { path: 'inventory/deliveries', component: TransactionsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
+      { path: 'inventory/deliveries', component: DeliveryComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }

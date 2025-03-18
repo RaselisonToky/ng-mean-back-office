@@ -1,26 +1,30 @@
+@import "tailwindcss";
+
 * {
-  font-family: "Inter",Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 14px;
 }
 
-body{
+body {
   margin: 0;
 }
 
 @font-face {
-  font-family: 'FlowCircular';
-  src: url('./assets/fonts/FlowCircular-Regular.ttf') format('truetype');
+  font-family: "FlowCircular";
+  src: url("./assets/fonts/FlowCircular-Regular.ttf") format("truetype");
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf")
+    format("truetype");
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-family: "Roboto";
+  src: url("./assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf")
+    format("truetype");
   font-style: normal;
 }

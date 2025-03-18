@@ -85,7 +85,7 @@ export const menuItems: MenuItem[] = [
       {
         id: 'delivery',
         label: 'Livraison',
-        href: '#',
+        href: '/inventory/deliveries',
         icon: Truck,
         roles: ['ADMIN'],
       },
