@@ -4,8 +4,9 @@ import {
   Bookmark,
   Grid2x2,
   Truck,
-  Newspaper,
   RotateCcw,
+  CircuitBoard,
+  ClipboardList,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -108,7 +109,14 @@ export const menuItems: MenuItem[] = [
         id: 'supplierOrder',
         label: 'Commande fournisseur',
         href: '#',
-        icon: Newspaper,
+        icon: ClipboardList,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'piece',
+        label: 'Pièces détachée',
+        href: '/inventory/pieces',
+        icon: CircuitBoard,
         roles: ['ADMIN'],
       },
     ],
