@@ -1,11 +1,11 @@
 import {
   Clock,
   Wrench,
-  Package,
   Bookmark,
   Grid2x2,
   Truck,
   Newspaper,
+  RotateCcw
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -76,7 +76,14 @@ export const menuItems: MenuItem[] = [
     display: true,
     items: [
       {
-        id: 'Delivery',
+        id: 'transaction',
+        label: 'Transaction',
+        href: '#',
+        icon: RotateCcw,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'delivery',
         label: 'Livraison',
         href: '#',
         icon: Truck,
