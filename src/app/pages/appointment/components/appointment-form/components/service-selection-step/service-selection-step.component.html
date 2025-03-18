@@ -1,0 +1,125 @@
+<div class="step-content">
+  <h2 class="step-title">Sélectionner les services</h2>
+  <p class="step-description">Choisissez les services dont vous avez besoin pour le véhicule.</p>
+
+  <div class="service-grid">
+    <div class="tabs">
+      <div class="scroll-button">
+        <div>
+          @if (hasPreviousPage()) {
+            <button
+              (click)="previousCategoryPage()"
+              class="tab-scroll-btn left-scroll"
+              [disabled]="isAnimating"
+              aria-label="Catégories précédentes"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          }
+        </div>
+        <div>
+          @if (hasNextPage()) {
+            <button
+              (click)="nextCategoryPage()"
+              class="tab-scroll-btn right-scroll"
+              [disabled]="isAnimating"
+              aria-label="Catégories suivantes"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+      <div class="tabs-list">
+        <div class="tabs-wrapper" [ngClass]="{'slide-right': slideDirection === 'right', 'slide-left': slideDirection === 'left'}">
+          @for (category of visibleCategories; track category._id) {
+            <button
+              [ngClass]="{'active': activeTab === category._id}"
+              [ngStyle]="{
+                'background-color': activeTab === category._id ? category.backgroundColor : '',
+                'color': activeTab === category._id ? category.color : '',
+                'border-color': activeTab === category._id ? category.borderColor : ''
+              }"
+              (click)="activeTab = category._id"
+              class="tab-trigger"
+            >
+              {{ category.name }}
+            </button>
+          }
+        </div>
+      </div>
+      @for (category of categories; track category._id) {
+        <div [ngClass]="{'active': activeTab === category._id}" class="tab-content">
+          <div class="services-grid">
+            @for (service of getServicesByCategory(category._id); track service._id) {
+              <div
+                (click)="toggleService(service._id)"
+                [ngClass]="{'selected': isServiceSelected(service._id)}"
+                [ngStyle]="{
+                  'background-color': isServiceSelected(service._id) ? category.backgroundColor : '',
+                  'border-color': isServiceSelected(service._id) ? category.borderColor : ''
+                }"
+                class="service-card"
+              >
+                <div class="service-info">
+                  <h3 class="service-name">{{ service.name }}</h3>
+                  <div class="service-details">
+                    <span class="service-price">${{ service.price.toFixed(2) }}</span>
+                    <span class="service-duration">~ {{ service.estimateDuration }} min</span>
+                  </div>
+                </div>
+                @if (isServiceSelected(service._id)) {
+                  <svg
+                    class="check-icon"
+                    [ngStyle]="{'color': category.color}"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="service-summary">
+      <div class="summary-details">
+        <p class="summary-text">Nombre de services sélectionnés: {{ selectedServiceIds.length }}</p>
+        <div class="summary-totals">
+          <p class="total-price">Total: ${{ totalPrice.toFixed(2) }}</p>
+          <p class="total-duration">Durée estimée: {{ totalDuration }} min</p>
+        </div>
+      </div>
+      <div class="summary-actions">
+        <button
+          (click)="onPrevious.emit()"
+          class="button-outline"
+        >
+          ← Retour
+        </button>
+
+        <button
+          (click)="handleNext()"
+          [disabled]="selectedServiceIds.length === 0"
+          class="button-primary"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

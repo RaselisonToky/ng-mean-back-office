@@ -12,6 +12,5 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideClientHydration(withEventReplay())
   ]
 };

@@ -9,9 +9,16 @@ import {
   Settings,
   Clock,
   House,
-  Hotel, Caravan, Settings2, PenTool, Wrench, ScrollText,
-  Package
-
+  Hotel,
+  Caravan,
+  Settings2,
+  PenTool,
+  Wrench,
+  ScrollText,
+  Package,
+  Bookmark,
+  Car,
+  Grid2x2,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -31,10 +38,21 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'dashboard', label: 'Tableau de bord', href: '/garage', icon: Home, roles: ['ADMIN'] },
-      { id: 'maintenance', label: 'Maintenance', href: '/maintenance', icon: Wrench, roles: ['ADMIN'] },
-      { id: 'appointment', label: 'Rendez-vous', href: '/appointment', icon: Clock, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'dashboard',
+        label: 'Tableau de bord',
+        href: '/garage',
+        icon: Grid2x2,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'appointment',
+        label: 'Rendez-vous',
+        href: '/appointment',
+        icon: Bookmark,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'intervention',
@@ -42,24 +60,48 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'interv-maintenance', label: 'Mécanicien', href: '/m', icon: Wrench, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'interv-appointment',
+        label: 'Planifier un rendez-vous',
+        href: '/appointment-form',
+        icon: Clock,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'settings',
     label: 'CONFIGURATION',
     display: true,
     items: [
-      { id: 'prestation', label: 'Prestation', href: '/service', icon: ScrollText, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'prestation',
+        label: 'Prestation',
+        href: '/service',
+        icon: Wrench,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'inventory',
     label: 'MATERIEL',
     display: true,
     items: [
-      { id: 'piece', label: 'Piece Detachée', href: '#', icon: Settings, roles: ['ADMIN'] },
-      { id: 'commande', label: 'Commande', href: '#', icon: Package, roles: ['ADMIN'] },
-    ]
-  }
+      {
+        id: 'piece',
+        label: 'Piece Detachée',
+        href: '#',
+        icon: Settings,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'commande',
+        label: 'Commande',
+        href: '#',
+        icon: Package,
+        roles: ['ADMIN'],
+      },
+    ],
+  },
 ];

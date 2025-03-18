@@ -1,13 +1,9 @@
+import {Category} from '../../category/model/category.model';
+
 export interface Service {
+  _id: string;
   name: string;
-  category: Category;
   price: number;
   estimateDuration: number;
-}
-
-export interface Category {
-  name: string;
-  backgroundColor?: string;
-  borderColor?:string;
-  color?: string;
+  category: Category;
 }

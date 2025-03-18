@@ -1,0 +1,35 @@
+<div class="time-chip-container">
+  <div class="time-chip-wrapper">
+    <button
+      type="button"
+      class="selected-time"
+      (click)="toggleDropdown()"
+      [attr.aria-expanded]="isOpen"
+      [class.error]="hasError"
+    >
+      <span>{{ value || 'Sélectionnez une heure' }}</span>
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+    <div class="overlay" *ngIf="isOpen" (click)="toggleDropdown()"></div>
+    <div class="time-chips-dropdown" *ngIf="isOpen">
+      <div class="modal-title">
+        Choisissez l'heure du rendez-vous
+      </div>
+      <div class="time-chips-grid">
+        <button
+          type="button"
+          class="time-chip"
+          *ngFor="let time of timeSlots"
+          [class.selected]="time === value"
+          (click)="selectTime(time)"
+        >
+          {{ time }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <p class="error-message" *ngIf="hasError">{{ errorMessage }}</p>
+</div>

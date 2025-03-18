@@ -5,6 +5,7 @@ export interface User {
   username: string;
   email: string;
   password?: string;
+  hiringDate?: Date;
   roles: Role[];
 }
 

@@ -1,0 +1,33 @@
+<div class="main-container">
+  <div class="app-header">
+    <div class="app-tag">Prise de rendez-vous</div>
+<!--    <h1 class="app-title">Planifiez un entretien automobile</h1>-->
+<!--    <p class="app-description">-->
+<!--      Prenez rendez-vous facilement pour l'entretien de votre véhicule grâce à notre système intuitif -->
+<!--    </p>-->
+  </div>
+  <div class="stepper">
+    <app-stepper-progress [currentStep]="currentStep" [totalSteps]="totalSteps"></app-stepper-progress>
+  </div>
+  @if (currentStep === 1) {
+    <app-user-vehicle-step
+      (onNext)="handleNext($event)"
+      [brands]="brands"
+      [models]="models"
+    >
+    </app-user-vehicle-step>
+  } @else if (currentStep === 2) {
+    <app-service-selection-step
+      (onPrevious)="handlePrevious()"
+      (onNext)="handleServicesNext($event)">
+    </app-service-selection-step>
+  } @else if (currentStep === 3 || currentStep === 4) {
+    <app-appointment-summary-step
+      [appointmentDetails]="appointmentDetails!"
+      [brands]="brands"
+      [models]="models"
+      (onPrevious)="handlePrevious()"
+      (onConfirm)="handleConfirm()">
+    </app-appointment-summary-step>
+  }
+</div>

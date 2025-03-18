@@ -1,0 +1,166 @@
+<div class="step-content">
+  <h2 class="step-title">Informations</h2>
+  <p class="step-description">Veuillez renseigner les coordonnées et les informations du véhicule</p>
+
+  <form (ngSubmit)="handleSubmit($event)">
+    <div class="form-grid">
+      <div class="form-card">
+        <h3 class="form-section-title">Informations personnelles</h3>
+
+        <div class="form-fields">
+          <div class="form-field">
+            <label htmlFor="name" class="form-label">Nom complet</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              [(ngModel)]="name"
+              class="form-input"
+              [class.error]="formErrors['name']"
+            />
+            @if (formErrors['name']) {
+              <p class="error-message">{{ formErrors['name'] }}</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label htmlFor="email" class="form-label">Adresse e-mail</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              class="form-input"
+              [class.error]="formErrors['email']"
+            />
+            @if (formErrors['email']) {
+              <p class="error-message">{{ formErrors['email'] }}</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label htmlFor="phone" class="form-label">Numéro de téléphone</label>
+            <input
+              id="phone"
+              type="text"
+              name="phone"
+              [(ngModel)]="phone"
+              class="form-input"
+              [class.error]="formErrors['phone']"
+            />
+            @if (formErrors['phone']) {
+              <p class="error-message">{{ formErrors['phone'] }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3 class="form-section-title">Informations sur le véhicule</h3>
+
+        <div class="form-fields">
+          <div class="form-field">
+            <label htmlFor="brand" class="form-label">Marque du véhicule</label>
+            <select
+              id="brand"
+              name="brand"
+              [(ngModel)]="selectedBrandId"
+              (ngModelChange)="onBrandChange($event)"
+              class="form-select"
+              [class.error]="formErrors['brandId']"
+            >
+              <option value="">Sélectionnez une marque</option>
+              @for (brand of brands; track brand._id) {
+                <option [value]="brand._id">{{ brand.name }}</option>
+              }
+            </select>
+            @if (formErrors['brandId']) {
+              <p class="error-message">{{ formErrors['brandId'] }}</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label htmlFor="model" class="form-label">Modèle du véhicule</label>
+            <select
+              id="model"
+              name="model"
+              [(ngModel)]="selectedModelId"
+              class="form-select"
+              [disabled]="!selectedBrandId"
+              [class.error]="formErrors['modelId']"
+            >
+              <option value="">Sélectionnez un modèle</option>
+              @for (model of filteredModels; track model._id) {
+                <option [value]="model._id">{{ model.name }} ({{ model.releaseYear }})</option>
+              }
+            </select>
+            @if (formErrors['modelId']) {
+              <p class="error-message">{{ formErrors['modelId'] }}</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label htmlFor="licensePlate" class="form-label">Plaque d'immatriculation</label>
+            <input
+              id="licensePlate"
+              type="text"
+              name="licensePlate"
+              [(ngModel)]="licensePlate"
+              (ngModelChange)="licensePlate = $event.toUpperCase()"
+              class="form-input"
+              [class.error]="formErrors['licensePlate']"
+            />
+            @if (formErrors['licensePlate']) {
+              <p class="error-message">{{ formErrors['licensePlate'] }}</p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card appointment-card">
+      <h3 class="form-section-title">Planification du rendez-vous</h3>
+
+      <div class="schedule-fields">
+        <div class="form-field">
+          <label htmlFor="appointmentDate" class="form-label">
+            Date
+          </label>
+          <input
+            id="appointmentDate"
+            type="date"
+            name="appointmentDate"
+            [(ngModel)]="appointmentDate"
+            class="form-input"
+            [class.error]="formErrors['appointmentDate']"
+            (change)="onScheduleAppointmentDateChange(appointmentDate)"
+          />
+          @if (formErrors['appointmentDate']) {
+            <p class="error-message">{{ formErrors['appointmentDate'] }}</p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label htmlFor="appointmentTime" class="form-label">Heure</label>
+          <app-time-chip-picker
+            [timeSlots]="availableTimeSlots"
+            [(value)]="appointmentTime"
+            [hasError]="!!formErrors['appointmentTime']"
+            [errorMessage]="formErrors['appointmentTime'] || ''"
+            (valueChange)="onTimeChange($event)"
+          ></app-time-chip-picker>
+
+          @if (formErrors['appointmentTime']) {
+            <p class="error-message">{{ formErrors['appointmentTime'] }}</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="button-primary">
+        Continuer
+      </button>
+    </div>
+  </form>
+</div>

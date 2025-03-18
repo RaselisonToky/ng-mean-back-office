@@ -8,10 +8,10 @@ import {Service} from './model/service.model';
   selector: 'app-service-page',
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.css'],
-  standalone: true,
   imports: [CommonModule, CustomTableComponent]
 })
 export class ServiceComponent implements OnInit {
+  height = '785px'
   services: Service[] = [];
   tableHeaders = ['Service','prix', 'categorie','durée (éstimation)']
 
