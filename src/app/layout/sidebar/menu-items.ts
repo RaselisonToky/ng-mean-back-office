@@ -1,24 +1,10 @@
 import {
-  LucideAngularModule,
-  File,
-  Home,
-  Menu,
-  UserCheck,
-  User,
-  Lock,
-  Settings,
   Clock,
-  House,
-  Hotel,
-  Caravan,
-  Settings2,
-  PenTool,
   Wrench,
-  ScrollText,
   Package,
   Bookmark,
-  Car,
   Grid2x2,
+  Truck,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -85,19 +71,19 @@ export const menuItems: MenuItem[] = [
   },
   {
     id: 'inventory',
-    label: 'MATERIEL',
+    label: 'STOCK & MATERIEL',
     display: true,
     items: [
       {
-        id: 'piece',
-        label: 'Piece Detachée',
+        id: 'Delivery',
+        label: 'Livraison',
         href: '#',
-        icon: Settings,
+        icon: Truck,
         roles: ['ADMIN'],
       },
       {
-        id: 'commande',
-        label: 'Commande',
+        id: 'supplierOrder',
+        label: 'Commande fournisseur',
         href: '#',
         icon: Package,
         roles: ['ADMIN'],
