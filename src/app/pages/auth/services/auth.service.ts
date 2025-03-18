@@ -81,7 +81,7 @@ export class AuthService {
       window.location.reload();
     }
   }
-
+  
   getRoles(): string[] | null {
     if (this.isBrowser) {
       const rolesString = localStorage.getItem('roles');
