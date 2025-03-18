@@ -1,1 +1,23 @@
-<p>pieces works!</p>
+<div class="page-container">
+  <div class="text-5xl font-bold">Piece</div>
+
+  <app-custom-table
+    [headers]="tableHeaders"
+    [data]="pieces"
+    [itemsPerPage]="30"
+  >
+    <ng-template let-item>
+      <td>{{ item.name }}</td>
+      <td>{{ item.reference }}</td>
+      <td>
+        {{ item.unit_price }}
+      </td>
+      <td>
+        {{ item.stock_quantity }}
+      </td>
+      <td>
+        {{ item.alert_threshold }}
+      </td>
+    </ng-template>
+  </app-custom-table>
+</div>

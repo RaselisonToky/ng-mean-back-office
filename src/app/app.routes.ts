@@ -12,6 +12,7 @@ import { ServiceComponent } from './pages/service/service.component';
 import { AppointmentComponent } from './pages/appointment/appointment.component';
 import { AppointmentFormComponent } from './pages/appointment/components/appointment-form/appointment-form.component';
 import { TaskComponent } from './pages/task/task.component';
+import { PiecesComponent } from './pages/inventory/pieces/pieces.component';
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -65,6 +66,12 @@ export const routes: Routes = [
       {
         path: 'inventory/deliveries',
         component: DeliveryComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'inventory/pieces',
+        component: PiecesComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ADMIN'] },
       },
