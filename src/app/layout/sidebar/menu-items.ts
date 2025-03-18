@@ -5,6 +5,7 @@ import {
   Bookmark,
   Grid2x2,
   Truck,
+  Newspaper,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -85,7 +86,7 @@ export const menuItems: MenuItem[] = [
         id: 'supplierOrder',
         label: 'Commande fournisseur',
         href: '#',
-        icon: Package,
+        icon: Newspaper,
         roles: ['ADMIN'],
       },
     ],
