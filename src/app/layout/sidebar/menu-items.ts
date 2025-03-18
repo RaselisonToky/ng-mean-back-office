@@ -78,7 +78,7 @@ export const menuItems: MenuItem[] = [
       {
         id: 'transaction',
         label: 'Transaction',
-        href: '#',
+        href: '/inventory/transactions',
         icon: RotateCcw,
         roles: ['ADMIN'],
       },

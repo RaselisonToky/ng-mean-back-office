@@ -7,7 +7,7 @@ import {AuthGuard} from './pages/auth/services/auth-guards.service';
 import {ServiceComponent} from './pages/service/service.component';
 import {AppointmentComponent} from './pages/appointment/appointment.component';
 import {AppointmentFormComponent} from './pages/appointment/components/appointment-form/appointment-form.component';
-
+import { TransactionsComponent } from './pages/iventory/transactions/transactions.component';
 export const routes: Routes = [
   {path: 'login', component: AuthComponent},
   {
@@ -20,7 +20,7 @@ export const routes: Routes = [
       { path: 'garage', component: SettingsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'maintenance', component: SettingsComponent, canActivate: [AuthGuard], data: { roles: ['ADMIN'] } },
       { path: 'service', component: ServiceComponent,  canActivate: [AuthGuard], data: { roles: ['ADMIN'] }},
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+      {path:'inventory/transactions',component:TransactionsComponent, canActivate:[AuthGuard], data:{roles:['ADMIN']}},      { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ]
   }
 ];
