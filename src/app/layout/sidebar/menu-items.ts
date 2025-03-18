@@ -1,5 +1,5 @@
 import {
-  Clock, Wrench, Bookmark, Car, Grid2x2
+  Clock, Wrench, Bookmark, Car, Grid2x2, Settings, Package
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -48,5 +48,26 @@ export const menuItems: MenuItem[] = [
     items: [
       { id: 'task', label: 'Mes tâches', href: '/task', icon: Grid2x2, roles: ['MECHANIC'] },
     ]
+  },
+  {
+    id: 'inventory',
+    label: 'MATERIEL',
+    display: true,
+    items: [
+      {
+        id: 'piece',
+        label: 'Piece Detachée',
+        href: '#',
+        icon: Settings,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'commande',
+        label: 'Commande',
+        href: '#',
+        icon: Package,
+        roles: ['ADMIN'],
+      },
+    ],
   },
 ];
