@@ -4,6 +4,8 @@ import {User} from '../../user/model/user.model';
 
 export enum TASK_STATUS {
   PENDING= 'PENDING',
+  IN_PROGRESS= 'IN_PROGRESS',
+  IN_REVIEW= 'IN_REVIEW',
   COMPLETED= 'COMPLETED',
   PAUSED= 'PAUSED',
 }

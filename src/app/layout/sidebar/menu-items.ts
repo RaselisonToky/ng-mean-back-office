@@ -39,5 +39,14 @@ export const menuItems: MenuItem[] = [
     items: [
       { id: 'prestation', label: 'Prestation', href: '/service', icon: Wrench, roles: ['ADMIN'] },
     ]
-  }
+  },
+  {
+    id: 'monitoring',
+    label: 'MONITORING',
+    display: true,
+    roles: ['ADMIN'],
+    items: [
+      { id: 'task', label: 'Mes tâches', href: '/task', icon: Grid2x2, roles: ['MECHANIC'] },
+    ]
+  },
 ];

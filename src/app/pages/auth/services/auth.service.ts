@@ -89,4 +89,19 @@ export class AuthService {
     }
     return null;
   }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken: JwtPayload = jwtDecode(token);
+        return decodedToken['userId'];
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
+    }
+    return null;
+  }
+
 }

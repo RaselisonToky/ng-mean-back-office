@@ -23,16 +23,11 @@ export class TaskService {
       );
   }
 
-
   getTasksByAppointment(appointmentId: string): Observable<{data: TaskDto[]}> {
-    return this.http.get<{data: TaskDto[]}>(`${this.baseUrl}/tasks/${appointmentId}`)
-      .pipe(
-        map(response => response),
-        shareReplay(1),
-        catchError(error => {
-          console.error('Erreur lors de la récupération des tâches:', error);
-          throw error;
-        })
-      );
+    return this.http.get<{data: TaskDto[]}>(`${this.baseUrl}/tasks/${appointmentId}`);
+  }
+
+  findTaskByUserId(userId: string): Observable<{data: Task[]}> {
+    return this.http.get<{data: Task[]}>(`${this.baseUrl}/tasks/task/${userId}`);
   }
 }

@@ -1,1 +1,160 @@
-<p>task works!</p>
+<div class="title">Tâches</div>
+<div class="controls">
+  <div class="date-range-container">
+    <div class="date-field">
+      <label for="startDate">De:</label>
+      <input
+        id="startDate"
+        type="date"
+        class="date-picker"
+        [(ngModel)]="startDate"
+      >
+    </div>
+    <div class="date-field">
+      <label for="endDate">À:</label>
+      <input
+        id="endDate"
+        type="date"
+        class="date-picker"
+        [(ngModel)]="endDate"
+      >
+    </div>
+    <div>
+      <label style="color: white">De:</label>
+      <button class="search-button" (click)="onSearch()">Rechercher</button>
+    </div>
+  </div>
+</div>
+<div class="kanban-board">
+  <div class="kanban-column">
+    <h2>À FAIRE <span class="task-count">{{ todoTasks.length }}</span></h2>
+    <div class="task-list"
+         id="todo"
+         cdkDropList
+         [cdkDropListData]="todoTasks"
+         [cdkDropListConnectedTo]="['inProgress']"
+         (cdkDropListDropped)="drop($event)">
+      @for (task of todoTasks; track task._id) {
+        <div class="task-card" cdkDrag>
+          <div class="task-info">
+            <div class="service-name">{{ task.service.name }}</div>
+            <div class="appointment-time">
+              <strong>Rendez-vous:</strong> {{ task.appointment.scheduleAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="task-details">
+              <strong>Véhicule:</strong> {{ task.appointment.carModel.brand.name }}  {{ task.appointment.carModel.name }}
+            </div>
+            <div class="task-details">
+              <strong>Matricule:</strong> {{ task.appointment.licensePlate}}
+            </div>
+            <div class="users-list">
+              <strong>Équipe:</strong>
+              @for (user of task.users; track user._id) {
+                <span class="user-chip">{{ user.firstname }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="kanban-column">
+    <h2>EN COURS <span class="task-count">{{ inProgressTasks.length }}</span></h2>
+    <div class="task-list"
+         id="inProgress"
+         cdkDropList
+         [cdkDropListData]="inProgressTasks"
+         [cdkDropListConnectedTo]="['todo', 'inReview']"
+         (cdkDropListDropped)="drop($event)">
+      @for (task of inProgressTasks; track task._id) {
+        <div class="task-card" cdkDrag>
+          <div class="task-info">
+            <div class="service-name">{{ task.service.name }}</div>
+            <div class="appointment-time">
+              <strong>Rendez-vous:</strong> {{ task.appointment.scheduleAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="task-details">
+              <strong>Véhicule:</strong> {{ task.appointment.carModel.brand.name }}  {{ task.appointment.carModel.name }}
+            </div>
+            <div class="task-details">
+              <strong>Matricule:</strong> {{ task.appointment.licensePlate}}
+            </div>
+            <div class="users-list">
+              <strong>Équipe:</strong>
+              @for (user of task.users; track user._id) {
+                <span class="user-chip">{{ user.firstname }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="kanban-column">
+    <h2>EN ATTENTE D'APPROBATION <span class="task-count">{{ inReviewTasks.length }}</span></h2>
+    <div class="task-list"
+         id="inReview"
+         cdkDropList
+         [cdkDropListData]="inReviewTasks"
+         [cdkDropListConnectedTo]="['inProgress', 'completed']"
+         (cdkDropListDropped)="drop($event)">
+      @for (task of inReviewTasks; track task._id) {
+        <div class="task-card" cdkDrag>
+          <div class="task-info">
+            <div class="service-name">{{ task.service.name }}</div>
+            <div class="appointment-time">
+              <strong>Rendez-vous:</strong> {{ task.appointment.scheduleAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="task-details">
+              <strong>Véhicule:</strong> {{ task.appointment.carModel.brand.name }}  {{ task.appointment.carModel.name }}
+            </div>
+            <div class="task-details">
+              <strong>Matricule:</strong> {{ task.appointment.licensePlate}}
+            </div>
+            <div class="users-list">
+              <strong>Équipe:</strong>
+              @for (user of task.users; track user._id) {
+                <span class="user-chip">{{ user.firstname }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="kanban-column">
+    <h2>TERMINÉ <span class="task-count">{{ completedTasks.length }}</span></h2>
+    <div class="task-list"
+         id="completed"
+         cdkDropList
+         [cdkDropListData]="completedTasks"
+         [cdkDropListConnectedTo]="['inReview']"
+         (cdkDropListDropped)="drop($event)">
+      @for (task of completedTasks; track task._id) {
+        <div class="task-card" cdkDrag>
+          <div class="task-info">
+            <div class="service-name">{{ task.service.name }}</div>
+            <div class="appointment-time">
+              <strong>Rendez-vous:</strong> {{ task.appointment.scheduleAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="task-details">
+              <strong>Véhicule:</strong> {{ task.appointment.carModel.brand.name }}  {{ task.appointment.carModel.name }}
+            </div>
+            <div class="task-details">
+              <strong>Matricule:</strong> {{ task.appointment.licensePlate}}
+            </div>
+            <div class="users-list">
+              <strong>Équipe:</strong>
+              @for (user of task.users; track user._id) {
+                <span class="user-chip">{{ user.firstname }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
