@@ -72,7 +72,7 @@ export class TaskComponent implements OnInit {
 
       const task = event.container.data[event.currentIndex];
       task.status = newStatus;
-      // this.taskService.updateTaskStatus(task._id!, newStatus).subscribe();
+      this.taskService.updateTaskStatus(task._id!, newStatus).subscribe();
     }
   }
 

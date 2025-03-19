@@ -6,32 +6,32 @@ export const STATUS_CHIP_COLORS: { [key in STATUS]: { backgroundColor: string; b
     borderColor: '#FFEEBA',
     color: '#856404',
   },
-  [STATUS.CONFIRMED]: {
-    backgroundColor: '#D4EDDA',
-    borderColor: '#C3E6CB',
-    color: '#155724',
-  },
-  [STATUS.IN_MAINTENANCE]: {
+  [STATUS.IN_PROGRESS]: {
     backgroundColor: '#D1ECF1',
     borderColor: '#BEE5EB',
     color: '#0C5460',
   },
-  [STATUS.SUSPENDED]: {
+  [STATUS.CANCELED]: {
     backgroundColor: '#F8D7DA',
     borderColor: '#F5C6CB',
     color: '#721C24',
   },
-  [STATUS.FINISHED]: {
+  [STATUS.IN_REVIEW]: {
     backgroundColor: '#E2E3E5',
     borderColor: '#D6D8DB',
     color: '#383D41',
+  },
+  [STATUS.COMPLETED]: {
+    backgroundColor: '#D4EDDA',
+    borderColor: '#C3E6CB',
+    color: '#155724',
   },
 };
 
 export const STATUS_LABELS_FR: { [key in STATUS]: string } = {
   [STATUS.PENDING]: 'En attente',
-  [STATUS.CONFIRMED]: 'Confirmé',
-  [STATUS.IN_MAINTENANCE]: 'En maintenance',
-  [STATUS.SUSPENDED]: 'Suspendu',
-  [STATUS.FINISHED]: 'Terminé',
+  [STATUS.IN_PROGRESS]: 'En cours',
+  [STATUS.CANCELED]: 'Annulé',
+  [STATUS.IN_REVIEW]: 'En vérification',
+  [STATUS.COMPLETED]: 'Terminé',
 };
