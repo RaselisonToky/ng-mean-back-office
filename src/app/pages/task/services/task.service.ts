@@ -30,4 +30,8 @@ export class TaskService {
   findTaskByUserId(userId: string): Observable<{data: Task[]}> {
     return this.http.get<{data: Task[]}>(`${this.baseUrl}/tasks/task/${userId}`);
   }
+
+  updateTaskStatus(id:string, status:string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/tasks/update/${id}`, {status});
+  }
 }
