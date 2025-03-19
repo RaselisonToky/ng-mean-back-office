@@ -1,5 +1,11 @@
 import {
-  Clock, Wrench, Bookmark, Car, Grid2x2, Settings, Package
+  Clock,
+  Wrench,
+  Bookmark,
+  Grid2x2,
+  Truck,
+  Newspaper,
+  RotateCcw,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -19,9 +25,21 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'dashboard', label: 'Tableau de bord', href: '/garage', icon: Grid2x2, roles: ['ADMIN'] },
-      { id: 'appointment', label: 'Rendez-vous', href: '/appointment', icon: Bookmark, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'dashboard',
+        label: 'Tableau de bord',
+        href: '/garage',
+        icon: Grid2x2,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'appointment',
+        label: 'Rendez-vous',
+        href: '/appointment',
+        icon: Bookmark,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'intervention',
@@ -29,16 +47,28 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'interv-appointment', label: 'Planifier un rendez-vous', href: '/appointment-form', icon: Clock, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'interv-appointment',
+        label: 'Planifier un rendez-vous',
+        href: '/appointment-form',
+        icon: Clock,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'settings',
     label: 'CONFIGURATION',
     display: true,
     items: [
-      { id: 'prestation', label: 'Prestation', href: '/service', icon: Wrench, roles: ['ADMIN'] },
-    ]
+      {
+        id: 'prestation',
+        label: 'Prestation',
+        href: '/service',
+        icon: Wrench,
+        roles: ['ADMIN'],
+      },
+    ],
   },
   {
     id: 'monitoring',
@@ -46,26 +76,39 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'task', label: 'Mes tâches', href: '/task', icon: Grid2x2, roles: ['MECHANIC'] },
-    ]
+      {
+        id: 'task',
+        label: 'Mes tâches',
+        href: '/task',
+        icon: Grid2x2,
+        roles: ['MECHANIC'],
+      },
+    ],
   },
   {
     id: 'inventory',
-    label: 'MATERIEL',
+    label: 'STOCK & MATERIEL',
     display: true,
     items: [
       {
-        id: 'piece',
-        label: 'Piece Detachée',
-        href: '#',
-        icon: Settings,
+        id: 'transaction',
+        label: 'Transaction',
+        href: '/inventory/transactions',
+        icon: RotateCcw,
         roles: ['ADMIN'],
       },
       {
-        id: 'commande',
-        label: 'Commande',
+        id: 'delivery',
+        label: 'Livraison',
+        href: '/inventory/deliveries',
+        icon: Truck,
+        roles: ['ADMIN'],
+      },
+      {
+        id: 'supplierOrder',
+        label: 'Commande fournisseur',
         href: '#',
-        icon: Package,
+        icon: Newspaper,
         roles: ['ADMIN'],
       },
     ],
