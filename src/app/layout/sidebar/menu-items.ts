@@ -26,7 +26,7 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      { id: 'dashboard', label: 'Tableau de bord', href: '/garage', icon: Grid2x2, roles: ['ADMIN'] },
+      { id: 'dashboard', label: 'Tableau de bord', href: '/dashboard', icon: Grid2x2, roles: ['ADMIN'] },
       { id: 'appointment', label: 'Rendez-vous', href: '/appointment', icon: Bookmark, roles: ['ADMIN'] },
     ],
   },
