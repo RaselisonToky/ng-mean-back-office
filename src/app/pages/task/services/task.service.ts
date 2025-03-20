@@ -31,6 +31,14 @@ export class TaskService {
     return this.http.get<{data: Task[]}>(`${this.baseUrl}/tasks/task/${userId}`);
   }
 
+  findTaskByAppointmentIdAndServiceId(appointmentId: string, serviceId: string): Observable<{data: Task}> {
+    const body = {
+      appointmentId,
+      serviceId
+    }
+    return this.http.post<{data: Task}>(`${this.baseUrl}/tasks/service`,body);
+  }
+
   updateTaskStatus(id:string, status:string): Observable<any> {
     return this.http.put(`${this.baseUrl}/tasks/update/${id}`, {status});
   }

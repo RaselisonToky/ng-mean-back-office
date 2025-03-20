@@ -17,7 +17,21 @@
   <div class="services-list">
     <div *ngFor="let service of appointment?.services" class="service-card">
       <div class="service-header">
-        <h3>{{ service.name }}</h3>
+        <div class="service-name">
+          <h3>{{ service.name }}</h3>
+          <div class="task-status-container" (click)="toggleStatusDropdown(service._id, $event)">
+            <span class="task-status" [ngStyle]="utilsService.getStatusChipStyle(getTaskStatus(service._id))">
+                {{ utilsService.getStatusLabel(getTaskStatus(service._id)) }}
+            </span>
+            <div class="status-dropdown" *ngIf="activeStatusDropdownServiceId() === service._id">
+              <ul>
+                <li *ngFor="let status of availableStatuses" (click)="changeStatus(appointment?._id!,service._id, status, $event)">
+                  {{ utilsService.getStatusLabel(status) }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <span class="duration">{{ service.estimateDuration }} min</span>
       </div>
 

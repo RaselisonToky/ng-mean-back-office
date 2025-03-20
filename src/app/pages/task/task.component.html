@@ -98,7 +98,7 @@
          id="inReview"
          cdkDropList
          [cdkDropListData]="inReviewTasks"
-         [cdkDropListConnectedTo]="['inProgress', 'completed']"
+         [cdkDropListConnectedTo]="['inProgress']"
          (cdkDropListDropped)="drop($event)">
       @for (task of inReviewTasks; track task._id) {
         <div class="task-card" cdkDrag>

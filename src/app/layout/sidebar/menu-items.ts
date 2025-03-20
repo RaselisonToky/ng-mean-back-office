@@ -6,7 +6,7 @@ import {
   Truck,
   RotateCcw,
   CircuitBoard,
-  ClipboardList,
+  ClipboardList, Sliders, Layers, Layers3, Layers2,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -26,20 +26,8 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      {
-        id: 'dashboard',
-        label: 'Tableau de bord',
-        href: '/garage',
-        icon: Grid2x2,
-        roles: ['ADMIN'],
-      },
-      {
-        id: 'appointment',
-        label: 'Rendez-vous',
-        href: '/appointment',
-        icon: Bookmark,
-        roles: ['ADMIN'],
-      },
+      { id: 'dashboard', label: 'Tableau de bord', href: '/garage', icon: Grid2x2, roles: ['ADMIN'] },
+      { id: 'appointment', label: 'Rendez-vous', href: '/appointment', icon: Bookmark, roles: ['ADMIN'] },
     ],
   },
   {
@@ -48,13 +36,7 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      {
-        id: 'interv-appointment',
-        label: 'Planifier un rendez-vous',
-        href: '/appointment-form',
-        icon: Clock,
-        roles: ['ADMIN'],
-      },
+      { id: 'interv-appointment', label: 'Planifier un rendez-vous', href: '/appointment-form', icon: Clock, roles: ['ADMIN'] },
     ],
   },
   {
@@ -62,13 +44,7 @@ export const menuItems: MenuItem[] = [
     label: 'CONFIGURATION',
     display: true,
     items: [
-      {
-        id: 'prestation',
-        label: 'Prestation',
-        href: '/service',
-        icon: Wrench,
-        roles: ['ADMIN'],
-      },
+      { id: 'prestation', label: 'Prestation', href: '/service', icon: Layers2, roles: ['ADMIN'] },
     ],
   },
   {
@@ -77,13 +53,7 @@ export const menuItems: MenuItem[] = [
     display: true,
     roles: ['ADMIN'],
     items: [
-      {
-        id: 'task',
-        label: 'Mes tâches',
-        href: '/task',
-        icon: Grid2x2,
-        roles: ['MECHANIC'],
-      },
+      { id: 'task', label: 'Mes tâches', href: '/task', icon: Grid2x2, roles: ['MECHANIC'] },
     ],
   },
   {

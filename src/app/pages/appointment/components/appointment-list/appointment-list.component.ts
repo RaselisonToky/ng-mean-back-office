@@ -9,11 +9,19 @@ import {Category} from '../../../category/model/category.model';
 import {CategoryService} from '../../../category/services/category.service';
 import {Clock, Filter, LucideAngularModule} from 'lucide-angular';
 import {TaskAssignmentComponent} from '../task-assignement/task-assignment.component';
+import {UtilsService} from '../../../../shared/utils/utils.service';
 
 
 @Component({
   selector: 'app-appointment-list',
-  imports: [CustomTableComponent, DatePipe, CommonModule, FormsModule, LucideAngularModule, TaskAssignmentComponent],
+  imports: [
+    CustomTableComponent,
+    DatePipe,
+    CommonModule,
+    FormsModule,
+    LucideAngularModule,
+    TaskAssignmentComponent
+  ],
   templateUrl: './appointment-list.component.html',
   styleUrls: ['./appointment-list.component.css']
 })
@@ -22,6 +30,7 @@ export class AppointmentListComponent implements OnInit {
   constructor(
     private appointmentService: AppointmentService,
     private categoryService: CategoryService,
+    protected utilsService: UtilsService,
   ) {}
 
   height = '909px';
@@ -29,8 +38,6 @@ export class AppointmentListComponent implements OnInit {
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
   tableHeaders = ['Client','phone', 'marque', 'model', 'services', 'programmé le', 'durée', 'prix', 'status'];
-  statusChipColors = STATUS_CHIP_COLORS;
-  statusLabelsFr = STATUS_LABELS_FR;
   expandedRows = new Set<number>();
   startDate: string = '';
   endDate: string = '';
@@ -147,14 +154,6 @@ export class AppointmentListComponent implements OnInit {
     }
   }
 
-  getStatusChipStyle(status: any): { backgroundColor: string; borderColor: string; color: string } {
-    return this.statusChipColors[status as STATUS];
-  }
-
-  getStatusLabel(status: any): string {
-    return this.statusLabelsFr[status as STATUS];
-  }
-
   shouldShowExpansionChevron(services: any[]): boolean {
     return services.length > 2;
   }
@@ -167,4 +166,5 @@ export class AppointmentListComponent implements OnInit {
 
   protected readonly Filter = Filter;
   protected readonly Clock = Clock;
+  protected readonly UtilsService = UtilsService;
 }

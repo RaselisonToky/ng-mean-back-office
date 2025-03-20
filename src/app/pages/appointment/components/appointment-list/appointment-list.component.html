@@ -33,8 +33,8 @@
     <span class="active-filter-tag">{{ service }}</span>
   }
   @for (status of selectedStatuses; track status) {
-    <span class="active-filter-tag" [ngStyle]="getStatusChipStyle(status)">
-      {{ getStatusLabel(status) }}
+    <span class="active-filter-tag" [ngStyle]="utilsService.getStatusChipStyle(status)">
+      {{ utilsService.getStatusLabel(status) }}
     </span>
   }
 </div>
@@ -83,7 +83,7 @@
               [checked]="selectedStatuses.includes(status)"
               (change)="toggleStatus(status)"
             >
-            <span>{{ getStatusLabel(status) }}</span>
+            <span>{{ utilsService.getStatusLabel(status) }}</span>
           </label>
         }
       </div>
@@ -147,8 +147,8 @@
       <td>{{ item.estimateDuration }}</td>
       <td>{{ item.estimatedPrice }}</td>
       <td>
-        <span class="category-chip" [ngStyle]="getStatusChipStyle(item.status)">
-          {{ getStatusLabel(item.status) }}
+        <span class="category-chip" [ngStyle]="utilsService.getStatusChipStyle(item.status)">
+          {{ utilsService.getStatusLabel(item.status) }}
         </span>
       </td>
     </ng-template>

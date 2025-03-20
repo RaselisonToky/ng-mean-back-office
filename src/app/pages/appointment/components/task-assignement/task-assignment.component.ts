@@ -6,7 +6,9 @@ import { Appointment } from '../../model/appointment.model';
 import { UserService } from '../../../user/services/user.service';
 import { User } from '../../../user/model/user.model';
 import { TaskService } from '../../../task/services/task.service';
-import { TASK_STATUS, TaskDto } from '../../../task/model/task.model';
+import {Task, TASK_STATUS, TaskDto} from '../../../task/model/task.model';
+import { UtilsService } from '../../../../shared/utils/utils.service';
+import {map, Observable, take} from 'rxjs';
 
 @Component({
   selector: 'app-task-assignment',
@@ -18,28 +20,34 @@ import { TASK_STATUS, TaskDto } from '../../../task/model/task.model';
 export class TaskAssignmentComponent implements OnInit, OnChanges {
   private userService = inject(UserService);
   private taskService = inject(TaskService);
+  protected utilsService = inject(UtilsService);
 
   @Input() appointment: Appointment | null = null;
   @Input() visible: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() tasksUpdated = new EventEmitter<any[]>();
 
-  // Utilisation de signaux pour l'état du composant
   mechanics = signal<User[]>([]);
+  serviceStatuses = signal<Map<string, TASK_STATUS>>(new Map());
   serviceAssignments = signal<Map<string, string[]>>(new Map());
   activeDropdownServiceId = signal<string | null>(null);
+  activeStatusDropdownServiceId = signal<string | null>(null);
   searchQuery = signal<string>('');
   isLoading = signal<boolean>(false);
+
+  updatedTaskId = '';
+  availableStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
 
   ngOnInit() {
     if (this.appointment) {
       const assignmentsMap = new Map<string, string[]>();
+      const statusesMap = new Map<string, TASK_STATUS>();
       this.appointment.services.forEach(service => {
-        if (!assignmentsMap.has(service._id)) {
-          assignmentsMap.set(service._id, []);
-        }
+        assignmentsMap.set(service._id, []);
+        statusesMap.set(service._id, TASK_STATUS.PENDING);
       });
       this.serviceAssignments.set(assignmentsMap);
+      this.serviceStatuses.set(statusesMap);
     }
     this.fetchMechanics();
   }
@@ -54,20 +62,37 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
     this.taskService.getTasksByAppointment(appointmentId).subscribe({
       next: (data) => {
         const assignmentsMap = new Map<string, string[]>();
+        const statusesMap = new Map<string, TASK_STATUS>();
         this.appointment?.services.forEach(service => {
           assignmentsMap.set(service._id, []);
+          statusesMap.set(service._id, TASK_STATUS.PENDING);
         });
 
         data.data.forEach((task: TaskDto) => {
           assignmentsMap.set(task.service, task.users);
+          statusesMap.set(task.service, task.status);
         });
 
         this.serviceAssignments.set(assignmentsMap);
+        this.serviceStatuses.set(statusesMap);
       },
       error: (error) => {
         console.error('Error fetching tasks:', error);
       }
     });
+  }
+
+  getTaskStatus(serviceId: string): TASK_STATUS {
+    return this.serviceStatuses().get(serviceId) || TASK_STATUS.PENDING;
+  }
+
+  getUpdatedTask(appointmentId: string, serviceId: string): Observable<string> {
+    return this.taskService.findTaskByAppointmentIdAndServiceId(appointmentId, serviceId)
+      .pipe(
+        map((data: any) => {
+          return data.data._id!;
+        })
+      );
   }
 
   fetchMechanics() {
@@ -86,6 +111,34 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
       this.activeDropdownServiceId.set(serviceId);
       this.searchQuery.set('');
     }
+  }
+
+  toggleStatusDropdown(serviceId: string, event: MouseEvent) {
+    event.stopPropagation();
+    if (this.activeStatusDropdownServiceId() === serviceId) {
+      this.activeStatusDropdownServiceId.set(null);
+    } else {
+      this.activeStatusDropdownServiceId.set(serviceId);
+    }
+  }
+
+  changeStatus(appointmentId: string, serviceId: string, newStatus: TASK_STATUS, event: MouseEvent) {
+    event.stopPropagation();
+    this.getUpdatedTask(appointmentId, serviceId)
+      .pipe(take(1))
+      .subscribe({
+        next: (taskId) => {
+          const statusesMap = new Map(this.serviceStatuses());
+          statusesMap.set(serviceId, newStatus);
+          this.serviceStatuses.set(statusesMap);
+          this.taskService.updateTaskStatus(taskId, newStatus)
+            .pipe(take(1))
+            .subscribe({
+              next: () => {},
+            });
+          this.activeStatusDropdownServiceId.set(null);
+        },
+      });
   }
 
   assignMechanic(serviceId: string, mechanicId: string) {
@@ -144,7 +197,6 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
         status: TASK_STATUS.PENDING
       });
     });
-
 
     this.taskService.upsertMany(tasksToUpsert).subscribe({
       next: (response) => {
