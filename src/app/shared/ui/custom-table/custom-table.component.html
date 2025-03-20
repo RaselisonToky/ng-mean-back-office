@@ -44,13 +44,13 @@
     <table [ngClass]="tableClassName">
       <thead>
       <tr>
-        <th *ngFor="let header of headers">{{ header }}</th>
+        <th *ngFor="let header of headers; let i = index" [class.text-left]="i === 0">{{ header }}</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of paginatedData; let i = index" (click)="onRowClicked(item)">
         <ng-container
-          *ngTemplateOutlet="rowTemplate; context: { $implicit: item, index: i }"
+          *ngTemplateOutlet="rowTemplate; context: { $implicit: item, index: i, isFirstColumn: i === 0 }"
         ></ng-container>
       </tr>
       </tbody>

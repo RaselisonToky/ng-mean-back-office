@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomTableComponent } from '../../../../shared/ui/custom-table/custom-table.component';
-import { STATUS_CHIP_COLORS, STATUS_LABELS_FR } from '../../../../shared/constants/constant';
 import { Appointment, STATUS } from '../../model/appointment.model';
 import { AppointmentService } from '../../services/appointment.service';
 import {Category} from '../../../category/model/category.model';
@@ -10,7 +9,6 @@ import {CategoryService} from '../../../category/services/category.service';
 import {Clock, Filter, LucideAngularModule} from 'lucide-angular';
 import {TaskAssignmentComponent} from '../task-assignement/task-assignment.component';
 import {UtilsService} from '../../../../shared/utils/utils.service';
-
 
 @Component({
   selector: 'app-appointment-list',
@@ -37,8 +35,17 @@ export class AppointmentListComponent implements OnInit {
   showSidebar = false;
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
-  tableHeaders = ['Client','phone', 'marque', 'model', 'services', 'programmé le', 'durée', 'prix', 'status'];
-  expandedRows = new Set<number>();
+  tableHeaders = [
+    'Numéro d\'immatriculation',
+    'Contact',
+    'Marque',
+    'Modèle',
+    'Services demandés',
+    'Rendez-vous',
+    'Durée estimée',
+    'Prix total',
+    'Statut'
+  ];  expandedRows = new Set<number>();
   startDate: string = '';
   endDate: string = '';
   searchQuery: string = '';
@@ -68,7 +75,6 @@ export class AppointmentListComponent implements OnInit {
     this.loadAppointment();
     this.fetchCategories();
   }
-
 
   formatDateForInput(date: Date): string {
     return date.toISOString().split('T')[0];
@@ -113,15 +119,12 @@ export class AppointmentListComponent implements OnInit {
       const nameMatch = appointment.name.toLowerCase().includes(searchLower);
       const phoneMatch = appointment.phone.toLowerCase().includes(searchLower);
       const searchMatch = nameMatch || phoneMatch;
-
       const categoryMatch = this.selectedCategories.length === 0 ||
         appointment.services.some(service =>
           this.selectedCategories.includes(service.category.name)
         );
-
       const statusMatch = this.selectedStatuses.length === 0 ||
         this.selectedStatuses.includes(appointment.status);
-
       return searchMatch && categoryMatch && statusMatch;
     });
   }
@@ -166,5 +169,4 @@ export class AppointmentListComponent implements OnInit {
 
   protected readonly Filter = Filter;
   protected readonly Clock = Clock;
-  protected readonly UtilsService = UtilsService;
 }
