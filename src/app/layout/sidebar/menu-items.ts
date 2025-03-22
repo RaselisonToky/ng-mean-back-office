@@ -1,7 +1,7 @@
 import {
   Clock, Grid2x2, Truck,
   RotateCcw, CircuitBoard,
-  ClipboardList, Layers2, CalendarCheck, LayoutGrid,
+  ClipboardList, Layers2, CalendarCheck, LayoutGrid, Bookmark, BookMarked, FolderClock,
 } from 'lucide-angular';
 
 export interface MenuItem {
@@ -33,20 +33,26 @@ export const menuItems: MenuItem[] = [
         href: '/appointment',
         icon: CalendarCheck, roles: ['ADMIN']
       },
+      {
+        id: 'log-book',
+        label: 'Journal',
+        href: '/log-book',
+        icon: BookMarked, roles: ['ADMIN']
+      },
     ],
   },
   {
-    id: 'intervention',
-    label: 'INTERVENTION',
+    id: 'statistics',
+    label: 'STATISTIQUES',
     display: true,
     roles: ['ADMIN'],
     items: [
       {
-        id: 'interv-appointment',
-        label: 'Planifier rendez-vous',
-        href: '/appointment-form',
-        icon: Clock, roles: ['ADMIN']
-      },
+        id: 'histories',
+        label: 'Historique',
+        href: '/histories',
+        icon: FolderClock, roles: ['ADMIN']
+      }
     ],
   },
   {
@@ -54,6 +60,12 @@ export const menuItems: MenuItem[] = [
     label: 'CONFIGURATION',
     display: true,
     items: [
+      {
+        id: 'interv-appointment',
+        label: 'Planifier rendez-vous',
+        href: '/appointment-form',
+        icon: Clock, roles: ['ADMIN']
+      },
       {
         id: 'prestation',
         label: 'Prestation',

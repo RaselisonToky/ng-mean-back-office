@@ -72,7 +72,12 @@ export class TaskComponent implements OnInit {
 
       const task = event.container.data[event.currentIndex];
       task.status = newStatus;
-      this.taskService.updateTaskStatus(task._id!, newStatus).subscribe();
+      if (newStatus === TASK_STATUS.IN_PROGRESS && previousStatus === TASK_STATUS.PENDING) {
+        task.maintenance_start_time = new Date();
+      } else if (newStatus === TASK_STATUS.IN_REVIEW && previousStatus === TASK_STATUS.IN_PROGRESS) {
+        task.review_start_time = new Date();
+      }
+      this.taskService.updateTask(task._id!, task).subscribe();
     }
   }
 

@@ -16,6 +16,9 @@ export interface Task {
   appointment: Appointment;
   service: Service;
   users: User[];
+  maintenance_start_time: Date;
+  review_start_time: Date;
+  finished_time: Date;
   status: TASK_STATUS;
 }
 

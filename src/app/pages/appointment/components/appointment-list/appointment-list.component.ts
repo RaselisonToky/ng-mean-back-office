@@ -6,7 +6,7 @@ import { Appointment, STATUS } from '../../model/appointment.model';
 import { AppointmentService } from '../../services/appointment.service';
 import {Category} from '../../../category/model/category.model';
 import {CategoryService} from '../../../category/services/category.service';
-import {Clock, Filter, LucideAngularModule, MoreVertical } from 'lucide-angular'; // Import MoreVertical
+import {Clock, Filter, LucideAngularModule, MoreVertical } from 'lucide-angular';
 import {TaskAssignmentComponent} from '../task-assignement/task-assignment.component';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {Router} from '@angular/router';
@@ -74,8 +74,8 @@ export class AppointmentListComponent implements OnInit {
 
   ngOnInit() {
     const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const firstDay = today;
+    const lastDay = today;
     this.startDate = this.formatDateForInput(firstDay);
     this.endDate = this.formatDateForInput(lastDay);
     this.loadAppointment();

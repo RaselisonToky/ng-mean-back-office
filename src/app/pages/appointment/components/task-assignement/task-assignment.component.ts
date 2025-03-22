@@ -146,7 +146,17 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
           const statusesMap = new Map(this.serviceStatuses());
           statusesMap.set(serviceId, newStatus);
           this.serviceStatuses.set(statusesMap);
-          this.taskService.updateTaskStatus(taskId, newStatus).subscribe({
+          const data = {
+            status: newStatus,
+            maintenance_start_time: new Date(),
+            review_start_time: new Date()
+          }
+          if (newStatus === TASK_STATUS.IN_PROGRESS) {
+            data.maintenance_start_time = new Date();
+          } else if (newStatus === TASK_STATUS.IN_REVIEW) {
+            data.review_start_time = new Date();
+          }
+          this.taskService.updateTask(taskId, data).subscribe({
               next: (data) => {
                 this.taskStatusUpdated.emit();
               },
@@ -198,7 +208,7 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
   onSave() {
     if (!this.appointment) return;
     this.isLoading.set(true);
-    const tasksToUpsert: TaskDto[] = [];
+    const tasksToUpsert: any[] = [];
     const assignments = this.serviceAssignments();
     this.appointment.services.forEach(service => {
       const mechanicIds = assignments.get(service._id) || [];
@@ -206,7 +216,6 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
         appointment: this.appointment?._id!,
         service: service._id,
         users: mechanicIds,
-        status: TASK_STATUS.PENDING
       });
     });
 
