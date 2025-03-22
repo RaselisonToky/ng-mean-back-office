@@ -2,6 +2,7 @@ import {Service} from '../../service/model/service.model';
 import {Model} from '../../model/model/model.model';
 
 export enum STATUS {
+  REQUESTED = 'REQUESTED',
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',
   IN_REVIEW = 'IN_REVIEW',

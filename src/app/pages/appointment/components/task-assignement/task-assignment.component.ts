@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, signal, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  signal,
+  inject,
+  ChangeDetectorRef
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, Search, X } from 'lucide-angular';
@@ -8,7 +18,7 @@ import { User } from '../../../user/model/user.model';
 import { TaskService } from '../../../task/services/task.service';
 import {Task, TASK_STATUS, TaskDto} from '../../../task/model/task.model';
 import { UtilsService } from '../../../../shared/utils/utils.service';
-import {map, Observable, take} from 'rxjs';
+import {catchError, map, Observable, of, take, throwError} from 'rxjs';
 
 @Component({
   selector: 'app-task-assignment',
@@ -26,6 +36,8 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
   @Input() visible: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Output() tasksUpdated = new EventEmitter<any[]>();
+  @Output() taskStatusUpdated = new EventEmitter<void>();
+  availableStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
 
   mechanics = signal<User[]>([]);
   serviceStatuses = signal<Map<string, TASK_STATUS>>(new Map());
@@ -34,9 +46,9 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
   activeStatusDropdownServiceId = signal<string | null>(null);
   searchQuery = signal<string>('');
   isLoading = signal<boolean>(false);
+  showErrorMessage = signal<boolean>(false);
+  errorMessage = signal<string>('');
 
-  updatedTaskId = '';
-  availableStatuses: TASK_STATUS[] = Object.values(TASK_STATUS);
 
   ngOnInit() {
     if (this.appointment) {
@@ -89,8 +101,11 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
   getUpdatedTask(appointmentId: string, serviceId: string): Observable<string> {
     return this.taskService.findTaskByAppointmentIdAndServiceId(appointmentId, serviceId)
       .pipe(
-        map((data: any) => {
-          return data.data._id!;
+        map((data: any) => data.data._id),
+        catchError((error) => {
+          this.errorMessage.set('Statut impossible à modifier : Affectez d\'abord un mécanicien');
+          this.showErrorMessage.set(true);
+          return throwError(() => error);
         })
       );
   }
@@ -131,16 +146,15 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
           const statusesMap = new Map(this.serviceStatuses());
           statusesMap.set(serviceId, newStatus);
           this.serviceStatuses.set(statusesMap);
-          this.taskService.updateTaskStatus(taskId, newStatus)
-            .pipe(take(1))
-            .subscribe({
-              next: () => {},
+          this.taskService.updateTaskStatus(taskId, newStatus).subscribe({
+              next: (data) => {
+                this.taskStatusUpdated.emit();
+              },
             });
           this.activeStatusDropdownServiceId.set(null);
         },
       });
   }
-
   assignMechanic(serviceId: string, mechanicId: string) {
     const currentMap = this.serviceAssignments();
     const currentAssignments = currentMap.get(serviceId) || [];
@@ -183,11 +197,9 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
 
   onSave() {
     if (!this.appointment) return;
-
     this.isLoading.set(true);
     const tasksToUpsert: TaskDto[] = [];
     const assignments = this.serviceAssignments();
-
     this.appointment.services.forEach(service => {
       const mechanicIds = assignments.get(service._id) || [];
       tasksToUpsert.push({
@@ -213,6 +225,10 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
 
   onClose() {
     this.close.emit();
+  }
+
+  closeErrorMessage(): void {
+    this.showErrorMessage.set(false);
   }
 
   protected readonly X = X;

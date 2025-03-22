@@ -26,7 +26,7 @@ export class UserVehicleStepComponent implements OnInit {
   selectedModelId: string = '';
   licensePlate: string = '789';
   appointmentDate: string = '';
-  appointmentTime: string = '10:00';
+  appointmentTime: string = '';
   availableTimeSlots : string[] = [];
 
   formErrors: Record<string, string> = {};

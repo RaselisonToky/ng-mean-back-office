@@ -6,9 +6,10 @@ import { Appointment, STATUS } from '../../model/appointment.model';
 import { AppointmentService } from '../../services/appointment.service';
 import {Category} from '../../../category/model/category.model';
 import {CategoryService} from '../../../category/services/category.service';
-import {Clock, Filter, LucideAngularModule} from 'lucide-angular';
+import {Clock, Filter, LucideAngularModule, MoreVertical } from 'lucide-angular'; // Import MoreVertical
 import {TaskAssignmentComponent} from '../task-assignement/task-assignment.component';
 import {UtilsService} from '../../../../shared/utils/utils.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-appointment-list',
@@ -29,6 +30,7 @@ export class AppointmentListComponent implements OnInit {
     private appointmentService: AppointmentService,
     private categoryService: CategoryService,
     protected utilsService: UtilsService,
+    private router: Router,
   ) {}
 
   height = '909px';
@@ -42,10 +44,11 @@ export class AppointmentListComponent implements OnInit {
     'Modèle',
     'Services demandés',
     'Rendez-vous',
-    'Durée estimée',
     'Prix total',
-    'Statut'
-  ];  expandedRows = new Set<number>();
+    'Statut',
+    ''
+  ];
+  expandedRows = new Set<number>();
   startDate: string = '';
   endDate: string = '';
   searchQuery: string = '';
@@ -55,10 +58,13 @@ export class AppointmentListComponent implements OnInit {
   availableCategories: Category[] = [];
   showFilters: boolean = false;
   selectedAppointment: Appointment | null = null;
+  contextMenuAppointment: Appointment | null = null;
+  showContextMenu: boolean = false;
+  contextMenuX = 0;
+  contextMenuY = 0;
 
-  onRowClick(appointment: Appointment): void {
-    this.selectedAppointment = appointment;
-    this.showSidebar = true;
+  onTaskStatusUpdated(): void {
+    this.loadAppointment();
   }
 
   onCloseSidebar(): void {
@@ -103,6 +109,11 @@ export class AppointmentListComponent implements OnInit {
         console.error('Erreur lors de la récupération des données:', error);
       }
     });
+  }
+
+  onDetailsClicked(appointment: Appointment) {
+    this.router.navigate(['/appointment', appointment._id]).then();
+    this.closeContextMenu();
   }
 
   onSearch(): void {
@@ -167,6 +178,25 @@ export class AppointmentListComponent implements OnInit {
     this.applyFilters();
   }
 
+  openContextMenu(event: MouseEvent, appointment: Appointment) {
+    event.preventDefault();
+    this.contextMenuAppointment = appointment;
+    this.showContextMenu = true;
+    this.contextMenuX = event.clientX - 200;
+    this.contextMenuY = event.clientY + 10;
+  }
+
+  closeContextMenu() {
+    this.showContextMenu = false;
+  }
+
+  onAssignTaskClicked() {
+    this.selectedAppointment = this.contextMenuAppointment;
+    this.showSidebar = true;
+    this.closeContextMenu();
+  }
+
   protected readonly Filter = Filter;
   protected readonly Clock = Clock;
+  protected readonly MoreVertical = MoreVertical;
 }

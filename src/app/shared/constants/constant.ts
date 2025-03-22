@@ -1,6 +1,11 @@
 import {STATUS} from '../../pages/appointment/model/appointment.model';
 
 export const STATUS_CHIP_COLORS: { [key in STATUS]: { backgroundColor: string; borderColor: string; color: string } } = {
+  [STATUS.REQUESTED]: {
+    backgroundColor: '#E6E0F8',
+    borderColor: '#D1C4F1',
+    color: '#4527A0',
+  },
   [STATUS.PENDING]: {
     backgroundColor: '#FFF3CD',
     borderColor: '#FFEEBA',
@@ -29,8 +34,9 @@ export const STATUS_CHIP_COLORS: { [key in STATUS]: { backgroundColor: string; b
 };
 
 export const STATUS_LABELS_FR: { [key in STATUS]: string } = {
-  [STATUS.PENDING]: 'En attente',
-  [STATUS.IN_PROGRESS]: 'En cours',
+  [STATUS.REQUESTED]: 'En attente de confirmation',
+  [STATUS.PENDING]: 'En attente d\'intervention',
+  [STATUS.IN_PROGRESS]: 'En maintenance',
   [STATUS.CANCELED]: 'Annulé',
   [STATUS.IN_REVIEW]: 'En vérification',
   [STATUS.COMPLETED]: 'Terminé',

@@ -312,3 +312,93 @@
   color: #666;
   font-size: 12px;
 }
+
+.action-column {
+  text-align: center;
+}
+
+.context-menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.context-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 150px;
+  padding: 5px 0;
+}
+
+.context-menu-item {
+  display: block;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.context-menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.timer-column {
+  text-align: center;
+  min-width: 120px;
+}
+
+.timer-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timer-history {
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  border-top: 1px dashed #ddd;
+  padding-top: 5px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.status-label {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  flex: 1;
+}
+
+.duration {
+  font-family: monospace;
+  margin: 0 5px;
+  flex: 1;
+}
+
+.timestamp {
+  color: #777;
+  font-size: 10px;
+  flex: 1;
+}

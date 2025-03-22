@@ -15,6 +15,12 @@
   </div>
 
   <div class="services-list">
+    <div class="error-alert" *ngIf="showErrorMessage()">
+      {{ errorMessage() }}
+      <button class="close-button" (click)="closeErrorMessage()">
+        <lucide-icon [img]="X" size="14"></lucide-icon>
+      </button>
+    </div>
     <div *ngFor="let service of appointment?.services" class="service-card">
       <div class="service-header">
         <div class="service-name">

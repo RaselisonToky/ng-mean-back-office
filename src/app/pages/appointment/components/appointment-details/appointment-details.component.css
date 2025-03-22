@@ -1,0 +1,48 @@
+.action-buttons {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.confirm-button, .reject-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.confirm-button {
+  background-color: #4CAF50;
+}
+
+.reject-button {
+  background-color: #f44336;
+}
+
+.loading-spinner {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.button-outline {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background-color: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.button-outline:hover {
+  background-color: #f8fafc;
+}
+
+.button-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

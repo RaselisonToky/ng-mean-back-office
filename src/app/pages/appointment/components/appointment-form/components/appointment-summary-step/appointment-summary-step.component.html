@@ -16,11 +16,6 @@
   </div>
 } @else {
   <div class="step-content">
-    <h2 class="step-title">Vérification et confirmation</h2>
-    <p class="step-description">
-      Merci de vérifier les détails de votre rendez-vous avant de le confirmer.
-    </p>
-
     <div class="summary-grid">
       <div class="summary-card">
         <div class="summary-card-header">
@@ -122,7 +117,7 @@
         </div>
         <div class="service-total">
           <span class="service-total-label">Prix total :</span>
-          <span class="service-total-value">${{ totalPrice.toFixed(2) }}</span>
+          <span class="service-total-value">${{ (totalPrice * 1.1).toFixed(2) }}</span>
         </div>
       </div>
       <div class="services-list">
@@ -130,7 +125,6 @@
           <div class="service-item">
             <div>
               <p class="service-name">{{ service.name }}</p>
-              <p class="service-duration">Est. {{ service.estimateDuration }} min</p>
             </div>
             <p class="service-price">${{ service.price.toFixed(2) }}</p>
           </div>
@@ -154,13 +148,14 @@
     </div>
 
     <div class="summary-actions">
-      <button (click)="onPrevious.emit()" class="button-outline" [disabled]="isSubmitting">
-        ← Retour
-      </button>
-
-      <button (click)="handleConfirm()" [disabled]="isSubmitting" class="button-primary">
-        {{ isSubmitting ? 'Traitement en cours...' : 'Confirmer le rendez-vous' }}
-      </button>
+      @if (showConfirmButton) {
+        <button (click)="onPrevious.emit()" class="button-outline" [disabled]="isSubmitting">
+          ← Retour
+        </button>
+        <button (click)="handleConfirm()" [disabled]="isSubmitting" class="button-primary">
+          {{ isSubmitting ? 'Traitement en cours...' : 'Confirmer le rendez-vous' }}
+        </button>
+      }
     </div>
   </div>
 }

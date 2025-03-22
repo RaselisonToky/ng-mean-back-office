@@ -13,6 +13,9 @@ import { AppointmentComponent } from './pages/appointment/appointment.component'
 import { AppointmentFormComponent } from './pages/appointment/components/appointment-form/appointment-form.component';
 import { TaskComponent } from './pages/task/task.component';
 import { PiecesComponent } from './pages/inventory/pieces/pieces.component';
+import {
+  AppointmentDetailsComponent
+} from './pages/appointment/components/appointment-details/appointment-details.component';
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -29,6 +32,12 @@ export const routes: Routes = [
       {
         path: 'appointment',
         component: AppointmentComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'appointment/:id',
+        component: AppointmentDetailsComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ADMIN'] },
       },

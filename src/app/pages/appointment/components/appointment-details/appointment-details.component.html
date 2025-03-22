@@ -1,0 +1,19 @@
+<div class="details-container" *ngIf="!isLoading">
+  <button (click)="onBack()" class="button-outline">Retour</button>
+  <div *ngIf="appointmentDetails">
+    <app-appointment-summary-step
+      [appointmentDetails]="appointmentDetails"
+      [brands]="brands"
+      [models]="models"
+      [showConfirmButton]="false"
+    ></app-appointment-summary-step>
+    <div class="action-buttons" *ngIf="isRequested">
+      <button (click)="onConfirmAppointment()" class="confirm-button">Confirmer</button>
+      <button (click)="onRejectAppointment()" class="reject-button">Refuser</button>
+    </div>
+  </div>
+</div>
+
+<div class="loading-spinner" *ngIf="isLoading">
+  Loading...
+</div>

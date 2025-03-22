@@ -20,6 +20,14 @@ export class AppointmentService {
     return this.http.post(`${this.baseUrl}/appointment/monitoring`,body);
   }
 
+  findById(id: string): Observable<any>{
+    return this.http.get(`${this.baseUrl}/appointment/${id}`);
+  }
+
+  update(appointmentId: string, appointmentDto: Appointment): Observable<any> {
+    return this.http.put(`${this.baseUrl}/appointment/${appointmentId}`, appointmentDto);
+  }
+
   create(appointment: AppointmentDto): Observable<any> {
     return this.http.post(`${this.baseUrl}/appointment`, appointment);
   }

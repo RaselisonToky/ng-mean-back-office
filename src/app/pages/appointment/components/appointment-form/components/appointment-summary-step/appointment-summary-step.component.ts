@@ -34,6 +34,7 @@ export class AppointmentSummaryStepComponent {
   @Input() appointmentDetails!: AppointmentDetails;
   @Input() brands: Brand[] = [];
   @Input() models: Model[] = [];
+  @Input() showConfirmButton = true;
   @Output() onPrevious = new EventEmitter<void>();
   @Output() onConfirm = new EventEmitter<void>();
 
@@ -85,7 +86,7 @@ export class AppointmentSummaryStepComponent {
       scheduleAt,
       estimateDuration: this.totalDuration,
       estimatedPrice: this.totalPrice,
-      status: STATUS.PENDING
+      status: STATUS.REQUESTED
     }
 
     this.appointmentService.create(newAppointmentData).subscribe({
