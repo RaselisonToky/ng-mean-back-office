@@ -9,7 +9,8 @@ import {STATUS_CHIP_COLORS, STATUS_LABELS_FR} from '../constants/constant';
 export class UtilsService {
   constructor() {}
 
-  formatDate(date: Date): string {
+  formatDate(anyFormOfDate: Date): string {
+    const date = new Date(anyFormOfDate);
     return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(date);
   }
 
@@ -19,5 +20,9 @@ export class UtilsService {
 
   getStatusLabel(status: any): string {
     return STATUS_LABELS_FR[status as STATUS];
+  }
+
+  formatDateForInput(date: Date): string {
+    return date.toISOString().split('T')[0];
   }
 }

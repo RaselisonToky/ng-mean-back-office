@@ -16,6 +16,7 @@ import { PiecesComponent } from './pages/inventory/pieces/pieces.component';
 import {
   AppointmentDetailsComponent
 } from './pages/appointment/components/appointment-details/appointment-details.component';
+import { TaskHistoryComponent } from './pages/task-history/task-history.component'
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -84,13 +85,19 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ['ADMIN'] },
       },
-
       {
         path: 'task',
         component: TaskComponent,
         canActivate: [AuthGuard],
         data: { roles: ['MECHANIC'] },
       },
+      {
+        path: 'log-book',
+        component: TaskHistoryComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+
 
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ],

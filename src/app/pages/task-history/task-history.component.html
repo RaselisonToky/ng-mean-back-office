@@ -1,0 +1,26 @@
+<app-custom-table
+  [headers]="tableHeaders"
+  [data]="taskHistories"
+  [itemsPerPage]="30"
+  [height]="height"
+>
+  <ng-template let-item let-i="index">
+    <td class="first-column">{{ item.appointment.licensePlate }}</td>
+    <td>
+        <span class="category-chip" [ngStyle]="utilsService.getStatusChipStyle(item.status)">
+          {{ utilsService.getStatusLabel(item.status) }}
+        </span>
+    </td>
+    <td>{{item.service.name}}</td>
+    <td>
+      @for (user of item.users; track user){
+        {{user.firstname}}
+      }
+    </td>
+    <td>{{item.maintenance_start_time ? item.maintenance_start_time : '-' }}</td>
+    <td>{{item.review_start_time ? item.review_start_time : '-' }}</td>
+    <td>{{item.finished_time ? item.finished_time : '-' }}</td>
+    <td>{{ item.price | currency:'USD':'symbol':'1.2-2' }}</td>
+    <td>{{ utilsService.formatDate(item.createdAt)}}</td>
+  </ng-template>
+</app-custom-table>

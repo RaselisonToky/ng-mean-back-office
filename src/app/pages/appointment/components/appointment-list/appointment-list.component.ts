@@ -76,14 +76,10 @@ export class AppointmentListComponent implements OnInit {
     const today = new Date();
     const firstDay = today;
     const lastDay = today;
-    this.startDate = this.formatDateForInput(firstDay);
-    this.endDate = this.formatDateForInput(lastDay);
+    this.startDate = this.utilsService.formatDateForInput(firstDay);
+    this.endDate = this.utilsService.formatDateForInput(lastDay);
     this.loadAppointment();
     this.fetchCategories();
-  }
-
-  formatDateForInput(date: Date): string {
-    return date.toISOString().split('T')[0];
   }
 
   fetchCategories(): void {

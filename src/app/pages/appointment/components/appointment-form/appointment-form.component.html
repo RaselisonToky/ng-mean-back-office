@@ -6,9 +6,9 @@
 <!--      Prenez rendez-vous facilement pour l'entretien de votre véhicule grâce à notre système intuitif -->
 <!--    </p>-->
   </div>
-  <div class="stepper">
-    <app-stepper-progress [currentStep]="currentStep" [totalSteps]="totalSteps"></app-stepper-progress>
-  </div>
+<!--  <div class="stepper">-->
+<!--    <app-stepper-progress [currentStep]="currentStep" [totalSteps]="totalSteps"></app-stepper-progress>-->
+<!--  </div>-->
   @if (currentStep === 1) {
     <app-user-vehicle-step
       (onNext)="handleNext($event)"
