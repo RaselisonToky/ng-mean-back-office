@@ -1,26 +1,98 @@
+<div class="title">Journal</div>
+<div class="controls">
+  <div class="date-range-container">
+    <div class="date-field">
+      <label for="startDate">De:</label>
+      <input
+        id="startDate"
+        type="date"
+        class="date-picker"
+        [(ngModel)]="startDate"
+      >
+    </div>
+    <div class="date-field">
+      <label for="endDate">À:</label>
+      <input
+        id="endDate"
+        type="date"
+        class="date-picker"
+        [(ngModel)]="endDate"
+      >
+    </div>
+    <div>
+      <label style="color: white">De:</label>
+      <button class="search-button" (click)="onSearch()">Rechercher</button>
+    </div>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input
+    type="text"
+    placeholder="Recherche..."
+    class="search-input"
+    [(ngModel)]="searchQuery"
+    (keyup)="applyFilters()"
+  >
+</div>
+
 <app-custom-table
   [headers]="tableHeaders"
-  [data]="taskHistories"
+  [data]="filteredTaskHistories"
   [itemsPerPage]="30"
   [height]="height"
 >
   <ng-template let-item let-i="index">
-    <td class="first-column">{{ item.appointment.licensePlate }}</td>
+    <td
+      class="first-column"
+      style="font-family: monospace; width: 1px !important;"
+    >
+      {{ item.appointment.licensePlate }}
+    </td>
     <td>
         <span class="category-chip" [ngStyle]="utilsService.getStatusChipStyle(item.status)">
           {{ utilsService.getStatusLabel(item.status) }}
         </span>
     </td>
     <td>{{item.service.name}}</td>
-    <td>
+    <td class="chip-container">
       @for (user of item.users; track user){
-        {{user.firstname}}
+        <span class="chip">{{user.firstname}}</span>
       }
     </td>
-    <td>{{item.maintenance_start_time ? item.maintenance_start_time : '-' }}</td>
-    <td>{{item.review_start_time ? item.review_start_time : '-' }}</td>
-    <td>{{item.finished_time ? item.finished_time : '-' }}</td>
-    <td>{{ item.price | currency:'USD':'symbol':'1.2-2' }}</td>
-    <td>{{ utilsService.formatDate(item.createdAt)}}</td>
+    <td>
+      <div class="schedule">
+        @if (item.maintenance_start_time) {
+          <span class="time">
+            {{ item.maintenance_start_time | date:'HH:mm' }}
+          </span>
+        } @else {
+          -
+        }
+      </div>
+    </td>
+    <td>
+      <div class="schedule">
+        @if (item.review_start_time) {
+          <span class="time">
+            {{ item.review_start_time | date:'HH:mm' }}
+          </span>
+        } @else {
+          -
+        }
+      </div>
+    </td>
+    <td>
+      <div class="schedule">
+        @if (item.finished_time) {
+          <span class="time">
+            {{ item.finished_time| date:'HH:mm' }}
+          </span>
+        } @else {
+          -
+        }
+      </div>
+    </td>
+    <td>{{item.createdAt | date: 'd MMMM' : 'fr' }}</td>
   </ng-template>
 </app-custom-table>

@@ -75,8 +75,8 @@
   justify-content: space-between;
   align-items: flex-start;
   background-color: white;
-  padding: 10px 16px 0 16px;
   border-radius: 8px;
+  margin-bottom: 16px;
 }
 
 .date-range-container {
@@ -274,14 +274,13 @@
 
 .page-container {
   background-color: white;
-  padding: 20px;
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 5px;
+  margin-bottom: 2rem;
   position: relative;
   padding-bottom: 8px;
 }
