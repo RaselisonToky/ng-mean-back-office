@@ -81,6 +81,7 @@
             "assets": [
               {
                 "glob": "**/*",
+
                 "input": "public"
               }
             ],

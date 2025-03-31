@@ -1,0 +1,41 @@
+.statistics-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.statistic-card {
+  flex: 1;
+  min-width: 150px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.statistic-action {
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f6368;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.statistic-count {
+  font-size: 24px;
+  font-weight: 600;
+  color: #202124;
+}
+
+@media (max-width: 768px) {
+  .statistics-container {
+    flex-direction: column;
+  }
+
+  .statistic-card {
+    width: 100%;
+  }
+}

@@ -53,6 +53,11 @@
           *ngTemplateOutlet="rowTemplate; context: { $implicit: item, index: i, isFirstColumn: i === 0 }"
         ></ng-container>
       </tr>
+      <tr *ngIf="paginatedData.length === 0">
+        <td [attr.colspan]="headers.length" class="no-data-message">
+          Aucune donnée disponible.
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
