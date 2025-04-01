@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="statistics-container">
+  @for (statisticPerStatus of appointmentCountPerStatus; track statisticPerStatus) {
+    <div class="statistic-card">
+      <div class="statistic-action">{{utils.getStatusLabel(statisticPerStatus.action)}}</div>
+      <div class="statistic-count">{{statisticPerStatus.count}}</div>
+    </div>
+  }
+</div>
