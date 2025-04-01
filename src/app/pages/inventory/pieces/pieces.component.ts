@@ -15,7 +15,7 @@ import { Validators } from '@angular/forms';
 })
 export class PiecesComponent implements OnInit {
   height = '400px';
-  tableHeaders = ['Nom', 'Ref', 'Prix', 'Quantité', 'Qte Minimal'];
+  tableHeaders = ['Nom', 'Ref', 'Prix', 'Quantité', 'Qte Minimal','Action'];
   pieces: Piece[] = [];
   constructor(private pieceService: PiecesService, private dialog: MatDialog) { }
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class PiecesComponent implements OnInit {
       if (result) {
         if (piece) {
           // Mise à jour d'une pièce existante
-          this.pieceService.update(parseInt(piece._id), result).subscribe({
+          this.pieceService.update(piece._id, result).subscribe({
             next: () => {
               console.log('Pièce mise à jour avec succès');
               this.loadPieces(); // Recharger les données
@@ -111,7 +111,7 @@ export class PiecesComponent implements OnInit {
 
   deletePiece(piece: Piece): void {
     if (confirm(`Êtes-vous sûr de vouloir supprimer la pièce ${piece.name}?`)) {
-      this.pieceService.delete(parseInt(piece._id)).subscribe({
+      this.pieceService.delete(piece._id).subscribe({
         next: () => {
           console.log('Pièce supprimée avec succès');
           this.loadPieces(); // Recharger les données

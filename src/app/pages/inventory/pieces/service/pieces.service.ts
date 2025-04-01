@@ -28,12 +28,12 @@ export class PiecesService {
   }
 
 
-  update(id: number, piece: Piece): Observable<Piece> {
+  update(id: string, piece: Piece): Observable<Piece> {
     return this.http.put<Piece>(`${this.baseUrl}/${id}`, piece);
   }
 
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }
