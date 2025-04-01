@@ -1,9 +1,7 @@
 export interface Transaction {
     _id:string,
-    piece:string,
-    price:number,
+    part_id:any,
     quantity:number,
-    justif:string
     type: string,
-    date: string
+    transaction_date: string
 }
