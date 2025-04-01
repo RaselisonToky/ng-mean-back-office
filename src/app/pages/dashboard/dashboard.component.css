@@ -30,6 +30,52 @@
   color: #202124;
 }
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.calendar-section,
+.info-section {
+  min-height: 600px;
+  border: 1px solid #e6e6e6;
+  padding: 16px;
+}
+
+.info-card {
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+.info-card h2 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.placeholder-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  text-align: center;
+  padding: 24px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 2px dashed #e2e8f0;
+}
+
+h2{
+  color: #1e293b;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .statistics-container {
     flex-direction: column;
@@ -37,5 +83,14 @@
 
   .statistic-card {
     width: 100%;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-section,
+  .info-section {
+    min-height: auto;
   }
 }

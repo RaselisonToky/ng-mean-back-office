@@ -1,0 +1,30 @@
+<div class="calendar">
+  <div class="calendar-header">
+    <button (click)="previousMonth()">&lt;</button>
+    <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
+    <button (click)="nextMonth()">&gt;</button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="weekday">Mon</div>
+    <div class="weekday">Tue</div>
+    <div class="weekday">Wed</div>
+    <div class="weekday">Thu</div>
+    <div class="weekday">Fri</div>
+    <div class="weekday">Sat</div>
+    <div class="weekday">Sun</div>
+
+    @for (week of calendar; track $index) {
+      @for (day of week; track $index) {
+        <div class="day"
+             [class.other-month]="!day.isCurrentMonth"
+             [class.today]="day.isToday">
+          <span class="date">{{ day.date.getDate() }}</span>
+          <span class="appointment-count" *ngIf="day.appointmentCount > 0">
+            {{ day.appointmentCount }}
+          </span>
+        </div>
+      }
+    }
+  </div>
+</div>
