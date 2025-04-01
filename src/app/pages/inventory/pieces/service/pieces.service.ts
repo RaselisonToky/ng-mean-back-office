@@ -8,9 +8,32 @@ import { Piece } from '../model/piece.model';
   providedIn: 'root',
 })
 export class PiecesService {
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl + '/inventory/pieces';
+
   constructor(private http: HttpClient) { }
-  findAll(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/inventory/pieces`);
+
+
+  findAll(): Observable<{ data: Piece[] }> {
+    return this.http.get<{ data: Piece[] }>(this.baseUrl);
+  }
+
+
+  findById(id: number): Observable<Piece> {
+    return this.http.get<Piece>(`${this.baseUrl}/${id}`);
+  }
+
+
+  create(piece: Piece): Observable<Piece> {
+    return this.http.post<Piece>(this.baseUrl, piece);
+  }
+
+
+  update(id: number, piece: Piece): Observable<Piece> {
+    return this.http.put<Piece>(`${this.baseUrl}/${id}`, piece);
+  }
+
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

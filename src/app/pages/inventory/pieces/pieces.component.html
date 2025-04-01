@@ -1,22 +1,22 @@
 <div class="page-container">
   <div class="text-5xl font-bold">Piece</div>
 
-  <app-custom-table
-    [headers]="tableHeaders"
-    [data]="pieces"
-    [itemsPerPage]="30"
-  >
+  <button mat-raised-button color="primary" (click)="openDialog()">Ajouter</button>
+
+  <app-custom-table [headers]="tableHeaders" [data]="pieces" [itemsPerPage]="30">
     <ng-template let-item>
-      <td>{{ item.name }}</td>
+      <td class="first-column">{{ item.name }}</td>
       <td>{{ item.reference }}</td>
+      <td>{{ item.unit_price }}</td>
+      <td>{{ item.stock_quantity }}</td>
+      <td>{{ item.alert_threshold }}</td>
       <td>
-        {{ item.unit_price }}
-      </td>
-      <td>
-        {{ item.stock_quantity }}
-      </td>
-      <td>
-        {{ item.alert_threshold }}
+        <button mat-icon-button color="primary" (click)="openDialog(item)">
+          edit
+        </button>
+        <button mat-icon-button color="warn">
+          delete
+        </button>
       </td>
     </ng-template>
   </app-custom-table>
