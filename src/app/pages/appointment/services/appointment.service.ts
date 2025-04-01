@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core'
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environments';
 import {Appointment, AppointmentDto} from '../model/appointment.model';
@@ -8,12 +8,12 @@ import {Appointment, AppointmentDto} from '../model/appointment.model';
   providedIn: 'root'
 })
 export class AppointmentService {
+  private readonly http = inject(HttpClient);
   private baseUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
 
   findAll(startDate: Date, endDate: Date): Observable<any> {
     const body = {
+
       startDate,
       endDate,
     }
@@ -34,6 +34,15 @@ export class AppointmentService {
 
   getAvailableSlots(filter_date: Date): Observable<any>{
     return this.http.get(`${this.baseUrl}/appointment/available-time-slots/${filter_date}`);
+  }
+
+  getAppointmentCountBetweenTwoDates(startDate: string, endDate: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/appointment/between-dates`,{
+      params: {
+        startDate,
+        endDate
+      }
+    });
   }
 
 }

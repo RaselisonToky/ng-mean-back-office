@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { TaskHistories } from './model/task-history.model'
 import { TaskHistoryService } from './services/task-history.service'
 import { UtilsService } from '../../shared/utils/utils.service'
@@ -6,6 +6,7 @@ import { CustomTableComponent } from '../../shared/ui/custom-table/custom-table.
 import { CurrencyPipe, DatePipe, NgStyle } from '@angular/common'
 import { Clock, Filter, LucideAngularModule } from 'lucide-angular'
 import { FormsModule } from '@angular/forms'
+import { AppointmentService } from '../appointment/services/appointment.service'
 
 @Component({
   selector: 'app-task-history',
@@ -19,10 +20,9 @@ import { FormsModule } from '@angular/forms'
   templateUrl: './task-history.component.html',
   styleUrl: './task-history.component.css'
 })
-export class TaskHistoryComponent {
-  private taskHistoriesService = inject(TaskHistoryService);
+export class TaskHistoryComponent implements OnInit {
+  private readonly taskHistoriesService = inject(TaskHistoryService);
   protected utilsService = inject(UtilsService);
-
   height = '909px';
   taskHistories : TaskHistories[] = [];
   startDate: string = '';
