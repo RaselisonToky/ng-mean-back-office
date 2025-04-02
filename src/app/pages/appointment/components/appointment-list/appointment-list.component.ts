@@ -71,11 +71,11 @@ export class AppointmentListComponent implements OnInit {
     this.showSidebar = false;
     this.selectedAppointment = null;
   }
-
   ngOnInit() {
     const today = new Date();
-    const firstDay = today;
-    const lastDay = today;
+    const firstDay = new Date(today);
+    const lastDay = new Date(today);
+    lastDay.setDate(lastDay.getDate() + 7);
     this.startDate = this.utilsService.formatDateForInput(firstDay);
     this.endDate = this.utilsService.formatDateForInput(lastDay);
     this.loadAppointment();

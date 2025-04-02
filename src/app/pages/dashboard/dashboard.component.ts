@@ -21,18 +21,31 @@ export class DashboardComponent implements OnInit {
   appointmentCounts: { date: string; appointmentCount: number }[] = [];
   currentMonth = signal(new Date().getMonth());
   currentYear = signal(new Date().getFullYear());
+  statisticsStartDate: Date = new Date();
+  statisticsEndDate: Date = new Date();
+
+  constructor() {
+    this.statisticsStartDate.setDate(1);
+    this.statisticsStartDate.setHours(0, 0, 0, 0);
+    this.statisticsEndDate.setMonth(this.statisticsEndDate.getMonth() + 1);
+    this.statisticsEndDate.setDate(0);
+    this.statisticsEndDate.setHours(23, 59, 59, 999);
+  }
 
   ngOnInit() {
     this.loadAppointmentCountPerStatus();
     this.loadAppointmentsForMonth();
+    this.loadGroupedServiceByCategory();
   }
 
-  loadAppointmentCountPerStatus() {
-    this.dashboardService.getAppointmentCountPerStatus().subscribe({
+  loadGroupedServiceByCategory(){
+    const startDate = this.statisticsStartDate.toISOString().split('T')[0];
+    const endDate = this.statisticsEndDate.toISOString().split('T')[0];
+    this.dashboardService.getGroupedServiceByCategory(startDate, endDate).subscribe({
       next: (data) => {
-        this.appointmentCountPerStatus = data.data;
+        console.log(data.data);
       }
-    });
+    })
   }
 
   loadAppointmentsForMonth() {
@@ -44,6 +57,14 @@ export class DashboardComponent implements OnInit {
     ).subscribe({
       next: (data) => {
         this.appointmentCounts = data.data;
+      }
+    });
+  }
+
+  loadAppointmentCountPerStatus() {
+    this.dashboardService.getAppointmentCountPerStatus().subscribe({
+      next: (data) => {
+        this.appointmentCountPerStatus = data.data;
       }
     });
   }
