@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, sign
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { LucideAngularModule, Search, X } from 'lucide-angular'
-import { Appointment } from '../../model/appointment.model'
+import { Appointment, STATUS } from '../../model/appointment.model'
 import { UserService } from '../../../user/services/user.service'
 import { User } from '../../../user/model/user.model'
 import { TaskService } from '../../../task/services/task.service'
@@ -145,6 +145,7 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
             data['review_start_time'] = new Date();
           } else if (newStatus === TASK_STATUS.COMPLETED) {
             data['finish_time'] = new Date();
+            window.location.reload();
           }
           this.taskService.updateTask(taskId, data).subscribe({
               next: (data) => {
@@ -232,4 +233,6 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
 
   protected readonly X = X;
   protected readonly Search = Search;
+  protected readonly TASK_STATUS = TASK_STATUS
+  protected readonly STATUS = STATUS
 }

@@ -25,7 +25,7 @@ export class ServiceComponent implements OnInit {
     this.serviceService.findAll().subscribe({
       next: (data) => {
         this.services = data.data;
-        console.log('Données récupérées:', data);
+        console.log('Données récupérées:', data.data);
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des données:', error);

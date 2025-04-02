@@ -195,4 +195,5 @@ export class AppointmentListComponent implements OnInit {
   protected readonly Filter = Filter;
   protected readonly Clock = Clock;
   protected readonly MoreVertical = MoreVertical;
+  protected readonly STATUS = STATUS
 }
