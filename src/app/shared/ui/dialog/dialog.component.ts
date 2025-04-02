@@ -10,6 +10,7 @@ import { NgIf,NgFor } from '@angular/common';
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.css'],
   imports: [MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -18,6 +19,7 @@ import { NgIf,NgFor } from '@angular/common';
     ReactiveFormsModule,NgIf,NgFor]
 })
 export class DialogComponent {
+  
   @Input() customClass: string = '';
   form: FormGroup;
   title: string;

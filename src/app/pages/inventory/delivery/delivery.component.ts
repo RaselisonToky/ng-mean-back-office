@@ -8,6 +8,19 @@ import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 })
 export class DeliveryComponent implements OnInit, OnDestroy {
   private linkElement!: HTMLLinkElement;
+  private currentStep: number = 1;
+  private totalSteps: number = 3;
+  private steps: string[] = ['Information Général', 'Détails du livraison', 'Vérification'];
+  private stepTitles: string[] = ['Information Général', 'Détails du livraison', 'Vérification'];
+  
+  formData: any = {
+    deliveryDate: '',
+    deliveryTime: '',
+    deliveryAddress: '',
+    deliveryInstructions: '',
+    deliveryContactName: '',
+    deliveryContactPhone: ''
+  }
   constructor(private renderer: Renderer2) { }
   ngOnInit(): void {
     this.linkElement = this.renderer.createElement('link')
@@ -21,6 +34,12 @@ export class DeliveryComponent implements OnInit, OnDestroy {
       this.renderer.removeChild(document.head, this.linkElement);
 
     }
+  }
+  goToNextStep() {
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
+    }
+
   }
 
 }
