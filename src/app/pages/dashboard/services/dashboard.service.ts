@@ -13,4 +13,13 @@ export class DashboardService {
   getAppointmentCountPerStatus(): Observable<any> {
     return this.http.get(`${this.baseUrl}/appointment/count-per-status`);
   }
+
+  getGroupedServiceByCategory(startDate: string, endDate: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/category/grouped-by-category`,{
+      params: {
+        startDate,
+        endDate
+      }
+    });
+  }
 }

@@ -1,24 +1,14 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  signal,
-  inject,
-  ChangeDetectorRef
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Search, X } from 'lucide-angular';
-import { Appointment } from '../../model/appointment.model';
-import { UserService } from '../../../user/services/user.service';
-import { User } from '../../../user/model/user.model';
-import { TaskService } from '../../../task/services/task.service';
-import {Task, TASK_STATUS, TaskDto} from '../../../task/model/task.model';
-import { UtilsService } from '../../../../shared/utils/utils.service';
-import {catchError, map, Observable, of, take, throwError} from 'rxjs';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, signal } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { LucideAngularModule, Search, X } from 'lucide-angular'
+import { Appointment } from '../../model/appointment.model'
+import { UserService } from '../../../user/services/user.service'
+import { User } from '../../../user/model/user.model'
+import { TaskService } from '../../../task/services/task.service'
+import { TASK_STATUS, TaskDto } from '../../../task/model/task.model'
+import { UtilsService } from '../../../../shared/utils/utils.service'
+import { catchError, map, Observable, take, throwError } from 'rxjs'
 
 @Component({
   selector: 'app-task-assignment',
@@ -146,15 +136,15 @@ export class TaskAssignmentComponent implements OnInit, OnChanges {
           const statusesMap = new Map(this.serviceStatuses());
           statusesMap.set(serviceId, newStatus);
           this.serviceStatuses.set(statusesMap);
-          const data = {
+          const data: { [key: string]: any } = {
             status: newStatus,
-            maintenance_start_time: new Date(),
-            review_start_time: new Date()
-          }
+          };
           if (newStatus === TASK_STATUS.IN_PROGRESS) {
-            data.maintenance_start_time = new Date();
+            data['maintenance_start_time'] = new Date();
           } else if (newStatus === TASK_STATUS.IN_REVIEW) {
-            data.review_start_time = new Date();
+            data['review_start_time'] = new Date();
+          } else if (newStatus === TASK_STATUS.COMPLETED) {
+            data['finish_time'] = new Date();
           }
           this.taskService.updateTask(taskId, data).subscribe({
               next: (data) => {
