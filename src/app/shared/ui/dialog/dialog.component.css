@@ -1,0 +1,103 @@
+/* Conteneur du dialogue */
+.dialog-container {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    width: 800px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Titre */
+  .dialog-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  /* Contenu du formulaire */
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Champs du formulaire */
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  
+  .form-input:focus {
+    border-color: #2563eb;
+    outline: none;
+  }
+  
+  /* Messages d'erreur et d'aide */
+  .form-hint {
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+  
+  .form-error {
+    font-size: 0.85rem;
+    color: #dc2626;
+  }
+  
+  /* Boutons */
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .button {
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+  }
+  
+  .cancel-button:hover {
+    background: #f3f4f6;
+  }
+  
+  .save-button {
+    background: #2563eb;
+    color: white;
+    border: none;
+  }
+  
+  .save-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+  
+  .save-button:hover:not(:disabled) {
+    background: #1e40af;
+  }
+  

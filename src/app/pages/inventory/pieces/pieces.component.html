@@ -1,21 +1,21 @@
-<div class="page-container">
-  <div class="text-5xl font-bold">Piece</div>
+<div class="page-container tailwind-reset" appTailwind>
+  <div class="text-xl font-bold">Piece</div>
 
   <button mat-raised-button color="primary" (click)="openDialog()">Ajouter</button>
 
   <app-custom-table [headers]="tableHeaders" [data]="pieces" [itemsPerPage]="30">
     <ng-template let-item>
-      <td class="first-column">{{ item.name }}</td>
+      <td class="first-column text-sm">{{ item.name }}</td>
       <td>{{ item.reference }}</td>
       <td>{{ item.unit_price }}</td>
       <td>{{ item.stock_quantity }}</td>
       <td>{{ item.alert_threshold }}</td>
-      <td>
-        <button   (click)="openDialog(item)">
-          edit
+      <td class="flex gap-4 justify-center">
+        <button  class="p-2 bg-amber-100 backdrop-blur-lg rounded-md"    (click)="openDialog(item)">
+          Edit
         </button>
         <button   (click)="deletePiece(item)">
-          delete
+          Delete
         </button>
       </td>
     </ng-template>

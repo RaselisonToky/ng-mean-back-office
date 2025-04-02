@@ -1,25 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { CustomTableComponent } from '../../../shared/ui/custom-table/custom-table.component';
 import { Piece } from './model/piece.model';
 import { PiecesService } from './service/pieces.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from '../../../shared/ui/dialog/dialog.component';
 import { Validators } from '@angular/forms';
+import { LucideAngularComponent } from 'lucide-angular';
 
 @Component({
   selector: 'app-pieces',
   imports: [CommonModule, CustomTableComponent],
   templateUrl: './pieces.component.html',
   styleUrl: './pieces.component.css',
+  encapsulation: ViewEncapsulation.None,
 })
-export class PiecesComponent implements OnInit {
+
+export class PiecesComponent implements OnInit, OnDestroy {
+  private tailwindLinkElement: HTMLLinkElement | null = null;
+
   height = '400px';
-  tableHeaders = ['Nom', 'Ref', 'Prix', 'Quantité', 'Qte Minimal','Action'];
+  tableHeaders = ['Nom', 'Ref', 'Prix', 'Quantité', 'Qte Minimal', 'Action'];
   pieces: Piece[] = [];
-  constructor(private pieceService: PiecesService, private dialog: MatDialog) { }
+  constructor(private pieceService: PiecesService, private dialog: MatDialog, private renderer: Renderer2) { }
+  
   ngOnInit(): void {
+    this.tailwindLinkElement = this.renderer.createElement('link');
+    this.tailwindLinkElement!.rel = 'stylesheet';
+    this.tailwindLinkElement!.href = 'assets/tailwind-specific.css';
+    this.renderer.appendChild(document.head, this.tailwindLinkElement);
     this.loadPieces();
+  }
+
+  ngOnDestroy() {
+    if (this.tailwindLinkElement) {
+      this.renderer.removeChild(document.head, this.tailwindLinkElement);
+    }
   }
 
   loadPieces(): void {
@@ -37,7 +53,7 @@ export class PiecesComponent implements OnInit {
   openDialog(piece?: Piece): void {
     const dialogRef = this.dialog.open(DialogComponent, {
 
-      width: '700px',
+      width: '900px',
       data: {
         title: piece ? 'Modifier la pièce' : 'Ajouter une pièce',
         entity: piece || {},
