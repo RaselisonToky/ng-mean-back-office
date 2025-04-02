@@ -11,10 +11,10 @@
       <td>{{ item.stock_quantity }}</td>
       <td>{{ item.alert_threshold }}</td>
       <td>
-        <button mat-icon-button color="primary" (click)="openDialog(item)">
+        <button   (click)="openDialog(item)">
           edit
         </button>
-        <button mat-icon-button color="warn">
+        <button   (click)="deletePiece(item)">
           delete
         </button>
       </td>

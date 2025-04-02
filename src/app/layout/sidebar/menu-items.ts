@@ -2,6 +2,7 @@ import {
   Clock, Grid2x2, Truck,
   RotateCcw, CircuitBoard,
   ClipboardList, Layers2, CalendarCheck, LayoutGrid, Bookmark, BookMarked, FolderClock, Wrench, HandHelping, Layers,
+  ChartArea,
 } from 'lucide-angular'
 
 export interface MenuItem {
@@ -25,7 +26,7 @@ export const menuItems: MenuItem[] = [
         id: 'dashboard',
         label: 'Tableau de bord',
         href: '/dashboard',
-        icon: LayoutGrid, roles: ['ADMIN']
+        icon: ChartArea, roles: ['ADMIN']
       },
       {
         id: 'appointment',
