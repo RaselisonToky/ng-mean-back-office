@@ -32,9 +32,10 @@ export class DonutChartComponent implements OnInit {
 
   chartOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
       },
       tooltip: {
         callbacks: {

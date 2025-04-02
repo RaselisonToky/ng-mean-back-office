@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   dailyRevenueStartDate: Date = new Date();
   dailyRevenueEndDate: Date = new Date();
   dailyRevenue: ChartData[] = [];
+  formattedDailyRevenue: ChartData[] = [];
 
   constructor() {
     this.pieStatisticsStartDate.setDate(1);
@@ -68,7 +69,8 @@ export class DashboardComponent implements OnInit {
     const endDate = this.dailyRevenueEndDate.toISOString().split('T')[0];
     this.dashboardService.loadDailyRevenue(startDate, endDate).subscribe({
       next: (data) => {
-        this.dailyRevenue = data.data
+        this.dailyRevenue = data.data;
+        this.formattedDailyRevenue = this.getFormattedDailyRevenue();
       }
     })
   }
@@ -108,6 +110,20 @@ export class DashboardComponent implements OnInit {
       })
     }
     return results;
+  }
+
+  getFormattedDailyRevenue(): ChartData[] {
+    const formattedData: ChartData[] = [];
+    for (const item of this.dailyRevenue) {
+      const dateParts = item.key.split('-');
+      const day = dateParts[2];
+      formattedData.push({
+        key: day,
+        value: item.value
+      });
+    }
+
+    return formattedData;
   }
 
   handleMonthChange(event: { month: number; year: number }) {

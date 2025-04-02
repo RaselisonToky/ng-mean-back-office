@@ -32,7 +32,7 @@
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 2fr;
   gap: 16px;
   margin-top: 16px;
 }
@@ -41,6 +41,7 @@
 .info-section {
   min-height: 600px;
   border: 1px solid #e6e6e6;
+  border-radius: 4px;
   padding: 16px;
 }
 
@@ -64,7 +65,13 @@
   padding: 24px;
 }
 
-h2{
+.title-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.title {
   color: #1e293b;
   font-size: 1.5rem;
   margin-bottom: 16px;
@@ -88,4 +95,8 @@ h2{
   .info-section {
     min-height: auto;
   }
+}
+
+.subtitle{
+  color: #999999;
 }

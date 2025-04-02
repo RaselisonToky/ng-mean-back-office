@@ -10,7 +10,10 @@
 <div class="dashboard-grid">
   <div class="calendar-section">
     <div class="calendar-content">
-      <h2>Planning</h2>
+      <div class="title-section">
+        <span class="title">Planning mensuel</span>
+        <span class="subtitle">Rendez-vous confirmés en attente de réparation</span>
+      </div>
       <app-calendar
         [appointmentCounts]="appointmentCounts"
         [currentMonth]="currentMonth()"
@@ -22,7 +25,10 @@
   <div class="info-section">
     <div class="chart-section">
       <div class="info-card">
-        <h2>Statistiques détaillées</h2>
+        <div class="title-section">
+          <span class="title">Répartition des services</span>
+          <span class="subtitle">Distribution par catégorie (mois en cours)</span>
+        </div>
         <div class="placeholder-content">
           @if (servicePercentageByCategories.length >0) {
             <app-donut-chart [data]="servicePercentageByCategories"></app-donut-chart>
@@ -34,10 +40,13 @@
   <div class="info-section">
     <div class="chart-section">
       <div class="info-card">
-        <h2>Statistiques détaillées</h2>
+        <div class="title-section">
+          <span class="title">Évolution du chiffre d'affaires</span>
+          <span class="subtitle">Revenus quotidiens (20 derniers jours)</span>
+        </div>
         <div class="placeholder-content">
           @if (dailyRevenue.length >0) {
-            <app-line-chart [data]="dailyRevenue"></app-line-chart>
+            <app-line-chart [data]="formattedDailyRevenue"></app-line-chart>
           }
         </div>
       </div>
