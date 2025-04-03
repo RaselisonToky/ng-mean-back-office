@@ -1,0 +1,42 @@
+<form class="w-fit flex flex-col gap-3 rounded-md p-3" novalidate>
+    <div class="w-full p-3 flex flex-col gap-3">
+      <h1 class="" style="font-size: 23px;">Information de livraison</h1>
+      <p class="text-gray-500 text-sm">
+        Insérer les informations générals de livraison pour le bon de commande.
+      </p>
+    </div>
+    <div class="w-fit  flex  flex-col gap-3 p-3">
+      <div class="flex w-full  gap-3">
+        <div class="flex w-1/2 flex-col gap-2">
+          <label for="deliveryId" class="text-sm text-gray-500">Bon de livraison</label>
+          <input type="text" id="deliveryId" placeholder="BL-2023-0001"
+            class="border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400" />
+        </div>
+        <div class="flex w-1/2 flex-col gap-2">
+          <label for="deliveryDate" class="text-sm text-gray-500">Date de livraison</label>
+          <input type="datetime-local" id="deliveryDate"
+            class="border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400" />
+        </div>
+      </div>
+      <div class="flex w-full ">
+        <div class="flex flex-col gap-2">
+          <label for="deliveryId" class="text-sm text-gray-500">Livreur</label>
+          <input type="text" id="deliveryId" placeholder="Rakoto David"
+            class="border border-gray-300 w-4xl rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400" />
+        </div>
+      </div>
+      <div class="flex w-full ">
+        <div class="flex flex-col gap-2">
+          <label for="deliveryId" class="text-sm text-gray-500">Observation</label>
+          <textarea id="deliveryId" placeholder="Remarque, etc ..." cols="4" rows="4"
+            class="border border-gray-300 w-4xl rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex justify-end p-3">
+      <button type="submit"
+        class="w-fit bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+        Continuer
+      </button>
+    </div>
+  </form>
