@@ -1,1 +1,97 @@
-<p>details works!</p>
+<form class="w-fit flex flex-col gap-3 rounded-md p-3 min-w-4xl" novalidate>
+    <div class="w-full p-3 flex flex-col gap-3">
+        <h1 class="" style="font-size: 23px;">Détails de livraison</h1>
+        <p class="text-gray-500 text-sm">
+            Insérer les détails de livraison pour le bon de commande.
+        </p>
+    </div>
+
+    <main>
+        <div class="w-fit  flex  flex-col gap-3 p-3">
+            <div class="flex w-full ">
+                <div class="flex flex-col gap-2">
+                    <label for="deliveryId" class="text-sm text-gray-500">Pieces</label>
+                    <select [(ngModel)]="selectedPieceId" (change)="onPieceSelectedChange($event)"
+                        class="border border-gray-300 w-4xl rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400">
+                        <option value="0" selected disabled>Choisir une pièce</option>
+                        @for (piece of pieces; track piece._id) {
+                        <option [value]="piece._id">{{ piece.name }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex w-full  gap-3">
+                <div class="flex w-1/2 flex-col gap-2">
+                    <label for="quantity" class="text-sm text-gray-500">Quantité</label>
+                    <input type="number" id="quantity" placeholder="4" name="qunatity" [(ngModel)]="quantites"
+                        class="border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400" />
+                </div>
+                <div class="flex w-1/2 flex-col gap-2">
+                    <label for="unitPrice" class="text-sm text-gray-500">Prix Unitaire</label>
+                    <input type="number" id="unitPrice" name="prixUnitaire" [(ngModel)]="prixUnitaire"
+                        class="border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400" />
+                </div>
+            </div>
+            <div>
+                <button type="submit" (click)="addDetail()"
+                    class="bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+                    +
+                </button>
+            </div>
+
+        </div>
+
+        <div class="w-full overflow-x-auto">
+            @if (details.length == 0) {
+            <div class="flex justify-center items-center h-32">
+                <p class="text-gray-500">Aucun produit ajouté</p>
+            </div>
+            }@else {
+            <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                <thead class="bg-gray-50 text-gray-700">
+                    <tr>
+                        <th class="py-3 px-4 text-left font-semibold">Produit</th>
+                        <th class="py-3 px-4 text-left font-semibold">Quantité</th>
+                        <th class="py-3 px-4 text-left font-semibold">Prix unitaire</th>
+                        <th class="py-3 px-4 text-left font-semibold">Total</th>
+                        <th class="py-3 px-4 text-left font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+
+                    @for( detail of details ; track detail._id) {
+                    <tr class="hover:bg-gray-50">
+                        <td class="py-3 px-4">{{detail.piece.name}}</td>
+                        <td class="py-3 px-4">{{detail.quantite}}</td>
+                        <td class="py-3 px-4">{{detail.prixUnitaire}}</td>
+                        <td class="py-3 px-4">{{detail.total}}</td>
+
+                        <td class="py-3 px-4">
+                            <button (click)="editDetail(detail)" class="text-blue-500 hover:underline">Modifier</button>
+                            <button (click)="removeDetail(detail._id)"
+                                class="text-red-500 hover:underline ml-2">Supprimer</button>
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+                <tfoot class="bg-gray-50">
+                    <tr>
+                        <td colspan="4" class="py-3 px-4 text-right font-semibold">Total:</td>
+                        <td class="py-3 px-4 font-semibold">{{calculerTotal()}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            }
+
+        </div>
+    </main>
+
+    <div class="w-full flex justify-end p-3">
+        <button type="submit"
+            class="w-fit bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+            Continuer
+        </button>
+    </div>
+</form>
