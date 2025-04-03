@@ -152,9 +152,11 @@
         </span>
       </td>
       <td class="action-column">
-        <button class="context-menu-button" (click)="openContextMenu($event, item)">
-          <lucide-icon [img]="MoreVertical" size="16" class="icon"></lucide-icon>
-        </button>
+        @if (item.status !== STATUS.COMPLETED) {
+          <button class="context-menu-button" (click)="openContextMenu($event, item)">
+            <lucide-icon [img]="MoreVertical" size="16" class="icon"></lucide-icon>
+          </button>
+        }
       </td>
     </ng-template>
   </app-custom-table>

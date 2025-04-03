@@ -96,8 +96,8 @@
 .appointment-count {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #ffffff;
-  background-color: #1e293b;
+  color: #1e293b;
+  border: 1px solid #1e293b;
   padding: 4px 8px;
   border-radius: 16px;
   min-width: 24px;

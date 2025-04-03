@@ -22,4 +22,13 @@ export class DashboardService {
       }
     });
   }
+
+  loadDailyRevenue(startDate: string, endDate: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/appointment/daily-revenue`,{
+      params: {
+        startDate,
+        endDate
+      }
+    });
+  }
 }

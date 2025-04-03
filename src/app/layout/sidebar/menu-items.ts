@@ -43,26 +43,6 @@ export const menuItems: MenuItem[] = [
     ],
   },
   {
-    id: 'statistics',
-    label: 'STATISTIQUES',
-    display: true,
-    roles: ['ADMIN'],
-    items: [
-      {
-        id: 'service',
-        label: 'Service',
-        href: '/histories',
-        icon: Layers, roles: ['ADMIN']
-      },
-      {
-        id: 'mechanic',
-        label: 'Mécanicien',
-        href: '/histories',
-        icon: Wrench, roles: ['ADMIN']
-      }
-    ],
-  },
-  {
     id: 'settings',
     label: 'CONFIGURATION',
     display: true,

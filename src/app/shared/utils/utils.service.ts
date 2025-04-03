@@ -9,6 +9,14 @@ import {STATUS_CHIP_COLORS, STATUS_LABELS_FR} from '../constants/constant';
 export class UtilsService {
   constructor() {}
 
+  getMonthName(monthIndex: number): string {
+    const months = [
+      'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+      'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    ];
+    return months[monthIndex];
+  }
+
   formatDate(anyFormOfDate: Date): string {
     const date = new Date(anyFormOfDate);
     return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(date);

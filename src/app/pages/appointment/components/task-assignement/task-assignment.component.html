@@ -84,11 +84,13 @@
     </div>
   </div>
 
-  <div class="sidebar-footer">
-    <button class="cancel-button" (click)="onClose()">Annuler</button>
-    <button class="save-button" (click)="onSave()" [disabled]="isLoading()">
-      <span *ngIf="isLoading()">Chargement...</span>
-      <span *ngIf="!isLoading()">Confirmer</span>
-    </button>
-  </div>
+  @if (this.appointment?.status !== STATUS.COMPLETED) {
+    <div class="sidebar-footer">
+      <button class="cancel-button" (click)="onClose()">Annuler</button>
+      <button class="save-button" (click)="onSave()" [disabled]="isLoading()">
+        <span *ngIf="isLoading()">Chargement...</span>
+        <span *ngIf="!isLoading()">Confirmer</span>
+      </button>
+    </div>
+  }
 </div>

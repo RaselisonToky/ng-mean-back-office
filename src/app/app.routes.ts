@@ -5,7 +5,7 @@ import { DeliveryComponent } from './pages/inventory/delivery/delivery.component
 
 import { AuthComponent } from './pages/auth/auth.component';
 import { LayoutComponent } from './layout/layout.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+// import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { AuthGuard } from './pages/auth/services/auth-guards.service';
 import { ServiceComponent } from './pages/service/service.component';
@@ -17,6 +17,7 @@ import {
   AppointmentDetailsComponent
 } from './pages/appointment/components/appointment-details/appointment-details.component';
 import { TaskHistoryComponent } from './pages/task-history/task-history.component'
+import { DashboardComponent } from './pages/dashboard/dashboard.component'
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
