@@ -1,4 +1,5 @@
-import { Component, Input, Output } from '@angular/core';
+import { DeliveryDetail } from './../delivery.types';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PiecesService } from '../../pieces/service/pieces.service';
 import { Piece } from '../../pieces/model/piece.model';
 import { FormsModule } from '@angular/forms';
@@ -17,15 +18,10 @@ export class DetailsComponent {
   @Input() pieces: Piece[] = [];
   filteredPieces: Piece[] = [];
   selectedPiece = '';
-  details: {
-    _id: string;
-    pieceId: string;
-    piece: Piece;
-    prixUnitaire: number;
-    quantite: number;
-    total: number;
-  }[] = [];
+  details: DeliveryDetail[] = [];
 
+  @Output() onNext = new EventEmitter<any[]>();
+  @Output() onPrevious = new EventEmitter<void>();
   addDetail() {
     console.log(this.selectedPieceId);
     const newDetail = {
@@ -92,6 +88,12 @@ export class DetailsComponent {
 
   removeDetail(detailId: string) {
     this.details = this.details.filter(detail => detail._id !== detailId);
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    console.log('Form submitted:', this.details);
+    this.onNext.emit(this.details);
   }
 
 }

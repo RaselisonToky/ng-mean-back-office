@@ -7,10 +7,13 @@ import { DetailsComponent } from './details/details.component';
 import { VerificationComponent } from './verification/verification.component';
 import { PiecesService } from '../pieces/service/pieces.service';
 import { Piece } from '../pieces/model/piece.model';
+import { CommonModule } from '@angular/common';
+import { DeliveryGeneralFormData } from './delivery.types';
 @Component({
   selector: 'app-delivery',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     GeneralInfoComponent,
@@ -19,14 +22,15 @@ import { Piece } from '../pieces/model/piece.model';
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.css',
-  
+
 })
 export class DeliveryComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
   totalSteps: number = 3;
   action: string | null = 'create';
   pieces: Piece[] = [];
-
+  deliveryGeneral: DeliveryGeneralFormData | null = null;
+  deliveryDetails: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private pieceService: PiecesService) { }
   ngOnInit(): void {
@@ -53,10 +57,9 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     });
   }
 
-  goToNextStep(event: Event): void {
-    event.preventDefault();
+  goToNextStep(genInfo: DeliveryGeneralFormData): void {
+    this.deliveryGeneral = genInfo;
     this.route.params.subscribe(params => {
-      const id = params['id'];
       if (this.currentStep < this.totalSteps) {
         this.currentStep++;
         this.router.navigate(['inventory/deliveries'], {
@@ -70,4 +73,25 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     );
   }
 
+  goToVerificationStep(details: any[]): void {
+    this.deliveryDetails = details;
+    console.log('Details:', details);
+    this.route.params.subscribe(params => {
+      if (this.currentStep < this.totalSteps) {
+        this.currentStep++;
+        this.router.navigate(['inventory/deliveries'], {
+          queryParams: {
+            action: this.action,
+            step: this.currentStep
+          }
+        });
+      }
+    });
+  }
+
+  submitDelivery(): void {
+    // Handle the submission logic here
+    console.log('Delivery submitted:', this.deliveryGeneral, this.deliveryDetails);
+    // You can navigate to another page or show a success message
+  }
 }

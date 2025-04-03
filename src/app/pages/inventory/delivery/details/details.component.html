@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div>
-                <button type="submit" (click)="addDetail()"
+                <button (click)="addDetail()"
                     class="bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
                     +
                 </button>
@@ -89,7 +89,7 @@
     </main>
 
     <div class="w-full flex justify-end p-3">
-        <button type="submit"
+        <button type="submit" (click)="onSubmit($event)"
             class="w-fit bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
             Continuer
         </button>

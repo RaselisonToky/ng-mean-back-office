@@ -1,1 +1,69 @@
-<p>verification works!</p>
+<main class="w-fit flex flex-col gap-3 rounded-md p-3 min-w-4xl" novalidate>
+    <div class="w-full p-3 flex flex-col gap-3">
+        <h1 class="" style="font-size: 23px;">Vérification de saisie</h1>
+        <p class="text-gray-500 text-sm">
+            Veuillez vérifier les informations saisies avant la validation.
+        </p>
+    </div>
+
+    <main class="w-full  flex  flex-col gap-3 p-3">
+        <h1 class="text-gray-950 " style="font-size: 30px;">
+            Informations de livraison
+        </h1>
+        <header class="flex flex-col gap-2">
+            <span>
+                Bon de livraison : <span class="font-semibold">{{ general?.bonLivraison }}</span>
+            </span>
+            <span>
+                Date de livraison : <span class="italic">{{ general?.dateLivraison }}</span>
+            </span>
+            <span>
+                Livreur : <span class="italic">{{ general?.livreur }}</span>
+            </span>
+            <span>
+                Numéro de suivie : <span class="font-semibold text-blue-800">{{ "dsdddq" }}</span>
+            </span>
+        </header>
+        <h1 class="text-gray-950 " style="font-size: 30px;">
+            Détails de livraison
+        </h1>
+        <main class="w-full overflow-x-auto ">
+            <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                <thead class="text-gray-700">
+                    <tr>
+                        <th class="py-3 px-4 text-left font-semibold">Produit</th>
+                        <th class="py-3 px-4 text-left font-semibold">Quantité</th>
+                        <th class="py-3 px-4 text-left font-semibold">Prix unitaire</th>
+                        <th class="py-3 px-4 text-left font-semibold">Total</th>
+
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 ">
+                    @for (dt of details; track $index) {
+                    <tr>
+                        <td class="py-3 px-4 text-left font-semibold">{{dt.piece.name}}</td>
+                        <td class="py-3 px-4 text-left font-semibold">{{dt.quantite}}</td>
+                        <td class="py-3 px-4 text-left font-semibold">{{dt.prixUnitaire}}</td>
+                        <td class="py-3 px-4 text-left font-semibold">{{dt.total}}</td>
+                    </tr>
+                    }
+
+                </tbody>
+                <tfoot class="bg-gray-50">
+                    <tr>
+                        <td colspan="3" class="py-3 px-4 text-right font-semibold">Total:</td>
+                        <td class="py-3 px-4 font-semibold">{{getTotalPrice()}} Ar</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </main>
+    </main>
+
+
+    <div class="w-full flex justify-end p-3">
+        <button type="submit"
+            class="w-fit bg-gray-800 text-white py-2 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+            Valider
+        </button>
+    </div>
+</main>

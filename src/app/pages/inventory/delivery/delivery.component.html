@@ -7,7 +7,8 @@
   <div class="w-full flex justify-center items-center">
     <div class="w-3/5 flex p-2 justify-between items-center">
       <div class="flex flex-col gap-1 justify-center items-center">
-        <div class="w-5 h-5 rounded-full  bg-black flex  justify-center items-center gap-7">
+        <div class="w-5 h-5 rounded-full   flex  justify-center items-center gap-7"
+          [ngClass]="currentStep===1 ? 'bg-blue-600' : 'bg-gray-200' ">
           <span class="w-2 h-2 rounded-full bg-white flex justify-center items-center ">
           </span>
         </div>
@@ -20,7 +21,8 @@
 
       </div>
       <div class="flex flex-col gap-1 justify-center items-center">
-        <div class="w-5 h-5 rounded-full  bg-gray-200 flex  justify-center items-center gap-7">
+        <div class="w-5 h-5 rounded-full   flex  justify-center items-center gap-7"
+          [ngClass]="currentStep===2 ? 'bg-blue-600' : 'bg-gray-200' ">
           <span class="w-2 h-2 rounded-full bg-white flex justify-center items-center ">
           </span>
         </div>
@@ -33,7 +35,8 @@
 
       </div>
       <div class="flex flex-col gap-1 justify-center items-center">
-        <div class="w-5 h-5 rounded-full bg-gray-200 flex  justify-center items-center gap-7">
+        <div class="w-5 h-5 rounded-full  flex  justify-center items-center gap-7"
+          [ngClass]="currentStep===3 ? 'bg-blue-600' : 'bg-gray-200' ">
           <span class="w-2 h-2 rounded-full bg-white flex justify-center items-center ">
           </span>
         </div>
@@ -47,12 +50,13 @@
   <div class="w-full flex justify-center items-center">
     @if (action==="create") {
     @if(currentStep===1){
-    <app-general-info></app-general-info>
+    <app-general-info (onNext)="goToNextStep($event)" ></app-general-info>
     } @else if (currentStep=== 2) {
-    <app-details [pieces]="pieces"></app-details>
+    <app-details (onNext)="goToVerificationStep($event)" [pieces]="pieces"></app-details>
     }@else if (currentStep===3) {
-    <app-verification></app-verification>
+    <app-verification [general]="deliveryGeneral" [details]="deliveryDetails"></app-verification>
     }
     }
+
   </div>
 </div>
