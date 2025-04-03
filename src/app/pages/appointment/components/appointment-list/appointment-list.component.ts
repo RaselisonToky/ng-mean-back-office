@@ -94,7 +94,6 @@ export class AppointmentListComponent implements OnInit {
 
   loadAppointment(): void {
     this.isLoading.set(true);
-    setTimeout(() => {
       const startDateObj = this.startDate ? new Date(this.startDate) : new Date();
       const endDateObj = this.endDate ? new Date(this.endDate) : new Date();
       this.appointmentService.findAll(startDateObj, endDateObj).subscribe({
@@ -108,7 +107,6 @@ export class AppointmentListComponent implements OnInit {
           this.isLoading.set(false);
         }
       });
-    }, 3000)
   }
 
   onDetailsClicked(appointment: Appointment) {
