@@ -1,0 +1,10 @@
+<div class="spinner-container" [ngStyle]="containerStyle">
+  <div
+    class="spinner"
+    [ngClass]="spinnerSizeClass"
+    [ngStyle]="{'border-color': color, 'border-top-color': 'transparent'}"
+  ></div>
+  @if (showText) {
+    <div class="spinner-text" [ngStyle]="{'color': textColor}">{{text}}</div>
+  }
+</div>

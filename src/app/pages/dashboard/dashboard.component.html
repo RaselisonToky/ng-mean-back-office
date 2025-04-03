@@ -1,9 +1,18 @@
 <div class="statistics-container">
-  @for (statisticPerStatus of appointmentCountPerStatus; track statisticPerStatus) {
-    <div class="statistic-card">
-      <div class="statistic-action">{{utils.getStatusLabel(statisticPerStatus.action)}}</div>
-      <div class="statistic-count">{{statisticPerStatus.count}}</div>
-    </div>
+  @if (loading()) {
+    @for (item of [1, 2, 3, 4]; track item) {
+      <div class="statistic-card">
+        <app-place-holder-loading height="20px" width="100px" type="text-line"></app-place-holder-loading>
+        <app-place-holder-loading height="40px" width="60px" type="text-line"></app-place-holder-loading>
+      </div>
+    }
+  } @else {
+    @for (statisticPerStatus of appointmentCountPerStatus; track statisticPerStatus) {
+      <div class="statistic-card">
+        <div class="statistic-action">{{utils.getStatusLabel(statisticPerStatus.action)}}</div>
+        <div class="statistic-count">{{statisticPerStatus.count}}</div>
+      </div>
+    }
   }
 </div>
 
@@ -14,12 +23,16 @@
         <span class="title">Planning mensuel</span>
         <span class="subtitle">Rendez-vous confirmés en attente de réparation</span>
       </div>
-      <app-calendar
-        [appointmentCounts]="appointmentCounts"
-        [currentMonth]="currentMonth()"
-        [currentYear]="currentYear()"
-        (monthChanged)="handleMonthChange($event)"
-      ></app-calendar>
+      @if (loadingCalendar()) {
+        <app-place-holder-loading height="300px" width="100%" type="card"></app-place-holder-loading>
+      } @else {
+        <app-calendar
+          [appointmentCounts]="appointmentCounts"
+          [currentMonth]="currentMonth()"
+          [currentYear]="currentYear()"
+          (monthChanged)="handleMonthChange($event)"
+        ></app-calendar>
+      }
     </div>
   </div>
   <div class="info-section">
@@ -30,7 +43,9 @@
           <span class="subtitle">Distribution par catégorie (mois en cours)</span>
         </div>
         <div class="placeholder-content">
-          @if (servicePercentageByCategories.length >0) {
+          @if (loadingPieChart()) {
+            <app-place-holder-loading height="250px" width="100%" type="chart"></app-place-holder-loading>
+          } @else if (servicePercentageByCategories.length > 0) {
             <app-donut-chart [data]="servicePercentageByCategories"></app-donut-chart>
           }
         </div>
@@ -45,7 +60,9 @@
           <span class="subtitle">Revenus quotidiens (20 derniers jours)</span>
         </div>
         <div class="placeholder-content">
-          @if (dailyRevenue.length >0) {
+          @if (loadingLineChart()) {
+            <app-place-holder-loading height="250px" width="100%" type="chart"></app-place-holder-loading>
+          } @else if (dailyRevenue.length > 0) {
             <app-line-chart [data]="formattedDailyRevenue"></app-line-chart>
           }
         </div>

@@ -41,6 +41,7 @@
   [data]="filteredTaskHistories"
   [itemsPerPage]="30"
   [height]="height"
+  [isLoading]="isLoading()"
 >
   <ng-template let-item let-i="index">
     <td

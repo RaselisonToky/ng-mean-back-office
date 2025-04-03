@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, inject, OnInit, signal } from '@angular/core'
 import { TaskHistories } from './model/task-history.model'
 import { TaskHistoryService } from './services/task-history.service'
 import { UtilsService } from '../../shared/utils/utils.service'
@@ -39,6 +39,7 @@ export class TaskHistoryComponent implements OnInit {
   ];
   searchQuery: string = '';
   filteredTaskHistories: TaskHistories[] = [];
+  isLoading = signal(false);
 
   ngOnInit() {
     const firstDay = new Date();
@@ -49,6 +50,7 @@ export class TaskHistoryComponent implements OnInit {
   }
 
   loadTaskHistories() {
+    this.isLoading.set(true);
     const firstDay = this.startDate ? new Date(this.startDate) : new Date();
     const lastDay = this.endDate ? new Date(this.endDate) : new Date();
     this.taskHistoriesService.getAll(firstDay, lastDay).subscribe({
@@ -56,6 +58,7 @@ export class TaskHistoryComponent implements OnInit {
         this.taskHistories = data.data.reverse();
         this.filteredTaskHistories = [...this.taskHistories];
         this.applyFilters();
+        this.isLoading.set(false);
       }
     });
   }

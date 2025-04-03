@@ -41,6 +41,12 @@
   </div>
 
   <div class="table-wrapper">
+    <div class="loading-overlay" *ngIf="isLoading">
+      <spinner-loading
+        [size]='"sm"'
+      >
+      </spinner-loading>
+    </div>
     <table [ngClass]="tableClassName">
       <thead>
       <tr>
@@ -53,7 +59,7 @@
           *ngTemplateOutlet="rowTemplate; context: { $implicit: item, index: i, isFirstColumn: i === 0 }"
         ></ng-container>
       </tr>
-      <tr *ngIf="paginatedData.length === 0">
+      <tr *ngIf="paginatedData.length === 0 && !isLoading">
         <td [attr.colspan]="headers.length" class="no-data-message">
           Aucune donnée disponible.
         </td>
