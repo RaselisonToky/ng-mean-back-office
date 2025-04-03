@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core'
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -11,13 +11,33 @@ import {User} from '../../../user/model/user.model';
   styleUrls: ['./login.component.css'],
   imports: [FormsModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username = '';
   password = '';
   error = signal<string | null>(null);
   isLoading = signal<boolean>(false);
+  isAdmin = signal<boolean>(true);
 
   constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.updateDefaultCredentials();
+  }
+
+  toggleRole() {
+    this.isAdmin.update(current => !current);
+    this.updateDefaultCredentials();
+  }
+
+  updateDefaultCredentials() {
+    if (this.isAdmin()) {
+      this.username = 'admin';
+      this.password = 'admin';
+    } else {
+      this.username = 'mechanic1';
+      this.password = 'password';
+    }
+  }
 
   async onSubmit(event: Event) {
     event.preventDefault();

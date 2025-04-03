@@ -1,10 +1,21 @@
 <div class="container">
   <div class="loginSection">
     <div class="loginBox">
+      <div class="roleSwitch">
+        <span [class.active]="!isAdmin()">Mécanicien</span>
+        <label class="switch">
+          <input type="checkbox" [checked]="isAdmin()" (change)="toggleRole()">
+          <span class="slider round"></span>
+        </label>
+        <span [class.active]="isAdmin()">Admin</span>
+      </div>
+
       <h2>Connexion</h2>
+
       @if (error()) {
         <div class="errorMessage">{{ error() }}</div>
       }
+
       <form (submit)="onSubmit($event)">
         <div class="inputGroup">
           <label for="username">Nom d'utilisateur</label>
