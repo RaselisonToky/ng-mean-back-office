@@ -23,15 +23,11 @@ export class SidebarComponent {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private authService: AuthService) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-
-    // Filter the menu items based on user roles
     this.menuItems = this.filterMenuItems(menuItems);
-
     if (this.isBrowser) {
       effect(() => {
         localStorage.setItem('sidebarExpandedCategories', JSON.stringify(this.expandedCategories()));
       });
-
       const saved = localStorage.getItem('sidebarExpandedCategories');
       if (saved) {
         this.expandedCategories.set(JSON.parse(saved));
@@ -41,17 +37,13 @@ export class SidebarComponent {
 
   private filterMenuItems(menuItems: MenuItem[]): MenuItem[] {
     const userRoles = this.authService.getRoles();
-
     if (!userRoles) {
       return [];
     }
-
     return menuItems.filter(item => {
       if (!item.items) {
         return item.roles === undefined || item.roles.some((role: string) => userRoles.includes(role));
       }
-
-      // If the menu item has subitems, filter the subitems recursively
       item.items = this.filterMenuItems(item.items);
       return item.items.length > 0;
     });

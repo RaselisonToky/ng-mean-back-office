@@ -6,13 +6,13 @@ import {Component, ContentChild, TemplateRef,
 import { CommonModule } from '@angular/common';
 import { NgClass, NgStyle } from '@angular/common';
 import {isEmpty} from 'rxjs';
+import { SpinnerLoadingComponent } from '../spinner-loading/spinner-loading.component'
 
 @Component({
   selector: 'app-custom-table',
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.css'],
-  imports: [CommonModule, NgClass, NgStyle],
-  standalone: true,
+  imports: [CommonModule, SpinnerLoadingComponent],
   encapsulation: ViewEncapsulation.None
 })
 export class CustomTableComponent implements OnInit, OnChanges, AfterContentInit {
@@ -22,6 +22,7 @@ export class CustomTableComponent implements OnInit, OnChanges, AfterContentInit
   @Input() height?: string;
   @Input() className?: string;
   @Input() tableClassName?: string;
+  @Input() isLoading = false;
   @Output() rowClick = new EventEmitter<any>();
   @ContentChild(TemplateRef) rowTemplate!: TemplateRef<any>;
 
@@ -84,29 +85,24 @@ export class CustomTableComponent implements OnInit, OnChanges, AfterContentInit
     const maxButtons = 5;
     let start = Math.max(1, this.currentPage - Math.floor(maxButtons / 2));
     let end = Math.min(this.totalPages, start + maxButtons - 1);
-
     if (end - start + 1 < maxButtons) {
       start = Math.max(1, end - maxButtons + 1);
     }
-
     if (start > 1) {
       buttons.push({ type: 'button', value: 1 });
       if (start > 2) {
         buttons.push({ type: 'ellipsis', value: 'start-ellipsis' });
       }
     }
-
     for (let i = start; i <= end; i++) {
       buttons.push({ type: 'button', value: i, active: this.currentPage === i });
     }
-
     if (end < this.totalPages) {
       if (end < this.totalPages - 1) {
         buttons.push({ type: 'ellipsis', value: 'end-ellipsis' });
       }
       buttons.push({ type: 'button', value: this.totalPages });
     }
-
     return buttons;
   }
 

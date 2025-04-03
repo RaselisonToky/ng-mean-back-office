@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core'
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomTableComponent } from '../../../../shared/ui/custom-table/custom-table.component';
@@ -26,12 +26,10 @@ import {Router} from '@angular/router';
 })
 
 export class AppointmentListComponent implements OnInit {
-  constructor(
-    private appointmentService: AppointmentService,
-    private categoryService: CategoryService,
-    protected utilsService: UtilsService,
-    private router: Router,
-  ) {}
+  private readonly appointmentService = inject(AppointmentService);
+  private readonly categoryService = inject(CategoryService);
+  protected readonly utilsService = inject(UtilsService);
+  private readonly router = inject(Router)
 
   height = '909px';
   showSidebar = false;
@@ -62,6 +60,7 @@ export class AppointmentListComponent implements OnInit {
   showContextMenu: boolean = false;
   contextMenuX = 0;
   contextMenuY = 0;
+  isLoading = signal(false);
 
   onTaskStatusUpdated(): void {
     this.loadAppointment();
@@ -94,17 +93,20 @@ export class AppointmentListComponent implements OnInit {
   }
 
   loadAppointment(): void {
-    const startDateObj = this.startDate ? new Date(this.startDate) : new Date();
-    const endDateObj = this.endDate ? new Date(this.endDate) : new Date();
-    this.appointmentService.findAll(startDateObj, endDateObj).subscribe({
-      next: (data) => {
-        this.appointments = data.data;
-        this.applyFilters();
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des données:', error);
-      }
-    });
+    this.isLoading.set(true);
+      const startDateObj = this.startDate ? new Date(this.startDate) : new Date();
+      const endDateObj = this.endDate ? new Date(this.endDate) : new Date();
+      this.appointmentService.findAll(startDateObj, endDateObj).subscribe({
+        next: (data) => {
+          this.appointments = data.data;
+          this.applyFilters();
+          this.isLoading.set(false);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération des données:', error);
+          this.isLoading.set(false);
+        }
+      });
   }
 
   onDetailsClicked(appointment: Appointment) {
