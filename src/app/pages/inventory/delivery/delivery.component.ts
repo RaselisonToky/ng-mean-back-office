@@ -12,7 +12,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
   private totalSteps: number = 3;
   private steps: string[] = ['Information Général', 'Détails du livraison', 'Vérification'];
   private stepTitles: string[] = ['Information Général', 'Détails du livraison', 'Vérification'];
-  
+
   formData: any = {
     deliveryDate: '',
     deliveryTime: '',
@@ -35,10 +35,9 @@ export class DeliveryComponent implements OnInit, OnDestroy {
 
     }
   }
-  goToNextStep() {
-    if (this.currentStep < this.totalSteps) {
-      this.currentStep++;
-    }
+  goToNextStep(event: Event): void {
+    event.preventDefault();
+    console.log('Current Step:', this.currentStep);
 
   }
 
