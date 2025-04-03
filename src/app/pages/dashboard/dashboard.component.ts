@@ -10,12 +10,13 @@ import { CalendarComponent } from '../../shared/ui/calendar/calendar.component'
 import { DonutChartComponent } from '../../shared/ui/donut-chart/donut-chart.component'
 import { LineChartComponent } from '../../shared/ui/line-chart/line-chart.component'
 import { PlaceHolderLoadingComponent } from '../../shared/ui/place-holder-loading/place-holder-loading.component'
+import { FooterComponent } from '../../shared/ui/footer/footer.component'
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  imports: [CalendarComponent, DonutChartComponent, LineChartComponent, PlaceHolderLoadingComponent],
+  imports: [CalendarComponent, DonutChartComponent, LineChartComponent, PlaceHolderLoadingComponent, FooterComponent],
   standalone: true
 })
 export class DashboardComponent implements OnInit {
