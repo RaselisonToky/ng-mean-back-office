@@ -15,7 +15,7 @@ export class DetailsComponent {
   prixUnitaire: number = 0;
   quantites: number = 0;
   selectedPieceId: string = '';
-  @Input() pieces: Piece[] = [];
+  @Input() pieces: any[] = [];
   filteredPieces: Piece[] = [];
   selectedPiece = '';
   details: DeliveryDetail[] = [];

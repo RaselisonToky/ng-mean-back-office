@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { DeliveryGeneralFormData } from '../delivery.types';
 import { FormsModule } from '@angular/forms';
+import { SupplierOrderTicket } from '../../supplier-order/model/supplier-order.model';
 
 @Component({
   selector: 'app-general-info',
@@ -12,11 +13,13 @@ import { FormsModule } from '@angular/forms';
 export class GeneralInfoComponent {
   @Output() onNext = new EventEmitter<DeliveryGeneralFormData>();
 
+  @Input() tickets: SupplierOrderTicket[] = [];
   formErrors: Record<string, string> = {};
   bonLivraison: string = 'BL-123456';
   dateLivraison: string = '12/10/2023:00:00';
   livreur: string = 'Rajaonson Bien aimé';
   observation: string = '';
+  seletectedTicket: string = '';
 
   constructor() {
     const today = new Date();
@@ -71,10 +74,16 @@ export class GeneralInfoComponent {
         bonLivraison: this.bonLivraison,
         dateLivraison: this.dateLivraison,
         livreur: this.livreur,
-        observation: this.observation
+        observation: this.observation,
+        commandeId: this.seletectedTicket
       };
 
       this.onNext.emit(formData);
     }
+  }
+
+  onSeletectTicketChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.seletectedTicket = target.value
   }
 }

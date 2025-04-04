@@ -64,11 +64,11 @@
   <div class="w-full flex justify-center items-center">
 
     @if(currentStep===1){
-    <app-general-info (onNext)="goToNextStep($event)"></app-general-info>
+    <app-general-info (onNext)="goToNextStep($event)" [tickets]="tickets"></app-general-info>
     } @else if (currentStep=== 2) {
     <app-details (onNext)="goToVerificationStep($event)" [pieces]="pieces"></app-details>
     }@else if (currentStep===3) {
-    <app-verification [general]="deliveryGeneral" [details]="deliveryDetails"></app-verification>
+    <app-verification [general]="deliveryGeneral"  [details]="deliveryDetails"></app-verification>
     }
 
 

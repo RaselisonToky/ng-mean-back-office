@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environments';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,13 @@ export class SupplierOrderService {
     });
     // Convert date strings to ISO format if they are not empty
     return this.http.get(`${this.baseUrl}/search`, { params: query });
+  }
+
+  findAllAvailableTickets(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/available`);
+  }
+
+  findById(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 }

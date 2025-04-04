@@ -1,4 +1,4 @@
-<form  class="w-fit flex flex-col gap-3 rounded-md p-3" novalidate>
+<form class="w-fit flex flex-col gap-3 rounded-md p-3" novalidate>
   <div class="w-full p-3 flex flex-col gap-3">
     <h1 class="" style="font-size: 23px;">Information de livraison</h1>
     <p class="text-gray-500 text-sm">
@@ -6,6 +6,21 @@
     </p>
   </div>
   <div class="w-fit  flex  flex-col gap-3 p-3">
+    <div class="flex w-full ">
+      <div class="flex flex-col gap-2">
+        <label for="deliveryId" class="text-sm text-gray-500">Ticket de suivie</label>
+        <select (change)="onSeletectTicketChange($event)"
+          class="border border-gray-300 w-4xl rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400">
+          <option value="0" selected disabled>Choisissez un ticket de suivie</option>
+          @for(ticket of tickets; track ticket._id){
+          <option value="{{ ticket._id }}">{{ ticket.ticket_number }}</option>
+          }
+        </select>
+        <p ngIf="formErrors['livreur']" class="text-red-500 text-sm" style="font-size: x-small;">
+          {{ formErrors['livreur'] }}
+        </p>
+      </div>
+    </div>
     <div class="flex w-full  gap-3">
       <div class="flex w-1/2 flex-col gap-2">
         <label for="deliveryId" class="text-sm text-gray-500">Bon de livraison</label>

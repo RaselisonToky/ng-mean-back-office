@@ -1,3 +1,17 @@
-<app-supplier-list>
-    
-</app-supplier-list>
+<div>
+    <div class="flex w-full justify-start items-center">
+        <button (click)="switchViewMode()"
+            class="bg-gray-800 text-white h-10 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+            @if(action==="create"){
+            Voir historique
+            }@else {
+                Nouvelle commande
+            }
+
+        </button>
+
+    </div>
+    @if(action==="list"){
+    <app-supplier-list></app-supplier-list>
+    }
+</div>

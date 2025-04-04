@@ -14,8 +14,8 @@
                     <select [(ngModel)]="selectedPieceId" (change)="onPieceSelectedChange($event)"
                         class="border border-gray-300 w-4xl rounded-md p-2 focus:outline-none focus:ring focus:ring-gray-400">
                         <option value="0" selected disabled>Choisir une pièce</option>
-                        @for (piece of pieces; track piece._id) {
-                        <option [value]="piece._id">{{ piece.name }}</option>
+                        @for (piece of pieces; track piece.part_id._id) {
+                        <option [value]="piece.part_id._id">{{ piece.part_id.name }}</option>
                         }
                     </select>
                 </div>

@@ -2,6 +2,7 @@ import { Piece } from "../pieces/model/piece.model";
 
 export interface DeliveryGeneralFormData {
     bonLivraison: string;
+    commandeId: string
     dateLivraison: string;
     livreur: string;
     observation?: string
@@ -29,7 +30,7 @@ export interface Delivery {
     _id: string;
     bonLivraison: string;
     livreur: string;
-    ticketSuivie:string;
+    ticketSuivie: string;
     fournisseur: string;
     dateLivraison: string;
 }

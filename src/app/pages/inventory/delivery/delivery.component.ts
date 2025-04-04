@@ -1,3 +1,4 @@
+import { SupplierOrderService } from './../supplier-order/service/supplier-order.service';
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Route } from '@angular/router';
@@ -10,6 +11,8 @@ import { Piece } from '../pieces/model/piece.model';
 import { CommonModule } from '@angular/common';
 import { DeliveryGeneralFormData } from './delivery.types';
 import { DeliveryListComponent } from './delivery-list/delivery-list.component';
+import { SupplierOrderTicket } from '../supplier-order/model/supplier-order.model';
+import { DeliveryService } from './service/delivery.service';
 @Component({
   selector: 'app-delivery',
   standalone: true,
@@ -30,12 +33,20 @@ export class DeliveryComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
   totalSteps: number = 3;
   action: string | null = 'view';
-  pieces: Piece[] = [];
+  pieces: any[] = [];
   deliveryGeneral: DeliveryGeneralFormData | null = null;
   deliveryDetails: any[] = [];
   searchTerm: string = '';
+  tickets: SupplierOrderTicket[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private pieceService: PiecesService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private pieceService: PiecesService,
+    private supplierOrderService: SupplierOrderService,
+    private deliveryService: DeliveryService
+
+  ) { }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.action = params['action'] || 'view';
@@ -43,7 +54,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
       console.log('Action:', params['action']);
       console.log('Step:', params['step']);
     });
-    this.fetchPieces();
+    this.getAllTickets();
   }
   ngOnDestroy(): void {
 
@@ -60,8 +71,16 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     });
   }
 
-  goToNextStep(genInfo: DeliveryGeneralFormData): void {
+  async goToNextStep(genInfo: DeliveryGeneralFormData) {
     this.deliveryGeneral = genInfo;
+    this.supplierOrderService.findById(this.deliveryGeneral.commandeId).subscribe({
+      next: (data: any) => {
+        this.pieces = data.items
+      },
+      error: (error) => {
+        console.log('Erreur lors de la récupération des données', error)
+      }
+    })
     this.route.params.subscribe(params => {
       if (this.currentStep < this.totalSteps) {
         this.currentStep++;
@@ -74,6 +93,18 @@ export class DeliveryComponent implements OnInit, OnDestroy {
       }
     }
     );
+  }
+
+  getAllTickets() {
+    this.supplierOrderService.findAllAvailableTickets().subscribe({
+      next: (data: any) => {
+        this.tickets = data;
+        console.log('Tickets:', this.tickets);
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des données:', error);
+      }
+    });
   }
 
   goToVerificationStep(details: any[]): void {
@@ -92,11 +123,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitDelivery(): void {
-    // Handle the submission logic here
-    console.log('Delivery submitted:', this.deliveryGeneral, this.deliveryDetails);
-    // You can navigate to another page or show a success message
-  }
+  
 
   switchViewMode() {
     if (this.action === 'create') {

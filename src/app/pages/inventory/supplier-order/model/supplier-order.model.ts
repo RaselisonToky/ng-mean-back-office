@@ -6,3 +6,8 @@ export interface SupplierOrder {
     status: string;
     total_amount: number;
 }
+
+export interface SupplierOrderTicket {
+    _id: string;
+    ticket_number: string;
+}
