@@ -9,6 +9,7 @@ import { PiecesService } from '../pieces/service/pieces.service';
 import { Piece } from '../pieces/model/piece.model';
 import { CommonModule } from '@angular/common';
 import { DeliveryGeneralFormData } from './delivery.types';
+import { DeliveryListComponent } from './delivery-list/delivery-list.component';
 @Component({
   selector: 'app-delivery',
   standalone: true,
@@ -18,7 +19,8 @@ import { DeliveryGeneralFormData } from './delivery.types';
     ReactiveFormsModule,
     GeneralInfoComponent,
     DetailsComponent,
-    VerificationComponent
+    VerificationComponent,
+    DeliveryListComponent
   ],
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.css',
@@ -27,15 +29,16 @@ import { DeliveryGeneralFormData } from './delivery.types';
 export class DeliveryComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
   totalSteps: number = 3;
-  action: string | null = 'create';
+  action: string | null = 'view';
   pieces: Piece[] = [];
   deliveryGeneral: DeliveryGeneralFormData | null = null;
   deliveryDetails: any[] = [];
+  searchTerm: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private pieceService: PiecesService) { }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.action = params['action'] || 'create';
+      this.action = params['action'] || 'view';
       this.currentStep = +params['step'] || 1;
       console.log('Action:', params['action']);
       console.log('Step:', params['step']);
@@ -93,5 +96,22 @@ export class DeliveryComponent implements OnInit, OnDestroy {
     // Handle the submission logic here
     console.log('Delivery submitted:', this.deliveryGeneral, this.deliveryDetails);
     // You can navigate to another page or show a success message
+  }
+
+  switchViewMode() {
+    if (this.action === 'create') {
+      this.router.navigate(['inventory/deliveries'], {
+        queryParams: {
+          action: 'view'
+        }
+      });
+    }
+    else {
+      this.router.navigate(['inventory/deliveries'], {
+        queryParams: {
+          action: 'create'
+        }
+      });
+    }
   }
 }

@@ -15,9 +15,14 @@ interface ChartData {
   `,
   styles: [`
     .chart-container {
-      width: 100%;
       height: 400px;
       margin: 20px 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      position: relative;
+    }
+    canvas {
+      max-width: 100% !important;
     }
   `]
 })
@@ -32,7 +37,18 @@ export class LineChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.createChart();
-    }, 0);
+      window.addEventListener('resize', () => {
+        if (this.chart) {
+          this.chart.resize();
+        }
+      });
+      setTimeout(() => {
+        if (this.chart) {
+          this.chart.resize();
+          this.chart.update();
+        }
+      }, 300);
+    }, 100);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -47,11 +63,18 @@ export class LineChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
+    window.removeEventListener('resize', this.handleResize);
     if (this.chart) {
       this.chart.destroy();
       this.chart = undefined;
     }
   }
+
+  private handleResize = () => {
+    if (this.chart) {
+      this.chart.resize();
+    }
+  };
 
   private hasDataChanged(currentData: ChartData[], previousData: ChartData[]): boolean {
     if (!currentData || !previousData || currentData.length !== previousData.length) {

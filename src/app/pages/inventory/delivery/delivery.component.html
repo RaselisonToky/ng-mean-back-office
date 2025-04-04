@@ -1,4 +1,18 @@
 <div class="w-full h-full flex flex-col  justify-center gap-4">
+  <div class="flex w-full justify-start items-center">
+    <button (click)="switchViewMode()"
+      class="bg-gray-800 text-white h-10 px-4 cursor-pointer rounded-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+      @if(action==="create"){
+      Voir historique
+      }@else {
+      Enregistrer livraison
+      }
+
+    </button>
+
+  </div>
+
+  @if(action==="create"){
   <div class="flex w-full justify-center items-center">
     <div class="text-blue-600 p-1 w-56 rounded-2xl bg-blue-100 text-xs text-center " style="font-size: 12px;">
       Enregistrement de la livraison
@@ -48,15 +62,20 @@
 
   </div>
   <div class="w-full flex justify-center items-center">
-    @if (action==="create") {
+
     @if(currentStep===1){
-    <app-general-info (onNext)="goToNextStep($event)" ></app-general-info>
+    <app-general-info (onNext)="goToNextStep($event)"></app-general-info>
     } @else if (currentStep=== 2) {
     <app-details (onNext)="goToVerificationStep($event)" [pieces]="pieces"></app-details>
     }@else if (currentStep===3) {
     <app-verification [general]="deliveryGeneral" [details]="deliveryDetails"></app-verification>
     }
-    }
+
 
   </div>
+
+  }
+  @else {
+  <app-delivery-list></app-delivery-list>
+  }
 </div>

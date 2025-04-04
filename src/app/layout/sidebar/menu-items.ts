@@ -97,7 +97,7 @@ export const menuItems: MenuItem[] = [
       {
         id: 'supplierOrder',
         label: 'Commande fournisseur',
-        href: '#',
+        href: 'inventory/supplierOrders',
         icon: ClipboardList,
         roles: ['ADMIN'],
       },

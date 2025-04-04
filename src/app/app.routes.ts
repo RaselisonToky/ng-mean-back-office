@@ -18,6 +18,7 @@ import {
 } from './pages/appointment/components/appointment-details/appointment-details.component';
 import { TaskHistoryComponent } from './pages/task-history/task-history.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component'
+import { SupplierOrderComponent } from './pages/inventory/supplier-order/supplier-order.component';
 
 export const routes: Routes = [
   { path: 'login', component: AuthComponent },
@@ -77,6 +78,12 @@ export const routes: Routes = [
       {
         path: 'inventory/deliveries',
         component: DeliveryComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ADMIN'] },
+      },
+      {
+        path: 'inventory/supplierOrders',
+        component: SupplierOrderComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ADMIN'] },
       },

@@ -24,3 +24,12 @@ export interface DeliveryDetail {
     quantite: number;
     total: number;
 }
+
+export interface Delivery {
+    _id: string;
+    bonLivraison: string;
+    livreur: string;
+    ticketSuivie:string;
+    fournisseur: string;
+    dateLivraison: string;
+}

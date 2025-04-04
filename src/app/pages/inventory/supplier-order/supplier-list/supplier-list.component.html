@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full justify-center gap-4 items-center">
     <header class="flex flex-col w-full items-center ">
         <div class="flex w-full justify-items-start">
-            <span class="font-semibold space-y-2" style="font-size: 23px;">Historique de livraison</span>
+            <span class="font-semibold space-y-2" style="font-size: 23px;">Historique de commande</span>
         </div>
         <div class="flex w-full gap-3">
             <div class="flex gap-2 mt-5 items-center">
@@ -44,8 +44,27 @@
         </div>
     </div>
     <div class="mt-4 w-full">
-        <app-custom-table [headers]="tableHeaders" [data]="[]" [height]="height" [itemsPerPage]="itemsPerPage">
-
+        <app-custom-table [headers]="tableHeaders" [data]="supplierOrders" [height]="height"
+            [itemsPerPage]="itemsPerPage">
+            <ng-template let-item>
+                <td class="first-column">{{ item._id }}</td>
+                <td>{{ item.ticket_number }}</td>
+                <td>{{ item.supplier_id.name  }}</td>
+                <td>{{ item.total_amount }}</td>
+                <td>
+                    @if(item.status==='PENDING'){ 
+                    <span class="px-2 py-1 rounded-xl w-14 text-blue-800 bg-blue-100" style="font-size: 10px;">
+                        {{ item.status }}
+                    </span>
+                    }@else{
+                    <span class="px-2  py-1 rounded-xl text-red-800 bg-red-100" style="font-size: 10px;">
+                        {{ item.status }}
+                    </span>
+                    }
+                </td>
+                <td>{{ item.order_date | date: 'dd/MM/yyyy' }}</td>
+               
+            </ng-template>
         </app-custom-table>
     </div>
 
