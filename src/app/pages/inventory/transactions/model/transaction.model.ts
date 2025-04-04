@@ -3,7 +3,7 @@ export interface Transaction {
     part_id:any,
     piece:any
     quantity:number,
-    unit_price:number,
+    prix_unitaire:number,
     type: string,
     transaction_date: string
 }

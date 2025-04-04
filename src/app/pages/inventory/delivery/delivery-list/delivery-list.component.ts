@@ -12,7 +12,7 @@ import { DeliveryService } from '../service/delivery.service';
   styleUrl: './delivery-list.component.css'
 })
 export class DeliveryListComponent implements OnInit {
-  height = '750px';
+ 
 
   tableHeaders = ["Livraison Id", "Ticket de suivie", "Bon de livraison", "Livreur", "Fournisseur", "Prix Total", "Date"];
   startDate: string = '';  // Start date as string in 'YYYY-MM-DD' format

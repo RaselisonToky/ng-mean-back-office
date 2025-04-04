@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="mt-4 w-full">
-        <app-custom-table [headers]="tableHeaders" [data]="deliveries" [height]="height" [itemsPerPage]="itemsPerPage">
+        <app-custom-table [headers]="tableHeaders" [data]="deliveries"  [itemsPerPage]="itemsPerPage">
             <ng-template let-item>
                 <td class="first-column">
                     {{item._id}}
