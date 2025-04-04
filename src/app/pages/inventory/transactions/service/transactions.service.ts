@@ -14,4 +14,8 @@ export class TransactionsService {
   findAll(): Observable<any> {
     return this.http.get(`${this.baseUrl}/inventory/transactions`)
   }
+
+  search(params: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/inventory/transactions/search?${params}`)
+  }
 }
