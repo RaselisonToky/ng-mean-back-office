@@ -49,21 +49,32 @@
             <ng-template let-item>
                 <td class="first-column">{{ item._id }}</td>
                 <td>{{ item.ticket_number }}</td>
-                <td>{{ item.supplier_id.name  }}</td>
-                <td>{{ item.total_amount }}</td>
+                <td class="flex justify-items-start">{{ item.supplier_id.name }}</td>
+                <td>{{ formatPricePrettier(item.total_amount) }}</td>
+                <td>0%</td>
                 <td>
-                    @if(item.status==='PENDING'){ 
-                    <span class="px-2 py-1 rounded-xl w-14 text-blue-800 bg-blue-100" style="font-size: 10px;">
-                        {{ item.status }}
+                    @if(item.status==='PENDING'){
+                    <span class="px-2 py-1 rounded-xl w-14 text-amber-800 bg-amber-100" style="font-size: 10px;">
+                        En attente
                     </span>
-                    }@else{
+                    }@else if(item.status==='CANCELLED'){
                     <span class="px-2  py-1 rounded-xl text-red-800 bg-red-100" style="font-size: 10px;">
-                        {{ item.status }}
+                        Annulée
+                    </span>
+                    }
+                    @else if(item.status==='DELIVERED'){
+                    <span class="px-2  py-1 rounded-xl text-green-800 bg-green-100" style="font-size: 10px;">
+                        Livrée
+                    </span>
+                    }
+                    @else if(item.status==='PARTIALLY_DELIVERED'){
+                    <span class="px-2  py-1 rounded-xl text-purple-800 bg-purple-100" style="font-size: 10px;">
+                        Partiellement livrée
                     </span>
                     }
                 </td>
                 <td>{{ item.order_date | date: 'dd/MM/yyyy' }}</td>
-               
+
             </ng-template>
         </app-custom-table>
     </div>
