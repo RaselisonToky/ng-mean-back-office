@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 export class VerificationComponent {
   @Input() general: DeliveryGeneralFormData | null = null;
   @Input() details: DeliveryDetail[] = [];
-  
-  constructor(private deliveryService: DeliveryService, private router: Router){}
+
+  constructor(private deliveryService: DeliveryService, private router: Router) { }
 
   getTotalPrice(): number {
     return this.details.reduce((total, detail) => {
@@ -25,6 +25,8 @@ export class VerificationComponent {
     const data = {
       order_id: this.general?.commandeId,
       details: this.details,
+      livreur: this.general?.livreur,
+      bonLivraison: this.general?.bonLivraison,
       total_amount: this.getTotalPrice(),
     }
 
